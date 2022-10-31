@@ -1,5 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="BuildKnife4jVue">
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <NoWarn>1701;1702;1591</NoWarn>
@@ -29,10 +28,11 @@
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     </ItemGroup>
 
-    <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="!Exists('dist')">
-      <Exec Command="cnpm install" 
-            WorkingDirectory="../../../frontend/knife4j-vue" 
-            Condition="!Exists('../../../frontend/knife4j-vue/node_modules')"/>
+
+    <Target Name="BuildKnife4jVue" Condition="!Exists('dist')">
+        <Exec Command="cnpm install"
+              WorkingDirectory="../../../frontend/knife4j-vue"
+              Condition="!Exists('../../../frontend/knife4j-vue/node_modules')"/>
         <Exec Command="cnpm run build"
               WorkingDirectory="../../../frontend/knife4j-vue"/>
     </Target>
