@@ -1,9 +1,9 @@
-﻿using Furion.Authorization;
+﻿using System.Threading.Tasks;
+using Furion.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 
-namespace SimpleAdmin.Web.Core;
+namespace SimpleAdmin.Web.Core.Handlers;
 
 public class JwtHandler : AppAuthorizeHandler
 {
@@ -14,3 +14,4 @@ public class JwtHandler : AppAuthorizeHandler
         return Task.FromResult(true);
     }
 }
+
