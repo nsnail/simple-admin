@@ -4,6 +4,12 @@
         <name>SimpleAdmin.Application</name>
     </assembly>
     <members>
+        <member name="M:SimpleAdmin.Application.System.Services.SystemService.GetDescription">
+            <summary>
+                开发更简单，更通用，更流行。
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:SimpleAdmin.Application.System.SystemAppService">
             <summary>
                 系统服务接口

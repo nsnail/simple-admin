@@ -4,5 +4,697 @@
         <name>SimpleAdmin.Core</name>
     </assembly>
     <members>
+        <member name="T:SimpleAdmin.Core.Configuration.OptionAbstraction">
+            <summary>
+                选项抽象基类
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Configuration.Options.RestSkinOptions">
+            <summary>
+                API 界面 knife4j-vue 配置
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.RestSkinOptions.ConfigObject">
+            <summary>
+                swagger 配置对象 节点
+                Gets the JavaScript config object, represented as JSON, that will be passed to the SwaggerUI
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.RestSkinOptions.DocumentTitle">
+            <summary>
+                文档标题
+                Gets or sets a title for the swagger-ui page
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.RestSkinOptions.HeadContent">
+            <summary>
+                自定义页面 head 节点
+                Gets or sets additional content to place in the head of the swagger-ui page
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:SimpleAdmin.Core.Configuration.Options.RestSkinOptions.Interceptors" -->
+        <member name="P:SimpleAdmin.Core.Configuration.Options.RestSkinOptions.OAuthConfigObject">
+            <summary>
+                OAuth 配置节点
+                Gets the JavaScript config object, represented as JSON, that will be passed to the initOAuth method
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.RestSkinOptions.RoutePrefix">
+            <summary>
+                当url path 以此值开头，则交给 api skin 中间件处理 ， 开头不需要 "/"
+                Gets or sets a route prefix for accessing the swagger-ui
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Configuration.Options.ConnectionsOptions">
+            <summary>
+                数据库连接字符串配置
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.ConnectionsOptions.Item(System.String)">
+            <summary>
+                定位服务器节点
+            </summary>
+            <param name="name">连接名称</param>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.ConnectionsOptions.Servers">
+            <summary>
+                服务器节点列表
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode">
+            <summary>
+                swagger 配置对象 节点
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.AdditionalItems">
+            <summary>
+                附加item
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.DeepLinking">
+            <summary>
+                If set to true, enables deep linking for tags and operations
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.DefaultModelExpandDepth">
+            <summary>
+                The default expansion depth for the model on the model-example section
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.DefaultModelRendering">
+            <summary>
+                Controls how the model is shown when the API is first rendered.
+                (The user can always switch the rendering for a given model by clicking the 'Model' and 'Example Value' links)
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.DefaultModelsExpandDepth">
+            <summary>
+                The default expansion depth for models (set to -1 completely hide the models)
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.DisplayOperationId">
+            <summary>
+                Controls the display of operationId in operations list
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.DisplayRequestDuration">
+            <summary>
+                Controls the display of the request duration (in milliseconds) for Try-It-Out requests
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.DocExpansion">
+            <summary>
+                Controls the default expansion setting for the operations and tags.
+                It can be 'list' (expands only the tags), 'full' (expands the tags and operations) or 'none' (expands nothing)
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.Filter">
+            <summary>
+                If set, enables filtering. The top bar will show an edit box that you can use to filter the tagged operations
+                that are shown. Can be an empty string or specific value, in which case filtering will be enabled using that
+                value as the filter expression. Filtering is case sensitive matching the filter expression anywhere inside the tag
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.MaxDisplayedTags">
+            <summary>
+                If set, limits the number of tagged operations displayed to at most this many. The default is to show all
+                operations
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.OAuth2RedirectUrl">
+            <summary>
+                OAuth redirect URL
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.PersistAuthorization">
+            <summary>
+                If set to true, it persists authorization data and it would not be lost on browser close/refresh
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.ShowCommonExtensions">
+            <summary>
+                Controls the display of extensions (pattern, maxLength, minLength, maximum, minimum) fields and values for
+                Parameters
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.ShowExtensions">
+            <summary>
+                Controls the display of vendor extension (x-) fields and values for Operations, Parameters, and Schema
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.SupportedSubmitMethods">
+            <summary>
+                List of HTTP methods that have the Try it out feature enabled.
+                An empty array disables Try it out for all operations. This does not filter the operations from the display
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.TryItOutEnabled">
+            <summary>
+                Controls whether the "Try it out" section should be enabled by default.
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.Urls">
+            <summary>
+                One or more Swagger JSON endpoints (url and name) to power the UI
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ConfigObjectNode.ValidatorUrl">
+            <summary>
+                By default, Swagger-UI attempts to validate specs against swagger.io's online validator.
+                You can use this parameter to set a different validator URL, for example for locally deployed validators (Validator
+                Badge).
+                Setting it to null will disable validation
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.DocExpansionNode">
+            <summary>
+                swagger 文档展开方式配置节点
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.DocExpansionNode.List">
+            <summary>
+                列表式
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.DocExpansionNode.Full">
+            <summary>
+                全展开
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.DocExpansionNode.None">
+            <summary>
+                不展开
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.InterceptorFunctionsNode">
+            <summary>
+                拦截器功能配置节点
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.InterceptorFunctionsNode.RequestInterceptorFunction">
+            <summary>
+                MUST be a valid Javascript function.
+                Function to intercept remote definition, "Try it out", and OAuth 2.0 requests.
+                Accepts one argument requestInterceptor(request) and must return the modified request, or a Promise that resolves
+                to the modified request.
+                Ex: "req => { req.headers['MyCustomHeader'] = 'CustomValue'; return req; }"
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.InterceptorFunctionsNode.ResponseInterceptorFunction">
+            <summary>
+                MUST be a valid Javascript function.
+                Function to intercept remote definition, "Try it out", and OAuth 2.0 responses.
+                Accepts one argument responseInterceptor(response) and must return the modified response, or a Promise that
+                resolves to the modified response.
+                Ex: "res => { console.log(res); return res; }"
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ModelRenderingNode">
+            <summary>
+                模型表达方式配置节点
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ModelRenderingNode.Example">
+            <summary>
+                示例
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.ModelRenderingNode.Model">
+            <summary>
+                模型
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.OAuthConfigObjectNode">
+            <summary>
+                OAuth配置节点
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.OAuthConfigObjectNode.AdditionalQueryStringParams">
+            <summary>
+                Additional query parameters added to authorizationUrl and tokenUrl
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.OAuthConfigObjectNode.AppName">
+            <summary>
+                Application name, displayed in authorization popup
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.OAuthConfigObjectNode.ClientId">
+            <summary>
+                Default clientId
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.OAuthConfigObjectNode.ClientSecret">
+            <summary>
+                Default clientSecret
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.OAuthConfigObjectNode.Realm">
+            <summary>
+                Realm query parameter (for oauth1) added to authorizationUrl and tokenUrl
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.OAuthConfigObjectNode.Scopes">
+            <summary>
+                String array of initially selected oauth scopes, default is empty array
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.OAuthConfigObjectNode.ScopeSeparator">
+            <summary>
+                Scope separator for passing scopes, encoded before calling, default value is a space (encoded value %20)
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.OAuthConfigObjectNode.UseBasicAuthenticationWithAccessCodeGrant">
+            <summary>
+                Only activated for the accessCode flow. During the authorization_code request to the tokenUrl,
+                pass the Client Password using the HTTP Basic Authentication scheme
+                (Authorization header with Basic base64encode(client_id + client_secret))
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.OAuthConfigObjectNode.UsePkceWithAuthorizationCodeGrant">
+            <summary>
+                Only applies to authorizatonCode flows. Proof Key for Code Exchange brings enhanced security for OAuth public
+                clients.
+                The default is false
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.SubmitMethodNode">
+            <summary>
+                请求方法配置节点
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.SubmitMethodNode.Get">
+            <summary>
+                Get
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.SubmitMethodNode.Put">
+            <summary>
+                Put
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.SubmitMethodNode.Post">
+            <summary>
+                Post
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.SubmitMethodNode.Delete">
+            <summary>
+                Delete
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.SubmitMethodNode.Options">
+            <summary>
+                Options
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.SubmitMethodNode.Head">
+            <summary>
+                Head
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.SubmitMethodNode.Patch">
+            <summary>
+                Patch
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.SubmitMethodNode.Trace">
+            <summary>
+                Trace
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.UrlDescriptorNode">
+            <summary>
+                url描述符 配置节点
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.UrlDescriptorNode.Name">
+            <summary>
+                名称
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.ApiSkin.UrlDescriptorNode.Url">
+            <summary>
+                url
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Configuration.Options.Nodes.Connection.ServersNode">
+            <summary>
+                数据库服务器节点
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.Connection.ServersNode.AutoSyncStructure">
+            <summary>
+                是否自动同步数据结构
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.Connection.ServersNode.ConnStr">
+            <summary>
+                链接字符串
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.Connection.ServersNode.DbType">
+            <summary>
+                数据库类型
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Core.Configuration.Options.Nodes.Connection.ServersNode.Name">
+            <summary>
+                连接名称
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Constant.Const">
+            <summary>
+                常量类
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.STOP_WORDS">
+            <summary>
+                分词用的停词列表
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.USUAL_CHARS">
+            <summary>
+                常用字符
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Constant.Const.Enums">
+            <summary>
+                枚举类
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Constant.Const.Enums.Operators">
+            <summary>
+                操作者
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Enums.Operators.User">
+            <summary>
+                用户
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Enums.Operators.Administrator">
+            <summary>
+                管理员
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Enums.Operators.Service">
+            <summary>
+                服务程序
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Constant.Const.Enums.SqlCommandTypes">
+            <summary>
+                Sql命令类型
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Enums.SqlCommandTypes.Select">
+            <summary>
+                Select
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Enums.SqlCommandTypes.Insert">
+            <summary>
+                Insert
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Enums.SqlCommandTypes.Update">
+            <summary>
+                Update
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Enums.SqlCommandTypes.Delete">
+            <summary>
+                Delete
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Constant.Const.Messages">
+            <summary>
+                一些提示消息
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Messages.不存在的记录">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Messages.好像出了点问题请稍后再试">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Messages.NO_CLIENTID">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Messages.NO_SIGN">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Messages.NO_TIMESTAMP">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Messages.SIGN_ERROR">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Messages.TIMESTAMP_EXCEED">
+            <summary>
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Constant.Const.Values">
+            <summary>
+                一些值类型常量
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Values.COOKIE_MAX_DATE">
+            <summary>
+                预设的cookie最大日起值
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Values.PAGE_NO_MAX">
+            <summary>
+                最大页码
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Values.PAGE_NO_MIN">
+            <summary>
+                最小页码
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Values.PAGE_SIZE_MAX">
+            <summary>
+                最大分页容量
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Values.PAGE_SIZE_MIN">
+            <summary>
+                最小分页容量
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Values.SQL_MIN_DATE">
+            <summary>
+                sql server中的最小日期值
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Constant.Const.Templates">
+            <summary>
+                一些模板常量
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Templates.LOG_OUTPUT_TEMPLATE_FULL">
+            <summary>
+                日志输出模板
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Templates.SYS36_TABLE">
+            <summary>
+                36进制码表
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Templates.UA_MOBILE">
+            <summary>
+                手机UserAgent
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Templates.UA_PC">
+            <summary>
+                电脑UserAgent
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Templates.YYYY_MM_DD">
+            <summary>
+                yyyy-MM-dd
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Templates.YYYY_MM_DD_HH_MM_SS">
+            <summary>
+                yyyy-MM-dd HH:mm:ss
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Templates.YYYYMMDD">
+            <summary>
+                yyyyMMdd
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.Const.Templates.YYYYMMDDHHMMSSFFFZZZZ">
+            <summary>
+                20230204182131000+0800
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Constant.ErrorCodes">
+            <summary>
+                错误码
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.ErrorCodes.未知错误">
+            <summary>
+                未知错误
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.ErrorCodes.无效输入">
+            <summary>
+                无效输入
+            </summary>
+        </member>
+        <member name="F:SimpleAdmin.Core.Constant.ErrorCodes.无效操作">
+            <summary>
+                无效操作
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Core.Extensions.DbCommandExtensions">
+            <summary>
+                DbCommand 扩展方法
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Core.Extensions.DbCommandExtensions.Executed(System.Data.Common.DbCommand,System.String,System.Action{SimpleAdmin.Core.Constant.Const.Enums.SqlCommandTypes,System.String,System.String})">
+            <summary>
+                sql语句执行后回调
+            </summary>
+            <param name="me"></param>
+            <param name="log">执行SQL命令，返回的结果</param>
+            <param name="commandInfo"></param>
+        </member>
+        <member name="M:SimpleAdmin.Core.Extensions.DbCommandExtensions.Executing(System.Data.Common.DbCommand)">
+            <summary>
+                sql语句执行前回调
+            </summary>
+            <param name="me"></param>
+        </member>
+        <member name="T:SimpleAdmin.Core.Extensions.HttpClientBuilderExtensions">
+            <summary>
+                IHttpClientBuilder 扩展方法
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Core.Extensions.HttpClientBuilderExtensions.AddFiddler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder)">
+            <summary>
+                使用Fiddler代理（抓包调试）
+            </summary>
+            <param name="me"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SimpleAdmin.Core.Extensions.HttpRequestMessageExtensions">
+            <summary>
+                HttpRequestMessage 扩展方法
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Core.Extensions.HttpRequestMessageExtensions.BuildJson(System.Net.Http.HttpRequestMessage)">
+            <summary>
+                将Http请求的Uri、Header、Body打包成Json字符串
+            </summary>
+            <param name="me"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAdmin.Core.Extensions.HttpRequestMessageExtensions.Log``1(System.Net.Http.HttpRequestMessage,Microsoft.Extensions.Logging.ILogger{``0})">
+            <summary>
+                记录日志
+            </summary>
+            <param name="me"></param>
+            <param name="logger"></param>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:SimpleAdmin.Core.Extensions.HttpRequestPartExtensions">
+            <summary>
+                HttpRequestPart 扩展方法
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Core.Extensions.HttpRequestPartExtensions.SetLog``1(Furion.RemoteRequest.HttpRequestPart,Microsoft.Extensions.Logging.ILogger{``0},System.Func{System.String,System.String})">
+            <summary>
+                设置日志
+            </summary>
+            <param name="me"></param>
+            <param name="logger"></param>
+            <param name="bodyHandle"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:SimpleAdmin.Core.Extensions.HttpResponseMessageExtensions">
+            <summary>
+                HttpResponseMessage 扩展方法
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Core.Extensions.HttpResponseMessageExtensions.BuildJson(System.Net.Http.HttpResponseMessage,System.Func{System.String,System.String})">
+            <summary>
+                将Http请求的Uri、Header、Body打包成Json字符串
+            </summary>
+            <param name="me"></param>
+            <param name="bodyHandle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAdmin.Core.Extensions.HttpResponseMessageExtensions.Log``1(System.Net.Http.HttpResponseMessage,Microsoft.Extensions.Logging.ILogger{``0},System.Func{System.String,System.String})">
+            <summary>
+                记录日志
+            </summary>
+            <param name="me"></param>
+            <param name="logger"></param>
+            <param name="bodyPreHandle">body预处理器</param>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:SimpleAdmin.Core.Extensions.HttpResponseMessageExtensions.LogException``1(System.Net.Http.HttpResponseMessage,System.String,Microsoft.Extensions.Logging.ILogger{``0},System.Func{System.String,System.String})">
+            <summary>
+                记录日常日志
+            </summary>
+            <param name="me"></param>
+            <param name="errors"></param>
+            <param name="logger"></param>
+            <param name="bodyHandle"></param>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:SimpleAdmin.Core.Extensions.LoggerConfigurationExtensions">
+            <summary>
+                Serilog配置类扩展
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Core.Extensions.LoggerConfigurationExtensions.FileLogSaveBySource(Serilog.LoggerConfiguration,System.String)">
+            <summary>
+                以日志来源为文件名配置文件日志
+            </summary>
+            <param name="config"></param>
+            <param name="sourceName"></param>
+        </member>
+        <member name="M:SimpleAdmin.Core.Extensions.LoggerConfigurationExtensions.FileLogSaveByType``1(Serilog.LoggerConfiguration)">
+            <summary>
+                以日志类型为文件名配置文件日志
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="config"></param>
+        </member>
+        <member name="M:SimpleAdmin.Core.Extensions.LoggerConfigurationExtensions.Init(Serilog.LoggerConfiguration)">
+            <summary>
+                初始化Serilog日志组件配置
+            </summary>
+            <param name="me"></param>
+        </member>
+        <member name="T:SimpleAdmin.Core.Extensions.StringExtensions">
+            <summary>
+                String  扩展方法
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Core.Extensions.StringExtensions.TrimEndOptions(System.String)">
+            <summary>
+                去掉尾部字符串“Options”
+            </summary>
+            <param name="me"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
