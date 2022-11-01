@@ -14,7 +14,7 @@ namespace SimpleAdmin.Core.Extensions;
 /// </summary>
 public static class DbCommandExtensions
 {
-    private static readonly Regex _tableNameRegex = new(@"\[([a-zA-Z0-9_]+?)\]\.\[(Tb_[a-zA-Z0-9_]+?)\]",
+    private static readonly Regex TABLE_NAME_REGEX = new(@"\[([a-zA-Z0-9_]+?)\]\.\[(Tb_[a-zA-Z0-9_]+?)\]",
                                                         RegexOptions.Compiled | RegexOptions.Multiline);
 
     /// <summary>
@@ -42,8 +42,8 @@ public static class DbCommandExtensions
         if (!Enum.TryParse(typeof(Const.Enums.SqlCommandTypes), firstOrder.x, true, out var typeObject)) return;
 
         var type       = (Const.Enums.SqlCommandTypes)typeObject!;
-        var schemaName = _tableNameRegex.Match(me.CommandText).Groups[1].Value;
-        var tableName  = _tableNameRegex.Match(me.CommandText).Groups[2].Value;
+        var schemaName = TABLE_NAME_REGEX.Match(me.CommandText).Groups[1].Value;
+        var tableName  = TABLE_NAME_REGEX.Match(me.CommandText).Groups[2].Value;
         commandInfo(type, schemaName, tableName);
     }
 
@@ -59,6 +59,3 @@ public static class DbCommandExtensions
         App.GetService<ILogger<DbCommand>>()?.Debug(sqlText);
     }
 }
-
-
-
