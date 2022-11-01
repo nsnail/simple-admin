@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="BuildKnife4jVue">
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <NoWarn>1701;1702;1591</NoWarn>
+        <DocumentationFile>SimpleAdmin.Rest.Common.xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\SimpleAdmin.Rest.Common.xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\SimpleAdmin.Rest.Common.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Update="webcore-settings.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="webcore-settings.Development.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SimpleAdmin.Application\SimpleAdmin.Application.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="dist/**/*" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Furion.Extras.Logging.Serilog" Version="4.7.2" />
+        <PackageReference Include="MediatR" Version="11.0.0" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    </ItemGroup>
+
+
+    <Target Name="BuildKnife4jVue" Condition="!Exists('dist')">
+        <Exec Command="cnpm install" WorkingDirectory="../../../frontend/knife4j-vue" Condition="!Exists('../../../frontend/knife4j-vue/node_modules')" />
+        <Exec Command="cnpm run build" WorkingDirectory="../../../frontend/knife4j-vue" />
+    </Target>
+
+</Project>

@@ -1,0 +1,223 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SimpleAdmin.Rest.Common</name>
+    </assembly>
+    <members>
+        <member name="T:SimpleAdmin.Rest.Common.CommonStartup">
+            <summary>
+                公共启动类
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.CommonStartup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+                配置应用程序中间件
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.CommonStartup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                配置服务容器
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="T:SimpleAdmin.Rest.Common.Extensions.ApplicationBuilderExtensions">
+            <summary>
+                ApplicationBuilder对象 扩展方法
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Extensions.ApplicationBuilderExtensions.UseHttpRequestEnableBuffering(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+                确保AspNetCore Http请求 主体可以被多次读取。
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Extensions.ApplicationBuilderExtensions.UseRestSkin(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+                使用 api skin （knife4j-vue）
+            </summary>
+        </member>
+        <member name="T:SimpleAdmin.Rest.Common.Extensions.ServiceCollectionExtensions">
+            <summary>
+                ServiceCollection 扩展方法
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Extensions.ServiceCollectionExtensions.AddAllOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                扫描程序集中继承自IConfigurableOptions的选项，注册
+            </summary>
+            <param name="me"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Extensions.ServiceCollectionExtensions.AddFreeSql(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Action{SimpleAdmin.Infrastructure.Constant.Const.Enums.SqlCommandTypes,System.String,System.String})">
+            <summary>
+                注册freeSql orm工具
+            </summary>
+            <param name="me"></param>
+            <param name="name"></param>
+            <param name="commandInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Extensions.ServiceCollectionExtensions.AddMediatR(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                注册 MediatR 组件
+            </summary>
+            <param name="me"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SimpleAdmin.Rest.Common.Middlewares.RestSkinMiddleware">
+            <summary>
+                Api 界面 knife4j-vue 中间件
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Middlewares.RestSkinMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.Options.IOptions{SimpleAdmin.Infrastructure.Configuration.Options.RestSkinOptions})">
+            <summary>
+                Api 界面 knife4j-vue 中间件
+            </summary>
+            <param name="next">下一个中间件</param>
+            <param name="env">主机环境</param>
+            <param name="logger">日志工厂</param>
+            <param name="options">api skin 配置项</param>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Middlewares.RestSkinMiddleware.CreateStaticFileMiddleware">
+            <summary>
+                创建静态文件处理中间件
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Middlewares.RestSkinMiddleware.GetIndexArguments">
+            <summary>
+                替换字典（首页）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Middlewares.RestSkinMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+                中间件主处理器
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Middlewares.RestSkinMiddleware.RespondWithIndexHtml(Microsoft.AspNetCore.Http.HttpResponse)">
+            <summary>
+                读取资源文件（首页），替换字典，输出到 HttpResponse
+            </summary>
+            <param name="response"></param>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Middlewares.RestSkinMiddleware.RespondWithRedirect(Microsoft.AspNetCore.Http.HttpResponse,System.String)">
+            <summary>
+                url 重定向
+            </summary>
+            <param name="response"></param>
+            <param name="location"></param>
+        </member>
+        <member name="T:SimpleAdmin.Rest.Common.Middlewares.HttpRequestEnableBufferingMiddleware">
+            <summary>
+                确保AspNetCore Http请求 主体可以被多次读取。
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Middlewares.HttpRequestEnableBufferingMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+                确保AspNetCore Http请求 主体可以被多次读取。
+            </summary>
+            <param name="next">下一个中间件指针</param>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Middlewares.HttpRequestEnableBufferingMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+                中间件主处理器
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:SimpleAdmin.Rest.Common.Pipeline.ApiResultHandler">
+            <summary>
+                Api响应结果格式化器
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Pipeline.ApiResultHandler.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext,Furion.FriendlyException.ExceptionMetadata)">
+            <inheritdoc />
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Pipeline.ApiResultHandler.OnResponseStatusCodes(Microsoft.AspNetCore.Http.HttpContext,System.Int32,Furion.UnifyResult.UnifyResultSettingsOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Pipeline.ApiResultHandler.OnSucceeded(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext,System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Pipeline.ApiResultHandler.OnValidateFailed(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Furion.DataValidation.ValidationMetadata)">
+            <inheritdoc />
+        </member>
+        <member name="T:SimpleAdmin.Rest.Common.Pipeline.FreeSqlTransactionBehavior`2">
+            <summary>
+                freeSql事务管道
+            </summary>
+            <typeparam name="TRequest"></typeparam>
+            <typeparam name="TResponse"></typeparam>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Pipeline.FreeSqlTransactionBehavior`2.#ctor(FreeSql.UnitOfWorkManager,Microsoft.Extensions.Logging.ILogger{SimpleAdmin.Rest.Common.Pipeline.FreeSqlTransactionBehavior{`0,`1}})">
+            <summary>
+                构造函数
+            </summary>
+            <param name="unitOfWorkManager">工作单元管理管理器</param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Pipeline.FreeSqlTransactionBehavior`2.Handle(`0,MediatR.RequestHandlerDelegate{`1},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:SimpleAdmin.Rest.Common.Pipeline.GlobalExceptionHandler">
+            <summary>
+                全局异常处理
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Pipeline.GlobalExceptionHandler.OnExceptionAsync(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:SimpleAdmin.Rest.Common.Pipeline.RequestAuditFilter">
+            <summary>
+                请求审计日志
+            </summary>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Pipeline.RequestAuditFilter.#ctor(Microsoft.Extensions.Logging.ILogger{SimpleAdmin.Rest.Common.Pipeline.RequestAuditFilter})">
+            <summary>
+                构造函数
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:SimpleAdmin.Rest.Common.Pipeline.RequestAuditFilter.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
+            <inheritdoc />
+        </member>
+        <member name="T:SimpleAdmin.Rest.Common.Pipeline.RestfulResultTmpl`1">
+            <summary>
+                RESTful 风格结果集
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:SimpleAdmin.Rest.Common.Pipeline.RestfulResultTmpl`1.Data">
+            <summary>
+                数据
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Rest.Common.Pipeline.RestfulResultTmpl`1.ErrorCode">
+            <summary>
+                错误码
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Rest.Common.Pipeline.RestfulResultTmpl`1.Errors">
+            <summary>
+                错误信息
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Rest.Common.Pipeline.RestfulResultTmpl`1.Extras">
+            <summary>
+                附加数据
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Rest.Common.Pipeline.RestfulResultTmpl`1.Succeeded">
+            <summary>
+                执行成功
+            </summary>
+        </member>
+        <member name="P:SimpleAdmin.Rest.Common.Pipeline.RestfulResultTmpl`1.Timestamp">
+            <summary>
+                时间戳
+            </summary>
+        </member>
+    </members>
+</doc>

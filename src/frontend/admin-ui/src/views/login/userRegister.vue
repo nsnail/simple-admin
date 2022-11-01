@@ -150,6 +150,7 @@
 				const formName = `stepForm_${this.stepActive}`
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
+						alert('ok')
 						this.stepActive += 1
 					}else{
 						return false
