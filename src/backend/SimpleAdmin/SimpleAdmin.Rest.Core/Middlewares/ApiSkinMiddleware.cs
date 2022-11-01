@@ -14,7 +14,7 @@ using Microsoft.Extensions.Options;
 using NSExt.Extensions;
 using SimpleAdmin.Infrastructure.Configuration.Options;
 
-namespace SimpleAdmin.Rest.Common.Middlewares;
+namespace SimpleAdmin.Rest.Core.Middlewares;
 
 /// <summary>
 ///     Api 界面 knife4j-vue 中间件
@@ -62,7 +62,7 @@ public class RestSkinMiddleware
         return new StaticFileMiddleware(_next, _env, Options.Create(staticFileOptions), _logger);
     }
 
-    private const string EMBEDDED_FILE_NAMESPACE = $"{nameof(SimpleAdmin)}.{nameof(Rest)}.{nameof(Common)}.dist";
+    private const string EMBEDDED_FILE_NAMESPACE = $"{nameof(SimpleAdmin)}.{nameof(Rest)}.{nameof(Core)}.skin.dist";
 
     /// <summary>
     ///     替换字典（首页）

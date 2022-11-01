@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using NSExt.Extensions;
 
-namespace SimpleAdmin.Rest.Common.Pipeline;
+namespace SimpleAdmin.Rest.Core.Pipeline;
 
 /// <summary>
 ///     freeSql事务管道

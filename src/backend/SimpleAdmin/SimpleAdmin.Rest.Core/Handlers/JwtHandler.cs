@@ -3,7 +3,7 @@ using Furion.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
-namespace SimpleAdmin.Rest.Common.Handlers;
+namespace SimpleAdmin.Rest.Core.Handlers;
 
 public class JwtHandler : AppAuthorizeHandler
 {

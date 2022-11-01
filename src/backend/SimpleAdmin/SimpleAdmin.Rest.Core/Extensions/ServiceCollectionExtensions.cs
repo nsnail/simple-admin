@@ -9,9 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using SimpleAdmin.Infrastructure.Configuration.Options;
 using SimpleAdmin.Infrastructure.Constant;
 using SimpleAdmin.Infrastructure.Extensions;
-using SimpleAdmin.Rest.Common.Pipeline;
+using SimpleAdmin.Rest.Core.Pipeline;
 
-namespace SimpleAdmin.Rest.Common.Extensions;
+namespace SimpleAdmin.Rest.Core.Extensions;
 
 /// <summary>
 ///     ServiceCollection 扩展方法

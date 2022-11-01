@@ -2,17 +2,17 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <NoWarn>1701;1702;1591</NoWarn>
+
         <DocumentationFile>SimpleAdmin.Application.xml</DocumentationFile>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\SimpleAdmin.Application.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\SimpleAdmin.Application.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\SimpleAdmin.Application.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\SimpleAdmin.Application.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -22,11 +22,17 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SimpleAdmin.Infrastructure\SimpleAdmin.Infrastructure.csproj" />
+        <ProjectReference Include="..\SimpleAdmin.DataContract\SimpleAdmin.DataContract.csproj"/>
+        <ProjectReference Include="..\SimpleAdmin.Infrastructure\SimpleAdmin.Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="System\Services\" />
+        <Folder Include="CommandHandlers"/>
+        <Folder Include="System\Services\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MediatR" Version="11.0.0"/>
     </ItemGroup>
 
 </Project>

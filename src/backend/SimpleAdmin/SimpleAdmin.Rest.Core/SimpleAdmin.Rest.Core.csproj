@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="BuildKnife4jVue">
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+
+        <DocumentationFile>SimpleAdmin.Rest.Core.xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DocumentationFile>bin\Debug\SimpleAdmin.Rest.Core.xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DocumentationFile>bin\Release\SimpleAdmin.Rest.Core.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Update="webcore-settings.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="webcore-settings.Development.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="skin/dist/**/*"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Furion.Extras.Logging.Serilog" Version="4.7.2"/>
+        <PackageReference Include="MediatR" Version="11.0.0"/>
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SimpleAdmin.Application\SimpleAdmin.Application.csproj"/>
+    </ItemGroup>
+
+    <Target Name="BuildKnife4jVue" Condition="!Exists('./skin/dist')">
+        <Exec Command="cnpm install" WorkingDirectory="../../../frontend/swagger-ui" Condition="!Exists('../../../frontend/swagger-ui/node_modules')"/>
+        <Exec Command="cnpm run build" WorkingDirectory="../../../frontend/swagger-ui"/>
+    </Target>
+
+</Project>

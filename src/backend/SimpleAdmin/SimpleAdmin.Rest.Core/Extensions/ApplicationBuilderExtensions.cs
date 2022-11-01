@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using SimpleAdmin.Rest.Common.Middlewares;
+using SimpleAdmin.Rest.Core.Middlewares;
 
-namespace SimpleAdmin.Rest.Common.Extensions;
+namespace SimpleAdmin.Rest.Core.Extensions;
 
 /// <summary>
 ///     ApplicationBuilder对象 扩展方法

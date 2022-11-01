@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using NSExt.Extensions;
 using Serilog;
 
-namespace SimpleAdmin.Rest.Common.Pipeline;
+namespace SimpleAdmin.Rest.Core.Pipeline;
 
 /// <summary>
 ///     全局异常处理

@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using SimpleAdmin.Infrastructure.Constant;
-using SimpleAdmin.Rest.Common.Extensions;
-using SimpleAdmin.Rest.Common.Handlers;
-using SimpleAdmin.Rest.Common.Pipeline;
+using SimpleAdmin.Rest.Core.Extensions;
+using SimpleAdmin.Rest.Core.Handlers;
+using SimpleAdmin.Rest.Core.Pipeline;
 
-namespace SimpleAdmin.Rest.Common;
+namespace SimpleAdmin.Rest.Core;
 
 /// <summary>
 ///     公共启动类
@@ -72,9 +72,12 @@ public class CommonStartup : AppStartup
     public void ConfigureServices(IServiceCollection services)
     {
         //Jwt 授权处理器
-        services.AddJwt<JwtHandler>();
+        services.AddJwt<JwtHandler>(enableGlobalAuthorize: true);
 
         services
+
+            // Mediator CQRS
+           .AddMediatR()
 
             //注册配置项
            .AddAllOptions()
@@ -98,6 +101,3 @@ public class CommonStartup : AppStartup
                                             Const.Templates.YYYY_MM_DD_HH_MM_SS);
     }
 }
-
-
-

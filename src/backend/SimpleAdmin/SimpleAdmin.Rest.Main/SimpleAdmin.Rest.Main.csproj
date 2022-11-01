@@ -29,18 +29,9 @@
         <Content Remove="logs\**" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
+        <ProjectReference Include="..\SimpleAdmin.DataContract\SimpleAdmin.DataContract.csproj" />
+        <ProjectReference Include="..\SimpleAdmin.Rest.Core\SimpleAdmin.Rest.Core.csproj" />
+        <ProjectReference Include="..\SimpleAdmin.Application\SimpleAdmin.Application.csproj" />
     </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\SimpleAdmin.Rest.Common\SimpleAdmin.Rest.Common.csproj" />
-    </ItemGroup>
-    <ProjectExtensions>
-        <VisualStudio>
-            <UserProperties properties_4launchsettings_1json__JsonSchema="" />
-        </VisualStudio>
-    </ProjectExtensions>
 
 </Project>

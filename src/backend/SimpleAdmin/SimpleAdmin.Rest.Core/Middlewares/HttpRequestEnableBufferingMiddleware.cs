@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace SimpleAdmin.Rest.Common.Middlewares;
+namespace SimpleAdmin.Rest.Core.Middlewares;
 
 /// <summary>
 ///     确保AspNetCore Http请求 主体可以被多次读取。

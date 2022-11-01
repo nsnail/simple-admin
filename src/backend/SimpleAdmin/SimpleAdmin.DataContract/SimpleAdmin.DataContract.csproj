@@ -2,15 +2,19 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <NoWarn>1701;1702;1591</NoWarn>
         <DocumentationFile>SimpleAdmin.DataContract.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\SimpleAdmin.DataContract.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\SimpleAdmin.DataContract.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\SimpleAdmin.DataContract.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\SimpleAdmin.DataContract.xml</DocumentationFile>
     </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MediatR" Version="11.0.0" />
+        <PackageReference Include="NSExt" Version="1.0.0" />
+    </ItemGroup>
 </Project>
