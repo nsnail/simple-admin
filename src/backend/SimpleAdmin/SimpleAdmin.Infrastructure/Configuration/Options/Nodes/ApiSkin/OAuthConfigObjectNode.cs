@@ -56,6 +56,3 @@ public record OAuthConfigObjectNode
     /// </summary>
     public bool UsePkceWithAuthorizationCodeGrant { get; set; } = false;
 }
-
-
-

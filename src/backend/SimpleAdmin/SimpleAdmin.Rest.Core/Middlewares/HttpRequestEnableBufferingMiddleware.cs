@@ -30,7 +30,3 @@ public class HttpRequestEnableBufferingMiddleware
         await _next(context);
     }
 }
-
-
-
-

@@ -40,6 +40,3 @@ public static class HttpRequestPartExtensions
         return me.OnRequesting(RequestHandle).OnResponsing(ResponseHandle).OnException(ExceptionHandle);
     }
 }
-
-
-

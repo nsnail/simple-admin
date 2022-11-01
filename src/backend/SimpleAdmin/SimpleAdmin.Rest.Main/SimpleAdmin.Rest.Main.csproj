@@ -7,31 +7,31 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\SimpleAdmin.Rest.Main.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\SimpleAdmin.Rest.Main.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\SimpleAdmin.Rest.Main.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\SimpleAdmin.Rest.Main.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Controllers\**" />
-        <Compile Remove="wwwroot\**" />
-        <Content Remove="Controllers\**" />
-        <Content Remove="wwwroot\**" />
-        <EmbeddedResource Remove="Controllers\**" />
-        <EmbeddedResource Remove="wwwroot\**" />
-        <None Remove="Controllers\**" />
-        <None Remove="wwwroot\**" />
-        <Compile Remove="logs\**" />
-        <EmbeddedResource Remove="logs\**" />
-        <None Remove="logs\**" />
-        <Content Remove="logs\**" />
+        <Compile Remove="Controllers\**"/>
+        <Compile Remove="wwwroot\**"/>
+        <Content Remove="Controllers\**"/>
+        <Content Remove="wwwroot\**"/>
+        <EmbeddedResource Remove="Controllers\**"/>
+        <EmbeddedResource Remove="wwwroot\**"/>
+        <None Remove="Controllers\**"/>
+        <None Remove="wwwroot\**"/>
+        <Compile Remove="logs\**"/>
+        <EmbeddedResource Remove="logs\**"/>
+        <None Remove="logs\**"/>
+        <Content Remove="logs\**"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\SimpleAdmin.DataContract\SimpleAdmin.DataContract.csproj" />
-        <ProjectReference Include="..\SimpleAdmin.Rest.Core\SimpleAdmin.Rest.Core.csproj" />
-        <ProjectReference Include="..\SimpleAdmin.Application\SimpleAdmin.Application.csproj" />
+        <ProjectReference Include="..\SimpleAdmin.DataContract\SimpleAdmin.DataContract.csproj"/>
+        <ProjectReference Include="..\SimpleAdmin.Rest.Core\SimpleAdmin.Rest.Core.csproj"/>
+        <ProjectReference Include="..\SimpleAdmin.Application\SimpleAdmin.Application.csproj"/>
     </ItemGroup>
 
 </Project>

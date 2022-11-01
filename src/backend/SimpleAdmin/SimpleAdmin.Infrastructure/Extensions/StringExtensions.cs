@@ -17,6 +17,3 @@ public static class StringExtensions
         return new Regex(@"Options$").Replace(me, string.Empty);
     }
 }
-
-
-

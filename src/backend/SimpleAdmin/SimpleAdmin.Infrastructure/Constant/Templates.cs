@@ -54,6 +54,3 @@ public static partial class Const
         public const string YYYYMMDDHHMMSSFFFZZZZ = "yyyyMMddHHmmssfffzzz";
     }
 }
-
-
-

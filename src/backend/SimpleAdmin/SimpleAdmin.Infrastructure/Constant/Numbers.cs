@@ -40,6 +40,3 @@ public static partial class Const
         public static readonly DateTime SQL_MIN_DATE = new(1753, 1, 1, 12, 0, 0);
     }
 }
-
-
-

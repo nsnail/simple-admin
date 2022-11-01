@@ -45,6 +45,3 @@ public enum SubmitMethodNode
     /// </summary>
     Trace
 }
-
-
-

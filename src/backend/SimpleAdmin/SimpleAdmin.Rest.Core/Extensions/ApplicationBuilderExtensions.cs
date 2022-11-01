@@ -24,6 +24,3 @@ public static class ApplicationBuilderExtensions
         return app.UseMiddleware<RestSkinMiddleware>();
     }
 }
-
-
-

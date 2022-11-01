@@ -15,7 +15,7 @@ namespace SimpleAdmin.Infrastructure.Extensions;
 public static class DbCommandExtensions
 {
     private static readonly Regex TABLE_NAME_REGEX = new(@"\[([a-zA-Z0-9_]+?)\]\.\[(Tb_[a-zA-Z0-9_]+?)\]",
-                                                        RegexOptions.Compiled | RegexOptions.Multiline);
+                                                         RegexOptions.Compiled | RegexOptions.Multiline);
 
     /// <summary>
     ///     sql语句执行后回调

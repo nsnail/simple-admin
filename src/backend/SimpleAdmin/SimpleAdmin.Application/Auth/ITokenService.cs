@@ -11,6 +11,4 @@
 namespace SimpleAdmin.Application.Auth;
 
 public interface ITokenService
-{
-
-}
+{ }

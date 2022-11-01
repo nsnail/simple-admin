@@ -23,7 +23,3 @@ public class SystemAppService : IDynamicApiController
         return _systemService.GetDescription();
     }
 }
-
-
-
-

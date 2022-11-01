@@ -27,7 +27,3 @@ public class GlobalExceptionHandler : IGlobalExceptionHandler, ISingleton
         return Task.CompletedTask;
     }
 }
-
-
-
-

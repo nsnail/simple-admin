@@ -114,6 +114,3 @@ public record ConfigObjectNode
     /// </summary>
     public string ValidatorUrl { get; set; } = null;
 }
-
-
-

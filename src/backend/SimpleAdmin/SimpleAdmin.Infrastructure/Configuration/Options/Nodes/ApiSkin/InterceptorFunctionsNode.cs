@@ -23,6 +23,3 @@ public record InterceptorFunctionsNode
     /// </summary>
     public string ResponseInterceptorFunction { get; set; }
 }
-
-
-

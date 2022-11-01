@@ -43,6 +43,3 @@ public static partial class Const
         public const string TIMESTAMP_EXCEED = "timestamp exceed";
     }
 }
-
-
-

@@ -36,6 +36,3 @@ public static class HttpRequestMessageExtensions
         logger.Info($"请求：{await me.BuildJson()}");
     }
 }
-
-
-

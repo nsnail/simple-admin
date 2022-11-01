@@ -15,6 +15,3 @@ public record UrlDescriptorNode
     /// </summary>
     public string Url { get; set; }
 }
-
-
-

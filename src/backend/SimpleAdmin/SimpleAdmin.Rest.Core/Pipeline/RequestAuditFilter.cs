@@ -56,7 +56,3 @@ public class RequestAuditFilter : IAsyncActionFilter
         // _logger.Debug(returnResult);
     }
 }
-
-
-
-

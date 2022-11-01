@@ -23,6 +23,3 @@ public enum ErrorCodes
     /// </summary>
     [ErrorCodeItemMetadata("{0}")] 无效操作 = 40200
 }
-
-
-

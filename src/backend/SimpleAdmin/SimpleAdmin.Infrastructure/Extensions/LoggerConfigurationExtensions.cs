@@ -146,7 +146,3 @@ public static class LoggerConfigurationExtensions
         return me;
     }
 }
-
-
-
-

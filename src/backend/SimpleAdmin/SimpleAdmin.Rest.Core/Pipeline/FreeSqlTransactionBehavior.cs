@@ -71,6 +71,3 @@ public class FreeSqlTransactionBehavior<TRequest, TResponse> : IPipelineBehavior
         return true;
     }
 }
-
-
-

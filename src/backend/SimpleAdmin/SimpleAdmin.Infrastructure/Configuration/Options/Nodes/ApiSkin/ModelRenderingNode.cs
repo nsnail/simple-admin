@@ -15,6 +15,3 @@ public enum ModelRenderingNode
     /// </summary>
     Model
 }
-
-
-

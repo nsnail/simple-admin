@@ -56,6 +56,3 @@ public static class HttpResponseMessageExtensions
         logger.Error($"异常（{errors}）：{await me.BuildJson(bodyHandle)}");
     }
 }
-
-
-

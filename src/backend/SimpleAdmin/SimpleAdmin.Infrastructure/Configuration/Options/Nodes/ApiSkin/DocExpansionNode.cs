@@ -20,6 +20,3 @@ public enum DocExpansionNode
     /// </summary>
     None
 }
-
-
-
