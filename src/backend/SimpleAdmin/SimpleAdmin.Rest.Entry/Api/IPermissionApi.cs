@@ -1,6 +1,6 @@
 ﻿using SimpleAdmin.DataContract.DataTransferObjects.Permission;
 
-namespace SimpleAdmin.Rest.Main.Api.Permission;
+namespace SimpleAdmin.Rest.Entry.Api;
 
 public interface IPermissionApi
 {

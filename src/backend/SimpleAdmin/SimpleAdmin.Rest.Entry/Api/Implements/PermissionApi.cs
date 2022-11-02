@@ -1,9 +1,10 @@
 using MediatR;
 using SimpleAdmin.DataContract.DataTransferObjects.Permission;
+using SimpleAdmin.Rest.Core;
 
-namespace SimpleAdmin.Rest.Main.Api.Permission;
+namespace SimpleAdmin.Rest.Entry.Api.Implements;
 
-public class PermissionApi : ApiBase<PermissionApi>, IPermissionApi
+public class PermissionApi : RestBase<PermissionApi>, IPermissionApi
 {
     /// <inheritdoc />
     public PermissionApi(ILogger<PermissionApi> logger, IMediator mediator) : base(logger, mediator)

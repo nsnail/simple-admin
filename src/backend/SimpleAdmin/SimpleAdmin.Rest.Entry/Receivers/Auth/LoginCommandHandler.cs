@@ -1,7 +1,8 @@
-﻿using MediatR;
+﻿using Furion.DataEncryption;
+using MediatR;
 using SimpleAdmin.DataContract.DataTransferObjects.Auth;
 
-namespace SimpleAdmin.Application.CommandHandlers.Auth;
+namespace SimpleAdmin.Rest.Entry.Receivers.Auth;
 
 public class LoginCommandHandler : IRequestHandler<LoginReq, LoginRsp>
 {

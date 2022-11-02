@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace SimpleAdmin.Rest.Core.Pipeline;
+namespace SimpleAdmin.Rest.Core.Pipelines;
 
 /// <summary>
 ///     Api结果格式化处理器

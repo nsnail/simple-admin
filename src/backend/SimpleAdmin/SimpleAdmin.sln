@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAdmin.Rest.Core", "Si
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAdmin.Infrastructure", "SimpleAdmin.Infrastructure\SimpleAdmin.Infrastructure.csproj", "{4FB30091-15C7-4FD9-AB7D-266814F360F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAdmin.Rest.Main", "SimpleAdmin.Rest.Main\SimpleAdmin.Rest.Main.csproj", "{C8D99F52-EDC7-411F-8300-6DB14BF59E8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAdmin.Rest.Entry", "SimpleAdmin.Rest.Entry\SimpleAdmin.Rest.Entry.csproj", "{C8D99F52-EDC7-411F-8300-6DB14BF59E8C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAdmin.DataContract", "SimpleAdmin.DataContract\SimpleAdmin.DataContract.csproj", "{62B5AFB0-9635-4942-9A0E-94399AFC05BE}"
 EndProject

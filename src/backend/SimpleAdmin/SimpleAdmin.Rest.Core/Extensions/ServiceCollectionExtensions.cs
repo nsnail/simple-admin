@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SimpleAdmin.Infrastructure.Configuration.Options;
 using SimpleAdmin.Infrastructure.Constant;
 using SimpleAdmin.Infrastructure.Extensions;
-using SimpleAdmin.Rest.Core.Pipeline;
+using SimpleAdmin.Rest.Core.Pipelines;
 
 namespace SimpleAdmin.Rest.Core.Extensions;
 

@@ -2,14 +2,15 @@ using Furion.DataEncryption;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using SimpleAdmin.DataContract.DataTransferObjects.Auth;
+using SimpleAdmin.Rest.Core;
 
-namespace SimpleAdmin.Rest.Main.Api.Auth;
+namespace SimpleAdmin.Rest.Entry.Api.Implements;
 
-/// <inheritdoc cref="ITokenApi" />
-public class TokenApi : ApiBase<TokenApi>, ITokenApi
+/// <inheritdoc cref="IAccountApi" />
+public class AccountApi : RestBase<AccountApi>, IAccountApi
 {
     /// <inheritdoc />
-    public TokenApi(ILogger<TokenApi> logger, IMediator mediator) : base(logger, mediator)
+    public AccountApi(ILogger<AccountApi> logger, IMediator mediator) : base(logger, mediator)
     { }
 
 
@@ -18,6 +19,12 @@ public class TokenApi : ApiBase<TokenApi>, ITokenApi
     public async Task<LoginRsp> Login(LoginReq cmd)
     {
         return await Mediator.Send(cmd);
+    }
+
+    /// <inheritdoc />
+    public async Task<RegisterRsp> Register(RegisterReq req)
+    {
+        return await Mediator.Send(req);
     }
 
 

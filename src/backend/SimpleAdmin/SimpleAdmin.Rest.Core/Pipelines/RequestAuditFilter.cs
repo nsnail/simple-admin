@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 
-namespace SimpleAdmin.Rest.Core.Pipeline;
+namespace SimpleAdmin.Rest.Core.Pipelines;
 
 /// <summary>
 ///     请求审计日志

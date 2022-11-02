@@ -1,4 +1,4 @@
-﻿namespace SimpleAdmin.Rest.Core.Pipeline;
+﻿namespace SimpleAdmin.Rest.Core.Pipelines;
 
 /// <summary>
 ///     RESTful 风格结果集

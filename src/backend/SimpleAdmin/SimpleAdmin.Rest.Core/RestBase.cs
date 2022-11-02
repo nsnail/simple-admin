@@ -1,15 +1,16 @@
 ﻿using Furion.DynamicApiController;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 // ReSharper disable ContextualLoggerProblem
 
-namespace SimpleAdmin.Rest.Main.Api;
+namespace SimpleAdmin.Rest.Core;
 
 /// <summary>
 ///     控制器基类
 /// </summary>
 /// <typeparam name="TLogType">日志类型</typeparam>
-public abstract class ApiBase<TLogType> : IDynamicApiController
+public abstract class RestBase<TLogType> : IDynamicApiController
 {
     /// <summary>
     ///     日志记录器
@@ -26,7 +27,7 @@ public abstract class ApiBase<TLogType> : IDynamicApiController
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="mediator"></param>
-    protected ApiBase(ILogger<TLogType> logger, IMediator mediator) : this(logger)
+    protected RestBase(ILogger<TLogType> logger, IMediator mediator) : this(logger)
     {
         Mediator = mediator;
     }
@@ -35,7 +36,7 @@ public abstract class ApiBase<TLogType> : IDynamicApiController
     ///     控制器基类
     /// </summary>
     /// <param name="logger"></param>
-    protected ApiBase(ILogger<TLogType> logger)
+    protected RestBase(ILogger<TLogType> logger)
     {
         Logger = logger;
     }

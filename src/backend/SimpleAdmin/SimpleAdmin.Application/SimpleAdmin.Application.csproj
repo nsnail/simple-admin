@@ -22,17 +22,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SimpleAdmin.DataContract\SimpleAdmin.DataContract.csproj"/>
-        <ProjectReference Include="..\SimpleAdmin.Infrastructure\SimpleAdmin.Infrastructure.csproj"/>
+        <ProjectReference Include="..\SimpleAdmin.DataContract\SimpleAdmin.DataContract.csproj" />
+        <ProjectReference Include="..\SimpleAdmin.Infrastructure\SimpleAdmin.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="CommandHandlers"/>
-        <Folder Include="System\Services\"/>
+        <Folder Include="System\Services\" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MediatR" Version="11.0.0"/>
+        <PackageReference Include="MediatR" Version="11.0.0" />
     </ItemGroup>
 
 </Project>

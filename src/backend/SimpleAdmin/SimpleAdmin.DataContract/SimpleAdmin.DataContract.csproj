@@ -13,8 +13,12 @@
         <DocumentationFile>bin\Release\SimpleAdmin.DataContract.xml</DocumentationFile>
     </PropertyGroup>
 
+
     <ItemGroup>
-        <PackageReference Include="MediatR" Version="11.0.0"/>
-        <PackageReference Include="NSExt" Version="1.0.0"/>
+        <ProjectReference Include="..\SimpleAdmin.Infrastructure\SimpleAdmin.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MediatR" Version="11.0.0" />
     </ItemGroup>
 </Project>

@@ -6,8 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using SimpleAdmin.Infrastructure.Constant;
 using SimpleAdmin.Rest.Core.Extensions;
-using SimpleAdmin.Rest.Core.Handlers;
-using SimpleAdmin.Rest.Core.Pipeline;
+using SimpleAdmin.Rest.Core.Pipelines;
 
 namespace SimpleAdmin.Rest.Core;
 
