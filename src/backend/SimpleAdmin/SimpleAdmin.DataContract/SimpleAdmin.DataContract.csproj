@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <DocumentationFile>SimpleAdmin.DataContract.xml</DocumentationFile>
+        <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -19,6 +19,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MediatR" Version="11.0.0" />
+        <Compile Include="..\GlobalUsings.cs">
+            <Link>GlobalUsings.cs</Link>
+        </Compile>
     </ItemGroup>
 </Project>

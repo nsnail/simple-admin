@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using MediatR;
 
 namespace SimpleAdmin.DataContract.DataTransferObjects.Auth;
 
@@ -7,7 +6,7 @@ namespace SimpleAdmin.DataContract.DataTransferObjects.Auth;
 ///     登录请求
 /// </summary>
 /// <inheritdoc cref="LoginInfo" />
-public record LoginReq : LoginInfo, ICommand, IRequest<LoginRsp>
+public record LoginReq : LoginInfo
 {
     /// <inheritdoc />
     [Required]

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SimpleAdmin.Infrastructure.Constant;
+﻿namespace SimpleAdmin.Infrastructure.Constant;
 
 public static partial class Const
 {

@@ -1,9 +1,10 @@
 ﻿// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 
-using System;
-
 namespace SimpleAdmin.Infrastructure.Attributes;
 
+/// <summary>
+/// 标记一个属性是否启用雪花id生成
+/// </summary>
 [AttributeUsage(AttributeTargets.Property)]
 public class SnowflakeAttribute : Attribute
 {

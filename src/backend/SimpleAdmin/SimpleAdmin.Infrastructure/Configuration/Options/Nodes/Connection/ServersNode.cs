@@ -5,6 +5,17 @@
 /// </summary>
 public record ServersNode
 {
+
+    /// <summary>
+    /// 启用多租户
+    /// </summary>
+    public bool MultiTenant { get; set; }
+
+    /// <summary>
+    /// 建库脚本路径、为空不自动建库
+    /// </summary>
+    public string CreateDbFilePath { get; set; }
+
     /// <summary>
     ///     是否自动同步数据结构
     /// </summary>

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using Furion.RemoteRequest;
+﻿using Furion.RemoteRequest;
 using Microsoft.Extensions.Logging;
 
 namespace SimpleAdmin.Infrastructure.Extensions;

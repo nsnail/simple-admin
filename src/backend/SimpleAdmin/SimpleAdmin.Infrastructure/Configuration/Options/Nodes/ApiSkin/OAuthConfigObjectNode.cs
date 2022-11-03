@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace SimpleAdmin.Infrastructure.Configuration.Options.Nodes.ApiSkin;
 
 /// <summary>
