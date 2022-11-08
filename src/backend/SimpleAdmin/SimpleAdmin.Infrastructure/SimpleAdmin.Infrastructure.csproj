@@ -15,14 +15,15 @@
 
 
     <ItemGroup>
-        <PackageReference Include="FreeSql" Version="3.2.682" />
-        <PackageReference Include="FreeSql.DbContext" Version="3.2.682" />
-        <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.2.682" />
-        <PackageReference Include="Furion" Version="4.7.2" />
-        <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="4.7.2" />
-        <PackageReference Include="Furion.Extras.ObjectMapper.Mapster" Version="4.7.2" />
-        <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
-        <PackageReference Include="NSExt" Version="1.0.0" />
+        <PackageReference Include="Yitter.IdGenerator" Version="1.0.14"/>
+        <PackageReference Include="FreeSql" Version="3.2.682"/>
+        <PackageReference Include="FreeSql.DbContext" Version="3.2.682"/>
+        <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.2.682"/>
+        <PackageReference Include="Furion" Version="4.7.2"/>
+        <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="4.7.2"/>
+        <PackageReference Include="Furion.Extras.ObjectMapper.Mapster" Version="4.7.2"/>
+        <PackageReference Include="Serilog.AspNetCore" Version="6.0.1"/>
+        <PackageReference Include="NSExt" Version="1.0.0"/>
     </ItemGroup>
 
 
@@ -31,5 +32,5 @@
             <Link>GlobalUsings.cs</Link>
         </Compile>
     </ItemGroup>
-    
+
 </Project>

@@ -20,6 +20,7 @@ public class RestSkinMiddleware
     private readonly RestSkinOptions      _options;
     private readonly StaticFileMiddleware _staticFileMiddleware;
 
+
     /// <summary>
     ///     Api 界面 knife4j-vue 中间件
     /// </summary>
