@@ -1,9 +1,8 @@
-﻿using Furion;
-using Microsoft.AspNetCore.HttpOverrides;
+﻿using Microsoft.AspNetCore.HttpOverrides;
 using Serilog;
-using SimpleAdmin.Infrastructure.Constant;
 using SimpleAdmin.WebApi.AopHooks;
-using SimpleAdmin.WebApi.Extensions;
+using SimpleAdmin.WebApi.Infrastructure.Constants;
+using SimpleAdmin.WebApi.Infrastructure.Extensions;
 
 namespace SimpleAdmin.WebApi;
 
@@ -52,7 +51,7 @@ public class Startup : AppStartup
            .UseRouting()
 
             // 新版swagger ui（knife4j）中间件
-           .UseRestSkin()
+           .UseSwaggerSkin()
 
             // 配置端点
            .UseEndpoints(endpoints => { endpoints.MapControllers(); })
@@ -81,10 +80,10 @@ public class Startup : AppStartup
             //支持跨域访问
            .AddCorsAccessor()
             //请求审计日志
-           .AddMvcFilter<RequestAuditFilter>()
+           // .AddMvcFilter<RequestAuditFilter>()
 
             // 远程请求
-           .AddRemoteRequest()
+           // .AddRemoteRequest()
 
             //注册控制器
            .AddControllers()

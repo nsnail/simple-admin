@@ -156,7 +156,7 @@
     }
   },
   // 7、api skin Api 界面 knife4j-vue 配置
-  "RestSkin": {
+  "SwaggerSkin": {
     //    文档标题
     "DocumentTitle": "Api 界面 knife4j-vue 中间件",
     // 当url path 以此值开头，则交给 api skin 中间件处理 ， 开头不需要 "/"
