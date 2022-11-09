@@ -14,6 +14,6 @@ public static class StringExtensions
     /// <returns></returns>
     public static string TrimEndOptions(this string me)
     {
-        return new Regex(@"Options$").Replace(me, string.Empty);
+        return Regex.Replace(me, @"Options$", string.Empty);
     }
 }
