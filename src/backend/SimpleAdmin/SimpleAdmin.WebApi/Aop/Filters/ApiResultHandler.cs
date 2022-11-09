@@ -3,14 +3,15 @@ using Furion.FriendlyException;
 using Furion.UnifyResult;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using SimpleAdmin.WebApi.DataContracts.Dto;
 
-namespace SimpleAdmin.WebApi.AopHooks;
+namespace SimpleAdmin.WebApi.Aop.Filters;
 
 /// <summary>
 ///     Api结果格式化处理器
 /// </summary>
 [SuppressSniffer]
-[UnifyModel(typeof(RestfulResultTmpl<>))]
+[UnifyModel(typeof(RestfulInfo<>))]
 public class ApiResultHandler : IUnifyResultProvider
 {
     /// <summary>
@@ -48,7 +49,7 @@ public class ApiResultHandler : IUnifyResultProvider
         // JsonResult 第二个参数可配置独立的序列化属性
         return new JsonResult(RestfulResult(metadata.StatusCode ?? StatusCodes.Status400BadRequest,
                                             metadata.Data,
-                                            metadata.ValidationResult.ToString()));
+                                            metadata.ValidationResult));
     }
 
     /// <summary>
@@ -65,16 +66,17 @@ public class ApiResultHandler : IUnifyResultProvider
         // 设置响应状态码
         UnifyContext.SetResponseStatusCodes(context, statusCode, unifyResultSettings);
 
+        var jsonOptions = App.GetOptions<JsonOptions>();
         switch (statusCode) {
             // 处理 401 状态码
             case StatusCodes.Status401Unauthorized:
                 await context.Response.WriteAsJsonAsync(RestfulResult(statusCode, "401 Unauthorized"),
-                                                        App.GetOptions<JsonOptions>()?.JsonSerializerOptions);
+                                                        jsonOptions?.JsonSerializerOptions);
                 break;
             // 处理 403 状态码
             case StatusCodes.Status403Forbidden:
                 await context.Response.WriteAsJsonAsync(RestfulResult(statusCode, "403 Forbidden"),
-                                                        App.GetOptions<JsonOptions>()?.JsonSerializerOptions);
+                                                        jsonOptions?.JsonSerializerOptions);
                 break;
         }
     }
@@ -86,11 +88,11 @@ public class ApiResultHandler : IUnifyResultProvider
     /// <param name="data"></param>
     /// <param name="message"></param>
     /// <returns></returns>
-    private static RestfulResultTmpl<dynamic> RestfulResult(int    statusCode,
+    private static RestfulInfo<dynamic> RestfulResult(int    statusCode,
                                                             object data    = default,
-                                                            string message = default)
+                                                            object message = default)
     {
-        return new RestfulResultTmpl<dynamic> {
+        return new RestfulInfo<dynamic> {
             Code    = statusCode,
             Data    = data,
             Message = message

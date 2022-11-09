@@ -144,31 +144,5 @@
   "SpecificationDocumentSettings": {
     "RoutePrefix": "swagger"
   },
-  //  6、Serilog 日志配置
-  "Serilog": {
-    "MinimumLevel": {
-      "Default": "Information",
-      "Override": {
-        "System": "Information",
-        "Microsoft": "Information",
-        "Microsoft.Hosting.Lifetime": "Information"
-      }
-    }
-  },
-  // 7、api skin Api 界面 knife4j-vue 配置
-  "SwaggerSkin": {
-    //    文档标题
-    "DocumentTitle": "Api 界面 knife4j-vue 中间件",
-    // 当url path 以此值开头，则交给 api skin 中间件处理 ， 开头不需要 "/"
-    "RoutePrefix": "",
-    // swagger 配置对象 节点
-    "ConfigObject": {
-      "Urls": [
-        {
-          "Url": "/swagger/Default/swagger.json",
-          "Name": "订单系统"
-        }
-      ]
-    }
-  }
+
 }

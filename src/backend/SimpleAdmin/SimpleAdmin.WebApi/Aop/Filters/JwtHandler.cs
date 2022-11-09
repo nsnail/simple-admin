@@ -1,8 +1,9 @@
 ﻿using Furion.Authorization;
 using Microsoft.AspNetCore.Authorization;
 
-namespace SimpleAdmin.WebApi.AopHooks;
+namespace SimpleAdmin.WebApi.Aop.Filters;
 
+[SuppressSniffer]
 public class JwtHandler : AppAuthorizeHandler
 {
     public override Task<bool> PipelineAsync(AuthorizationHandlerContext context, DefaultHttpContext httpContext)

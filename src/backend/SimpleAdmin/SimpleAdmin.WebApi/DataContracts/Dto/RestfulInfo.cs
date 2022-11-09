@@ -1,10 +1,10 @@
-﻿namespace SimpleAdmin.WebApi.AopHooks;
+﻿namespace SimpleAdmin.WebApi.DataContracts.Dto;
 
 /// <summary>
 ///     RESTful 风格结果集
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class RestfulResultTmpl<T>
+public record RestfulInfo<T> : DtoBase
 {
     /// <summary>
     ///     代码
@@ -19,5 +19,5 @@ public class RestfulResultTmpl<T>
     /// <summary>
     ///     消息
     /// </summary>
-    public string Message { get; set; }
+    public object Message { get; set; }
 }

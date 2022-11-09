@@ -1,6 +1,10 @@
 using System.Reflection;
+using FreeSql;
 using Furion.ConfigurableOptions;
-using SimpleAdmin.WebApi.Infrastructure.Constants;
+using SimpleAdmin.WebApi.Aop.Filters;
+using SimpleAdmin.WebApi.Infrastructure.Configuration.Options;
+using SimpleAdmin.WebApi.Infrastructure.Utils;
+using Yitter.IdGenerator;
 
 namespace SimpleAdmin.WebApi.Infrastructure.Extensions;
 
@@ -41,16 +45,34 @@ public static class ServiceCollectionExtensions
 
 
     /// <summary>
+    ///     注册雪花id生成器
+    /// </summary>
+    /// <param name="me"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddSnowflake(this IServiceCollection me)
+    {
+        //雪花漂移算法
+        var idGeneratorOptions = new IdGeneratorOptions(1) {
+            WorkerIdBitLength = 6
+        };
+        YitIdHelper.SetIdGenerator(idGeneratorOptions);
+        return me;
+    }
+
+    /// <summary>
     ///     注册freeSql orm工具
     /// </summary>
     /// <param name="me"></param>
-    /// <param name="name"></param>
-    /// <param name="commandInfo"></param>
     /// <returns></returns>
-    public static IServiceCollection AddFreeSql(this IServiceCollection                             me,
-                                                string                                              name,
-                                                Action<Const.Enums.SqlCommandTypes, string, string> commandInfo = null)
+    public static IServiceCollection AddFreeSql(this IServiceCollection me)
     {
+        var options = App.GetConfig<DatabaseOptions>(nameof(DatabaseOptions).TrimEndOptions());
+        var freeSql = FreeSqlHelper.Create(options);
+        me.AddSingleton(freeSql);
+        me.AddScoped<UnitOfWorkManager>();
+        me.AddFreeRepository(null, App.Assemblies.ToArray());
+        // 事务拦截器
+        me.AddScoped<TransactionHandler>();
         return me;
     }
 }

@@ -21,6 +21,7 @@
         <ProjectReference Include="d:\ForkedGitReps\ns-ext\src\NSExt\NSExt.csproj" />
         <ProjectReference Include="d:\ForkedGitReps\FreeSql\FreeSql\FreeSql.csproj" />
         <ProjectReference Include="d:\ForkedGitReps\FreeSql\FreeSql.DbContext\FreeSql.DbContext.csproj" />
+        <ProjectReference Include="d:\ForkedGitReps\FreeSql\Providers\FreeSql.Provider.Sqlite\FreeSql.Provider.Sqlite.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -38,12 +39,17 @@
 
 
     <ItemGroup>
-      <None Remove="logs\**" />
+        <None Remove="logs\**" />
     </ItemGroup>
 
 
     <ItemGroup>
-      <Content Remove="logs\**" />
+        <Content Remove="logs\**" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <PackageReference Include="Yitter.IdGenerator" Version="1.0.14" />
     </ItemGroup>
 
 </Project>

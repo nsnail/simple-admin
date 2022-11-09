@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using NSExt.Extensions;
 using Serilog;
 
-namespace SimpleAdmin.WebApi.AopHooks;
+namespace SimpleAdmin.WebApi.Aop.Filters;
 
 /// <summary>
 ///     全局异常处理

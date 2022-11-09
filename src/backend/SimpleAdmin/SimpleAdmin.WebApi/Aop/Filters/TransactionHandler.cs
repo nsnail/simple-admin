@@ -2,15 +2,16 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using NSExt.Extensions;
 
-namespace SimpleAdmin.WebApi.AopHooks;
+namespace SimpleAdmin.WebApi.Aop.Filters;
 
 /// <summary>
 ///      事务拦截器
 /// </summary>
-public class TransactionInterceptor : IAsyncActionFilter
+[SuppressSniffer]
+public class TransactionHandler : IAsyncActionFilter
 
 {
-    private readonly ILogger<TransactionInterceptor> _logger;
+    private readonly ILogger<TransactionHandler> _logger;
     private readonly UnitOfWorkManager                    _uowManager;
 
     /// <summary>
@@ -18,7 +19,7 @@ public class TransactionInterceptor : IAsyncActionFilter
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="uowManager"></param>
-    public TransactionInterceptor(ILogger<TransactionInterceptor> logger, UnitOfWorkManager uowManager)
+    public TransactionHandler(ILogger<TransactionHandler> logger, UnitOfWorkManager uowManager)
     {
         _logger                 = logger;
         _uowManager = uowManager;

@@ -1,3 +1,5 @@
-﻿global using Furion;
+﻿// 全局usings
+
+global using Furion;
 global using Furion.DependencyInjection;
 global using NSExt;

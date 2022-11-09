@@ -1,15 +1,4 @@
 {
-  // 数据库配置
-  "Connections": {
-    "Servers": [
-      {
-        "Name": "Main",
-        "DbType": "Sqlite",
-        "AutoSyncStructure": true,
-        "ConnStr": "Data Source=|DataDirectory|\\SimpleAdmin.db; Pooling=true;Min Pool Size=1"
-      }
-    ]
-  },
   "JWTSettings": {
     "ValidateIssuerSigningKey": true,
     // 是否验证密钥，bool 类型，默认true

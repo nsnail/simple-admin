@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.HttpOverrides;
+using Newtonsoft.Json.Serialization;
 using Serilog;
-using SimpleAdmin.WebApi.AopHooks;
+using SimpleAdmin.WebApi.Aop.Filters;
 using SimpleAdmin.WebApi.Infrastructure.Constants;
 using SimpleAdmin.WebApi.Infrastructure.Extensions;
 
@@ -12,6 +13,18 @@ namespace SimpleAdmin.WebApi;
 [AppStartup(100)]
 public class Startup : AppStartup
 {
+    /// <summary>
+    ///     程序入口
+    /// </summary>
+    /// <param name="args"></param>
+    public static void Main(string[] args)
+    {
+        Serve.Run(RunOptions.Default.WithArgs(args)
+                            .ConfigureBuilder(builder =>
+                                                  //
+                                                  builder.UseSerilogDefault(config => config.Init())));
+    }
+
     /// <summary>
     ///     配置应用程序中间件
     /// </summary>
@@ -70,20 +83,28 @@ public class Startup : AppStartup
         services.AddJwt<JwtHandler>(enableGlobalAuthorize: true);
 
         services
+            #if DEBUG
+            // 打印日志监视信息，便于调试
+           .AddMvcFilter<LoggingMonitorAttribute>()
+            #endif
+
+            // 雪花id生成器
+           .AddSnowflake()
 
             // 注册freeSql
-           .AddFreeSql("Main")
+           .AddFreeSql()
 
             //注册配置项
            .AddAllOptions()
 
             //支持跨域访问
            .AddCorsAccessor()
+
             //请求审计日志
-           // .AddMvcFilter<RequestAuditFilter>()
+           .AddMvcFilter<RequestAuditHandler>()
 
             // 远程请求
-           // .AddRemoteRequest()
+            // .AddRemoteRequest()
 
             //注册控制器
            .AddControllers()
@@ -92,7 +113,16 @@ public class Startup : AppStartup
             // .AddInject()
             // ↑ ↓ 二选一
             //使用NewtonsoftJson代替asp.netcore默认System.Text.Json组件进行正反序列化
-           .AddNewtonsoftJson(config => config.SerializerSettings.DateFormatString =
-                                            Const.Templates.YYYY_MM_DD_HH_MM_SS);
+           .AddNewtonsoftJson(config => {
+                                  #region 序列化设置
+
+                                  // 日期格式
+                                  config.SerializerSettings.DateFormatString = Const.Templates.YYYY_MM_DD_HH_MM_SS;
+                                  // 小驼峰属性名
+                                  config.SerializerSettings.ContractResolver =
+                                      new CamelCasePropertyNamesContractResolver();
+
+                                  #endregion
+                              });
     }
 }

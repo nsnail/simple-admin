@@ -1,4 +1,4 @@
-﻿namespace SimpleAdmin.WebApi.Middlewares;
+﻿namespace SimpleAdmin.WebApi.Aop.Middlewares;
 
 /// <summary>
 ///     确保AspNetCore Http请求 主体可以被多次读取。

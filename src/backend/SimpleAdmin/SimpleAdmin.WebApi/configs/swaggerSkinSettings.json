@@ -1,0 +1,17 @@
+{
+  "SwaggerSkin": {
+    //    文档标题
+    "DocumentTitle": "Api 界面 knife4j-vue 中间件",
+    // 当url path 以此值开头，则交给 api skin 中间件处理 ， 开头不需要 "/"
+    "RoutePrefix": "",
+    // swagger 配置对象 节点
+    "ConfigObject": {
+      "Urls": [
+        {
+          "Url": "/swagger/Default/swagger.json",
+          "Name": "订单系统"
+        }
+      ]
+    }
+  }
+}

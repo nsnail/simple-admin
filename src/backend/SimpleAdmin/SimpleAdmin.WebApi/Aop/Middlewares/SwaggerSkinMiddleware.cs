@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using NSExt.Extensions;
 using SimpleAdmin.WebApi.Infrastructure.Configuration.Options;
 
-namespace SimpleAdmin.WebApi.Middlewares;
+namespace SimpleAdmin.WebApi.Aop.Middlewares;
 
 /// <summary>
 ///     Api 界面 knife4j-vue 中间件
