@@ -1,17 +1,17 @@
-﻿using FreeSql.DataAnnotations;
+using FreeSql.DataAnnotations;
 using SimpleAdmin.WebApi.DataContracts.DbMaps.Dependency;
 
 namespace SimpleAdmin.WebApi.DataContracts.DbMaps;
 
 /// <summary>
-///     用户表
+///     角色表
 /// </summary>
 [Table]
-public record TbSysUser : DefaultTable
+public record TbSysRole : DefaultTable
 {
     /// <summary>
-    ///     用户名
+    ///     角色名称
     /// </summary>
     [Column]
-    public string UserName { get; set; }
+    public string RoleName { get; set; }
 }

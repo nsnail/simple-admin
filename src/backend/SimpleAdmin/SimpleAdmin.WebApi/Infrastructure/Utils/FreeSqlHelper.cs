@@ -1,6 +1,9 @@
-﻿using System.Reflection;
+﻿using System.Data.Common;
+using System.Reflection;
 using FreeSql;
 using FreeSql.Aop;
+using FreeSql.DataAnnotations;
+using NSExt.Extensions;
 using SimpleAdmin.WebApi.Aop.Attributes;
 using SimpleAdmin.WebApi.DataContracts;
 using SimpleAdmin.WebApi.Infrastructure.Configuration.Options;
@@ -41,7 +44,7 @@ public class FreeSqlHelper
     {
         var freeSql = new FreeSqlBuilder().UseConnectionString(_databaseOptions.DbType, _databaseOptions.ConnStr)
                                           .UseMonitorCommand(cmd => cmd.Executing(), (cmd, log) => cmd.Executed(log))
-                                          .UseAutoSyncStructure(_databaseOptions.IsSyncStructure)
+                                          .UseAutoSyncStructure(false)
                                           .Build();
 
         #region 数据审计
@@ -54,7 +57,78 @@ public class FreeSqlHelper
 
         #endregion
 
+
+        var entityTypes = GetEntityTypes();
+        var entityNames = entityTypes.Select(x => x.Name);
+
+        #region 监听Curd操作
+
+        freeSql.Aop.CurdBefore += (_, e) => {
+                                      var sql = GetNoParamSql(e.Sql, e.DbParms);
+                                      _logger.Info($"SQL.{sql.GetHashCode()}：{sql}");
+                                  };
+        freeSql.Aop.CurdAfter += (_, e) => {
+                                     var sql = GetNoParamSql(e.Sql, e.DbParms);
+                                     _logger.Info($"SQL.{e.Sql.GetHashCode()}：{e.ElapsedMilliseconds} ms");
+                                 };
+
+        #endregion 监听Curd操作
+
+
+        #region 同步结构
+
+        if (_databaseOptions.IsSyncStructure) {
+            _logger.Info("获取所有数据库表实体类...");
+            if (_databaseOptions.DbType == DataType.Oracle) freeSql.CodeFirst.IsSyncStructureToUpper = true;
+            _logger.Info(entityNames.Json());
+            _logger.Info($"同步 {_databaseOptions.DbType} 数据库结构...");
+            freeSql.CodeFirst.SyncStructure(entityTypes);
+            _logger.Info("完成");
+        }
+
+        #endregion
+
+        #region 同步数据
+
+        _logger.Info("初始化种子数据");
+        foreach (var entityType in entityTypes) {
+            var path = $"{AppContext.BaseDirectory}/seed_data/{entityType.Name}.json";
+            if (!File.Exists(path)) continue;
+            dynamic entities = File.ReadAllText(path).Object(typeof(List<>).MakeGenericType(entityType));
+            foreach (var entity in entities) {
+                var select = typeof(IFreeSql).GetMethod(nameof(freeSql.Select), 1, Type.EmptyTypes)
+                                            ?.MakeGenericMethod(entityType)
+                                             .Invoke(freeSql, null);
+                var any = select?.GetType()
+                                 .GetMethod(nameof(ISelect<dynamic>.Any), 0, Type.EmptyTypes)
+                                ?.Invoke(select, null) as bool? ?? true;
+
+                if (any) continue;
+                freeSql.Insert(entity).ExecuteAffrows();
+            }
+        }
+
+        #endregion
+
+
         return freeSql;
+    }
+
+    private static string GetNoParamSql(string sql, IEnumerable<DbParameter> dbParams)
+    {
+        return dbParams.Where(x => x is not null)
+                       .Aggregate(sql,
+                                  (current, dbParm) => current.Replace(dbParm.ParameterName, dbParm.Value?.ToString()));
+    }
+
+    private static Type[] GetEntityTypes()
+    {
+        //获取所有表实体
+        var entityTypes = (from type in App.EffectiveTypes
+                           from attr in type.GetCustomAttributes()
+                           where attr is TableAttribute { DisableSyncStructure: false }
+                           select type).ToArray();
+        return entityTypes;
     }
 
     private void DataAuditHandler(object sender, AuditValueEventArgs e)

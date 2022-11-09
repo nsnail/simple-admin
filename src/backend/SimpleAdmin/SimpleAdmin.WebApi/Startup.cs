@@ -91,6 +91,9 @@ public class Startup : AppStartup
             // 雪花id生成器
            .AddSnowflake()
 
+            //事件总线
+           .AddEventBus()
+
             // 注册freeSql
            .AddFreeSql()
 

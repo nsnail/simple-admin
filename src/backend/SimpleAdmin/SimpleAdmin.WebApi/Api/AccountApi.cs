@@ -1,5 +1,5 @@
-﻿using Furion.DynamicApiController;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using NSExt.Extensions;
 using SimpleAdmin.WebApi.DataContracts.DbMaps;
 using SimpleAdmin.WebApi.DataContracts.Dto.Account;
 using SimpleAdmin.WebApi.Repositories;
@@ -18,16 +18,8 @@ public interface IAccountApi
 }
 
 /// <inheritdoc cref="SimpleAdmin.WebApi.Api.IAccountApi" />
-public class AccountApi : IAccountApi, IDynamicApiController
+public class AccountApi : ApiBase<IAccountApi>, IAccountApi
 {
-    private readonly AccountRepository _accountRepository;
-
-    /// <param name="accountRepository"></param>
-    public AccountApi(AccountRepository accountRepository)
-    {
-        _accountRepository = accountRepository;
-    }
-
     /// <inheritdoc />
     [AllowAnonymous]
     public void Create(CreateReq req)
@@ -35,5 +27,14 @@ public class AccountApi : IAccountApi, IDynamicApiController
         _accountRepository.Insert(new TbSysUser {
             UserName = req.UserName
         });
+        Logger.Info($"当前线程：{Thread.CurrentThread.ManagedThreadId}");
+    }
+
+    private readonly AccountRepository _accountRepository;
+
+    /// <inheritdoc />
+    public AccountApi(ILogger<IAccountApi> logger, AccountRepository accountRepository) : base(logger)
+    {
+        _accountRepository = accountRepository;
     }
 }
