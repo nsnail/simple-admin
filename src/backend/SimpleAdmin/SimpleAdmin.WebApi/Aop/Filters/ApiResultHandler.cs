@@ -46,10 +46,9 @@ public class ApiResultHandler : IUnifyResultProvider
     /// <returns></returns>
     public IActionResult OnValidateFailed(ActionExecutingContext context, ValidationMetadata metadata)
     {
-        // JsonResult 第二个参数可配置独立的序列化属性
-        return new JsonResult(RestfulResult(metadata.StatusCode ?? StatusCodes.Status400BadRequest,
-                                            metadata.Data,
-                                            metadata.ValidationResult));
+        return new BadRequestObjectResult(RestfulResult(StatusCodes.Status400BadRequest,
+                                                        metadata.Data,
+                                                        metadata.ValidationResult));
     }
 
     /// <summary>
