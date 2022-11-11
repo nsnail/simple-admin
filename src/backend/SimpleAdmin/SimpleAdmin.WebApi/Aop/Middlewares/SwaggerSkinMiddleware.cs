@@ -16,7 +16,7 @@ public class SwaggerSkinMiddleware
     private readonly IWebHostEnvironment  _env;
     private readonly ILoggerFactory       _logger;
     private readonly RequestDelegate      _next;
-    private readonly SwaggerSkinOptions      _options;
+    private readonly SwaggerSkinOptions   _options;
     private readonly StaticFileMiddleware _staticFileMiddleware;
 
     /// <summary>
@@ -26,10 +26,10 @@ public class SwaggerSkinMiddleware
     /// <param name="env">主机环境</param>
     /// <param name="logger">日志工厂</param>
     /// <param name="options">api skin 配置项</param>
-    public SwaggerSkinMiddleware(RequestDelegate           next,
-                              IWebHostEnvironment       env,
-                              ILoggerFactory            logger,
-                              IOptions<SwaggerSkinOptions> options)
+    public SwaggerSkinMiddleware(RequestDelegate              next,
+                                 IWebHostEnvironment          env,
+                                 ILoggerFactory               logger,
+                                 IOptions<SwaggerSkinOptions> options)
     {
         _next                 = next;
         _env                  = env;
@@ -52,8 +52,8 @@ public class SwaggerSkinMiddleware
 
         return new StaticFileMiddleware(_next, _env, Options.Create(staticFileOptions), _logger);
     }
-
-    private const string EMBEDDED_FILE_NAMESPACE = $"{nameof(SimpleAdmin)}.{nameof(WebApi)}.skin.dist";
+    // SimpleAdmin.WebApi..res.swagger_ui.favicon.ico
+    private const string EMBEDDED_FILE_NAMESPACE = $"{nameof(SimpleAdmin)}.{nameof(WebApi)}..res.swagger_ui";
 
     /// <summary>
     ///     替换字典（首页）

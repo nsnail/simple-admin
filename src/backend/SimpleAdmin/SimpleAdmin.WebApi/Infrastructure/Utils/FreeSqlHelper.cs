@@ -92,7 +92,7 @@ public class FreeSqlHelper
 
         _logger.Info("初始化种子数据");
         foreach (var entityType in entityTypes) {
-            var path = $"{AppContext.BaseDirectory}/seed_data/{entityType.Name}.json";
+            var path = $"{AppContext.BaseDirectory}/.res/seed-data/{entityType.Name}.json";
             if (!File.Exists(path)) continue;
             dynamic entities = File.ReadAllText(path).Object(typeof(List<>).MakeGenericType(entityType));
             foreach (var entity in entities) {

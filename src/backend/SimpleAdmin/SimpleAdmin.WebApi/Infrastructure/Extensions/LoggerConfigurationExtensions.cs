@@ -121,7 +121,7 @@ public static class LoggerConfigurationExtensions
         #endregion
 
         // LogEventLevel.Warning 类型级别以上 写入文件
-        me.WriteTo.File("logs/.log",
+        me.WriteTo.File(".logs/.log",
                         outputTemplate: Const.Templates.LOG_OUTPUT_TEMPLATE_FULL,
                         rollingInterval: RollingInterval.Day,
                         restrictedToMinimumLevel: LogEventLevel.Warning,

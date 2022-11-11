@@ -10,6 +10,18 @@ namespace SimpleAdmin.WebApi.DataContracts.DbMaps;
 public record TbSysUser : DefaultTable
 {
     /// <summary>
+    ///     手机号
+    /// </summary>
+    [Column]
+    public long? Mobile { get; set; }
+
+    /// <summary>
+    ///     密码
+    /// </summary>
+    [Column]
+    public string Password { get; set; }
+
+    /// <summary>
     ///     用户名
     /// </summary>
     [Column]

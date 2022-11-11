@@ -14,43 +14,35 @@
     </PropertyGroup>
 
     <ItemGroup Condition="Exists('d:\ForkedGitReps')">
-        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Extras.Authentication.JwtBearer\Furion.Extras.Authentication.JwtBearer.csproj" />
-        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Extras.Logging.Serilog\Furion.Extras.Logging.Serilog.csproj" />
-        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Extras.ObjectMapper.Mapster\Furion.Extras.ObjectMapper.Mapster.csproj" />
-        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Pure\Furion.Pure.csproj" />
-        <ProjectReference Include="d:\ForkedGitReps\ns-ext\src\NSExt\NSExt.csproj" />
-        <ProjectReference Include="d:\ForkedGitReps\FreeSql\FreeSql\FreeSql.csproj" />
-        <ProjectReference Include="d:\ForkedGitReps\FreeSql\FreeSql.DbContext\FreeSql.DbContext.csproj" />
-        <ProjectReference Include="d:\ForkedGitReps\FreeSql\Providers\FreeSql.Provider.Sqlite\FreeSql.Provider.Sqlite.csproj" />
+        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Extras.Authentication.JwtBearer\Furion.Extras.Authentication.JwtBearer.csproj"/>
+        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Extras.Logging.Serilog\Furion.Extras.Logging.Serilog.csproj"/>
+        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Extras.ObjectMapper.Mapster\Furion.Extras.ObjectMapper.Mapster.csproj"/>
+        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Pure\Furion.Pure.csproj"/>
+        <ProjectReference Include="d:\ForkedGitReps\ns-ext\src\NSExt\NSExt.csproj"/>
+        <ProjectReference Include="d:\ForkedGitReps\FreeSql\FreeSql\FreeSql.csproj"/>
+        <ProjectReference Include="d:\ForkedGitReps\FreeSql\FreeSql.DbContext\FreeSql.DbContext.csproj"/>
+        <ProjectReference Include="d:\ForkedGitReps\FreeSql\Providers\FreeSql.Provider.Sqlite\FreeSql.Provider.Sqlite.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
         <Compile Include="..\GlobalUsings.cs">
             <Link>GlobalUsings.cs</Link>
         </Compile>
-        <Compile Remove="logs\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="../../../frontend/swagger-ui/dist/**" LinkBase=".res/swagger-ui"/>
     </ItemGroup>
 
 
     <ItemGroup>
-        <EmbeddedResource Include="skin/dist/**/*" />
-        <EmbeddedResource Remove="logs\**" />
+        <PackageReference Include="BenchmarkDotNet" Version="0.13.2"/>
+        <PackageReference Include="Yitter.IdGenerator" Version="1.0.14"/>
     </ItemGroup>
-
-
     <ItemGroup>
-        <None Remove="logs\**" />
+        <Content Include="../../../../res/**" LinkBase=".res" CopyToOutputDirectory="PreserveNewest">
+        </Content>
     </ItemGroup>
 
-
-    <ItemGroup>
-        <Content Remove="logs\**" />
-    </ItemGroup>
-
-
-    <ItemGroup>
-      <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
-      <PackageReference Include="Yitter.IdGenerator" Version="1.0.14" />
-    </ItemGroup>
 
 </Project>

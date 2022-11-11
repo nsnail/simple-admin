@@ -1,0 +1,9 @@
+{
+  "Database": {
+    "IsMultiTenant": true,
+    "DbCreationFile": null,
+    "DbType": "Sqlite",
+    "IsSyncStructure": true,
+    "ConnStr": "Data Source=|DataDirectory|\\.res\\simple-admin.db; Pooling=true;Min Pool Size=1"
+  }
+}

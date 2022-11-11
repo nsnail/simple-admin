@@ -5,7 +5,7 @@ const productionGzipExtensions = ["js", "css"];
 module.exports = {
   publicPath: ".",
   assetsDir: "webjars",
-  outputDir: "../../backend/SimpleAdmin/SimpleAdmin.WebApi/skin/dist",
+  outputDir: "./dist",
   lintOnSave: false,
   productionSourceMap: false,
   indexPath: "index.html",
