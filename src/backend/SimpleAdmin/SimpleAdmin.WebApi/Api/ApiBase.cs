@@ -11,11 +11,6 @@ namespace SimpleAdmin.WebApi.Api;
 public abstract class ApiBase<TLogType> : IDynamicApiController
 {
     /// <summary>
-    ///     日志记录器
-    /// </summary>
-    public ILogger<TLogType> Logger { get; }
-
-    /// <summary>
     ///     控制器基类
     /// </summary>
     /// <param name="logger"></param>
@@ -23,4 +18,9 @@ public abstract class ApiBase<TLogType> : IDynamicApiController
     {
         Logger = logger;
     }
+
+    /// <summary>
+    ///     日志记录器
+    /// </summary>
+    public ILogger<TLogType> Logger { get; }
 }

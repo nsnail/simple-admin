@@ -1,14 +1,14 @@
 namespace SimpleAdmin.WebApi.DataContracts.Dto.Security;
 
 /// <summary>
-///    验证码图像信息
+///     获取验证图片响应
 /// </summary>
-public record CaptchaImageInfo : DtoBase
+public record GetCaptchaRsp : CaptchaInfo
 {
     /// <summary>
     ///     背景图（base64）
     /// </summary>
-    public virtual string BackgrondImage { get; set; }
+    public virtual string BackgroundImage { get; set; }
 
     /// <summary>
     ///     滑块图（base64）

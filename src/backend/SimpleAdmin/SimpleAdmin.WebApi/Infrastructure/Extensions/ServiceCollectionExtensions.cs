@@ -1,6 +1,7 @@
 using System.Reflection;
 using FreeSql;
 using Furion.ConfigurableOptions;
+using NSExt.Extensions;
 using SimpleAdmin.WebApi.Aop.Filters;
 using SimpleAdmin.WebApi.Infrastructure.Configuration.Options;
 using SimpleAdmin.WebApi.Infrastructure.Utils;
@@ -43,22 +44,6 @@ public static class ServiceCollectionExtensions
         return me;
     }
 
-
-    /// <summary>
-    ///     注册雪花id生成器
-    /// </summary>
-    /// <param name="me"></param>
-    /// <returns></returns>
-    public static IServiceCollection AddSnowflake(this IServiceCollection me)
-    {
-        //雪花漂移算法
-        var idGeneratorOptions = new IdGeneratorOptions(1) {
-            WorkerIdBitLength = 6
-        };
-        YitIdHelper.SetIdGenerator(idGeneratorOptions);
-        return me;
-    }
-
     /// <summary>
     ///     注册freeSql orm工具
     /// </summary>
@@ -73,6 +58,40 @@ public static class ServiceCollectionExtensions
         me.AddFreeRepository(null, App.Assemblies.ToArray());
         // 事务拦截器
         me.AddScoped<TransactionHandler>();
+        return me;
+    }
+
+
+    /// <summary>
+    ///     注册redis缓存
+    /// </summary>
+    /// <param name="me"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddRedis(this IServiceCollection me)
+    {
+        var options = App.GetConfig<RedisOptions>(nameof(RedisOptions).TrimEndOptions());
+        me.AddStackExchangeRedisCache(redisCacheOptions => {
+                                          // 连接字符串，这里也可以读取配置文件
+                                          redisCacheOptions.Configuration = options.ConnStr;
+                                          // 键名前缀
+                                          redisCacheOptions.InstanceName = $"{nameof(SimpleAdmin).Snakecase()}_";
+                                      });
+        return me;
+    }
+
+
+    /// <summary>
+    ///     注册雪花id生成器
+    /// </summary>
+    /// <param name="me"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddSnowflake(this IServiceCollection me)
+    {
+        //雪花漂移算法
+        var idGeneratorOptions = new IdGeneratorOptions(1) {
+            WorkerIdBitLength = 6
+        };
+        YitIdHelper.SetIdGenerator(idGeneratorOptions);
         return me;
     }
 }

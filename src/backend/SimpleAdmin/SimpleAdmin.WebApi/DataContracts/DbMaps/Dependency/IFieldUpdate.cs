@@ -1,7 +1,3 @@
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using FreeSql.DataAnnotations;
-
 namespace SimpleAdmin.WebApi.DataContracts.DbMaps.Dependency;
 
 /// <summary>

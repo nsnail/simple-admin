@@ -20,8 +20,6 @@ namespace SimpleAdmin.WebApi.Aop.Filters;
 [SuppressSniffer]
 public class RequestAuditHandler : IAsyncActionFilter
 {
-    private readonly IEventPublisher _eventPublisher;
-
     /// <summary>
     ///     构造函数
     /// </summary>
@@ -30,6 +28,8 @@ public class RequestAuditHandler : IAsyncActionFilter
     {
         _eventPublisher = eventPublisher;
     }
+
+    private readonly IEventPublisher _eventPublisher;
 
     /// <inheritdoc />
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -103,25 +103,6 @@ public class RequestAuditHandler : IAsyncActionFilter
 
 
     /// <summary>
-    ///     处理泛型类型转字符串打印问题
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    private static string HandleGenericType(Type type)
-    {
-        if (type == null) return string.Empty;
-        // 处理泛型类型问题
-        if (!type.IsConstructedGenericType) return type.FullName;
-        var prefix = type.GetGenericArguments()
-                         .Select(HandleGenericType)
-                         .Aggregate((previous, current) => previous + current);
-
-        // 通过 _ 拼接多个泛型
-        return type.FullName!.Split('`').First() + "_" + prefix;
-    }
-
-
-    /// <summary>
     ///     检查是否是有效的结果（可进行规范化的结果）
     /// </summary>
     /// <param name="result"></param>
@@ -165,34 +146,6 @@ public class RequestAuditHandler : IAsyncActionFilter
                    };
 
         return isDataResult;
-    }
-
-
-    private static (Type, object) GetReturnData(ActionExecutedContext resultContext)
-    {
-        Type type;
-
-        // 解析返回值
-        if (CheckVaildResult(resultContext.Result, out var data)) {
-            type = data?.GetType();
-        }
-        // 处理文件类型
-        else if (resultContext.Result is FileResult fileResult) {
-            data = new {
-                FileName = fileResult.FileDownloadName,
-                fileResult.ContentType,
-                Length = fileResult is FileContentResult fileContentResult
-                             ? (object)fileContentResult.FileContents.Length
-                             : null
-            };
-
-            type = fileResult.GetType();
-        }
-        else {
-            type = resultContext.Result?.GetType();
-        }
-
-        return (type, data);
     }
 
 
@@ -308,6 +261,53 @@ public class RequestAuditHandler : IAsyncActionFilter
 
         // 获取 json 字符串
         return Encoding.UTF8.GetString(stream.ToArray());
+    }
+
+
+    private static (Type, object) GetReturnData(ActionExecutedContext resultContext)
+    {
+        Type type;
+
+        // 解析返回值
+        if (CheckVaildResult(resultContext.Result, out var data)) {
+            type = data?.GetType();
+        }
+        // 处理文件类型
+        else if (resultContext.Result is FileResult fileResult) {
+            data = new {
+                FileName = fileResult.FileDownloadName,
+                fileResult.ContentType,
+                Length = fileResult is FileContentResult fileContentResult
+                             ? (object)fileContentResult.FileContents.Length
+                             : null
+            };
+
+            type = fileResult.GetType();
+        }
+        else {
+            type = resultContext.Result?.GetType();
+        }
+
+        return (type, data);
+    }
+
+
+    /// <summary>
+    ///     处理泛型类型转字符串打印问题
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    private static string HandleGenericType(Type type)
+    {
+        if (type == null) return string.Empty;
+        // 处理泛型类型问题
+        if (!type.IsConstructedGenericType) return type.FullName;
+        var prefix = type.GetGenericArguments()
+                         .Select(HandleGenericType)
+                         .Aggregate((previous, current) => previous + current);
+
+        // 通过 _ 拼接多个泛型
+        return type.FullName!.Split('`').First() + "_" + prefix;
     }
 
 

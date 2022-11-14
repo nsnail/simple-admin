@@ -12,11 +12,6 @@ namespace SimpleAdmin.WebApi.Repositories;
 public interface IRepositoryBase<TTable> : IBaseRepository<TTable> where TTable : class
 {
     /// <summary>
-    ///     当前上下文关联的用户
-    /// </summary>
-    IContextUser ContextUser { get; set; }
-
-    /// <summary>
     ///     递归删除
     /// </summary>
     /// <param name="exp"></param>
@@ -75,6 +70,11 @@ public interface IRepositoryBase<TTable> : IBaseRepository<TTable> where TTable 
     /// <param name="disableGlobalFilterNames">禁用全局过滤器名</param>
     /// <returns></returns>
     Task<bool> SoftDeleteRecursiveAsync(Expression<Func<TTable, bool>> exp, params string[] disableGlobalFilterNames);
+
+    /// <summary>
+    ///     当前上下文关联的用户
+    /// </summary>
+    IContextUser ContextUser { get; set; }
 }
 
 /// <inheritdoc cref="SimpleAdmin.WebApi.Repositories.IRepositoryBase{TTable}" />
@@ -82,7 +82,16 @@ public abstract class RepositoryBase<TTable> : DefaultRepository<TTable, long>, 
     where TTable : class, ITable, new()
 {
     /// <inheritdoc />
-    public IContextUser ContextUser { get; set; }
+    public RepositoryBase(IFreeSql fsql) : base(fsql)
+    { }
+
+    /// <inheritdoc />
+    public RepositoryBase(IFreeSql fsql, Expression<Func<TTable, bool>> filter) : base(fsql, filter)
+    { }
+
+    /// <inheritdoc />
+    protected RepositoryBase(IFreeSql fsql, UnitOfWorkManager uowManger) : base(fsql, uowManger)
+    { }
 
 
     /// <inheritdoc />
@@ -178,16 +187,6 @@ public abstract class RepositoryBase<TTable> : DefaultRepository<TTable, long>, 
         return true;
     }
 
-
     /// <inheritdoc />
-    public RepositoryBase(IFreeSql fsql) : base(fsql)
-    { }
-
-    /// <inheritdoc />
-    public RepositoryBase(IFreeSql fsql, Expression<Func<TTable, bool>> filter) : base(fsql, filter)
-    { }
-
-    /// <inheritdoc />
-    protected RepositoryBase(IFreeSql fsql, UnitOfWorkManager uowManger) : base(fsql, uowManger)
-    { }
+    public IContextUser ContextUser { get; set; }
 }

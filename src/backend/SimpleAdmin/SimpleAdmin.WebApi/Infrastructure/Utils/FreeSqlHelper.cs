@@ -17,17 +17,17 @@ namespace SimpleAdmin.WebApi.Infrastructure.Utils;
 /// </summary>
 public class FreeSqlHelper
 {
-    private readonly DatabaseOptions        _databaseOptions;
-    private readonly IContextUser           _user;
-    private          TimeSpan               _timeOffset;
-    private readonly ILogger<FreeSqlHelper> _logger;
-
     private FreeSqlHelper(DatabaseOptions databaseOptions)
     {
         _databaseOptions = databaseOptions;
         _logger          = App.GetService<ILogger<FreeSqlHelper>>();
         _user            = App.GetService<IContextUser>();
     }
+
+    private readonly DatabaseOptions        _databaseOptions;
+    private readonly ILogger<FreeSqlHelper> _logger;
+    private          TimeSpan               _timeOffset;
+    private readonly IContextUser           _user;
 
 
     /// <summary>
@@ -114,23 +114,6 @@ public class FreeSqlHelper
         return freeSql;
     }
 
-    private static string GetNoParamSql(string sql, IEnumerable<DbParameter> dbParams)
-    {
-        return dbParams.Where(x => x is not null)
-                       .Aggregate(sql,
-                                  (current, dbParm) => current.Replace(dbParm.ParameterName, dbParm.Value?.ToString()));
-    }
-
-    private static Type[] GetEntityTypes()
-    {
-        //获取所有表实体
-        var entityTypes = (from type in App.EffectiveTypes
-                           from attr in type.GetCustomAttributes()
-                           where attr is TableAttribute { DisableSyncStructure: false }
-                           select type).ToArray();
-        return entityTypes;
-    }
-
     private void DataAuditHandler(object sender, AuditValueEventArgs e)
     {
         //设置服务器时间字段
@@ -144,5 +127,22 @@ public class FreeSqlHelper
             e.Property.GetCustomAttribute<SnowflakeAttribute>(false) is { Enable: true } &&
             (e.Value == null || (long)e.Value == default || (long?)e.Value == default))
             e.Value = YitIdHelper.NextId();
+    }
+
+    private static Type[] GetEntityTypes()
+    {
+        //获取所有表实体
+        var entityTypes = (from type in App.EffectiveTypes
+                           from attr in type.GetCustomAttributes()
+                           where attr is TableAttribute { DisableSyncStructure: false }
+                           select type).ToArray();
+        return entityTypes;
+    }
+
+    private static string GetNoParamSql(string sql, IEnumerable<DbParameter> dbParams)
+    {
+        return dbParams.Where(x => x is not null)
+                       .Aggregate(sql,
+                                  (current, dbParm) => current.Replace(dbParm.ParameterName, dbParm.Value?.ToString()));
     }
 }

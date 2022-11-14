@@ -83,27 +83,29 @@
 		</div>
 	</el-dialog>
 	<div>
-		<my-captcha ref="captcha"
-					:img-size="{ width: '330px', height: '155px' }"
-					:mode="'popup'"
-					@success="onCaptchaSuccess"
-		/>
+		<Verify
+			mode="pop"
+			:captchaType="captchaType"
+			:imgSize="{width:'400px',height:'200px'}"
+			ref="verify"
+		></Verify>
 	</div>
 </template>
 
 <script>
 import passwordForm from './components/passwordForm'
 import phoneForm from './components/phoneForm'
-import MyCaptcha from './components/my-captcha'
+import Verify from './components/verifition/Verify'
 
 export default {
 	components: {
-		MyCaptcha,
+		Verify,
 		passwordForm,
 		phoneForm
 	},
 	data() {
 		return {
+			captchaType:'blockPuzzle',
 			config: {
 				lang: this.$TOOL.data.get('APP_LANG') || this.$CONFIG.LANG,
 				dark: this.$TOOL.data.get('APP_DARK') || false
@@ -139,7 +141,8 @@ export default {
 		}
 	},
 	mounted() {
-		this.$refs.captcha.show()
+		//this.$refs.captcha.show()
+		this.$refs.verify.show();
 	},
 	created: function () {
 		this.$TOOL.cookie.remove("TOKEN")

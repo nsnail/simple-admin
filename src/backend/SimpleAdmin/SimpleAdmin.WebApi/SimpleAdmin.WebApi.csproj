@@ -37,12 +37,29 @@
 
     <ItemGroup>
         <PackageReference Include="BenchmarkDotNet" Version="0.13.2"/>
-        <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
-        <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15" />
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.0"/>
+        <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3"/>
+        <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15"/>
         <PackageReference Include="Yitter.IdGenerator" Version="1.0.14"/>
     </ItemGroup>
     <ItemGroup>
         <Content Include="../../../../res/**" LinkBase=".res" CopyToOutputDirectory="PreserveNewest">
+        </Content>
+        <Content Update="..\..\..\..\res\configs\redisSettings.json">
+            <LinkBase>.res\</LinkBase>
+            <Link>.res\configs\redisSettings.json</Link>
+        </Content>
+        <Content Update="..\..\..\..\res\configs\redisSettings.Development.json">
+            <LinkBase>.res\</LinkBase>
+            <Link>.res\configs\redisSettings.Development.json</Link>
+        </Content>
+        <Content Update="..\..\..\..\res\configs\securitySettings.json">
+            <LinkBase>.res\</LinkBase>
+            <Link>.res\configs\securitySettings.json</Link>
+        </Content>
+        <Content Update="..\..\..\..\res\configs\securitySettings.Development.json">
+            <LinkBase>.res\</LinkBase>
+            <Link>.res\configs\securitySettings.Development.json</Link>
         </Content>
     </ItemGroup>
 

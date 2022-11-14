@@ -20,5 +20,9 @@
     // 过期时间容错值，long 类型，单位秒，默认 5秒
     "Algorithm": "HS256"
     // 加密算法，string 类型，默认 HS256
+  },
+  "Secret": {
+    //密钥A，与前端保持一致
+    "SecretKeyA": "1Z?f(2)%v?:X5NYRl+]PSi.rDf7Ip#lB"
   }
 }

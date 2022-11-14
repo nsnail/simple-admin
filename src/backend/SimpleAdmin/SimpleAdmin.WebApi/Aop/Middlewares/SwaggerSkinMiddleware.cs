@@ -13,11 +13,10 @@ namespace SimpleAdmin.WebApi.Aop.Middlewares;
 /// </summary>
 public class SwaggerSkinMiddleware
 {
-    private readonly IWebHostEnvironment  _env;
-    private readonly ILoggerFactory       _logger;
-    private readonly RequestDelegate      _next;
-    private readonly SwaggerSkinOptions   _options;
-    private readonly StaticFileMiddleware _staticFileMiddleware;
+    // SimpleAdmin.WebApi..res.swagger_ui.favicon.ico
+    private const string EMBEDDED_FILE_NAMESPACE = $"{nameof(SimpleAdmin)}.{nameof(WebApi)}..res.swagger_ui";
+
+    private const string INDEX_FILE_NAME = "index.html";
 
     /// <summary>
     ///     Api 界面 knife4j-vue 中间件
@@ -38,39 +37,11 @@ public class SwaggerSkinMiddleware
         _staticFileMiddleware = CreateStaticFileMiddleware();
     }
 
-
-    /// <summary>
-    ///     创建静态文件处理中间件
-    /// </summary>
-    /// <returns></returns>
-    private StaticFileMiddleware CreateStaticFileMiddleware()
-    {
-        var staticFileOptions = new StaticFileOptions {
-            RequestPath  = string.IsNullOrWhiteSpace(_options.RoutePrefix) ? string.Empty : $"/{_options.RoutePrefix}",
-            FileProvider = new EmbeddedFileProvider(GetType().Assembly, EMBEDDED_FILE_NAMESPACE)
-        };
-
-        return new StaticFileMiddleware(_next, _env, Options.Create(staticFileOptions), _logger);
-    }
-    // SimpleAdmin.WebApi..res.swagger_ui.favicon.ico
-    private const string EMBEDDED_FILE_NAMESPACE = $"{nameof(SimpleAdmin)}.{nameof(WebApi)}..res.swagger_ui";
-
-    /// <summary>
-    ///     替换字典（首页）
-    /// </summary>
-    /// <returns></returns>
-    private IDictionary<string, string> GetIndexArguments()
-    {
-        return new Dictionary<string, string> {
-            { "%(DocumentTitle)", _options.DocumentTitle },
-            { "%(HeadContent)", _options.HeadContent },
-            { "%(ConfigObject)", _options.ConfigObject.JsonCamelCase() },
-            { "%(OAuthConfigObject)", _options.OAuthConfigObject.JsonCamelCase() },
-            { "%(Interceptors)", _options.Interceptors.JsonCamelCase() }
-        };
-    }
-
-    private const string INDEX_FILE_NAME = "index.html";
+    private readonly IWebHostEnvironment  _env;
+    private readonly ILoggerFactory       _logger;
+    private readonly RequestDelegate      _next;
+    private readonly SwaggerSkinOptions   _options;
+    private readonly StaticFileMiddleware _staticFileMiddleware;
 
     /// <summary>
     ///     中间件主处理器
@@ -116,6 +87,36 @@ public class SwaggerSkinMiddleware
                 await _staticFileMiddleware.Invoke(context);
                 break;
         }
+    }
+
+
+    /// <summary>
+    ///     创建静态文件处理中间件
+    /// </summary>
+    /// <returns></returns>
+    private StaticFileMiddleware CreateStaticFileMiddleware()
+    {
+        var staticFileOptions = new StaticFileOptions {
+            RequestPath  = string.IsNullOrWhiteSpace(_options.RoutePrefix) ? string.Empty : $"/{_options.RoutePrefix}",
+            FileProvider = new EmbeddedFileProvider(GetType().Assembly, EMBEDDED_FILE_NAMESPACE)
+        };
+
+        return new StaticFileMiddleware(_next, _env, Options.Create(staticFileOptions), _logger);
+    }
+
+    /// <summary>
+    ///     替换字典（首页）
+    /// </summary>
+    /// <returns></returns>
+    private IDictionary<string, string> GetIndexArguments()
+    {
+        return new Dictionary<string, string> {
+            { "%(DocumentTitle)", _options.DocumentTitle },
+            { "%(HeadContent)", _options.HeadContent },
+            { "%(ConfigObject)", _options.ConfigObject.JsonCamelCase() },
+            { "%(OAuthConfigObject)", _options.OAuthConfigObject.JsonCamelCase() },
+            { "%(Interceptors)", _options.Interceptors.JsonCamelCase() }
+        };
     }
 
     /// <summary>

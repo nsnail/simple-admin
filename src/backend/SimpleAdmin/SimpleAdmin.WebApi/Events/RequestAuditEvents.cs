@@ -11,12 +11,19 @@ namespace SimpleAdmin.WebApi.Events;
 /// </summary>
 public class RequestAuditEvents : IEventSubscriber, ISingleton, IDisposable
 {
-    private readonly IServiceScope _scope;
-
     /// <param name="serviceProvider"></param>
     public RequestAuditEvents(IServiceProvider serviceProvider)
     {
         _scope = serviceProvider.CreateScope();
+    }
+
+    private readonly IServiceScope _scope;
+
+
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        _scope?.Dispose();
     }
 
     /// <summary>
@@ -28,12 +35,5 @@ public class RequestAuditEvents : IEventSubscriber, ISingleton, IDisposable
     {
         var tbSysOperationLog = context.Source.Payload.Adapt<TbSysOperationLog>();
         await _scope.ServiceProvider.GetRequiredService<OperationLogRepository>().InsertAsync(tbSysOperationLog);
-    }
-
-
-    /// <inheritdoc />
-    public void Dispose()
-    {
-        _scope?.Dispose();
     }
 }

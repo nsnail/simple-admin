@@ -14,18 +14,6 @@ namespace SimpleAdmin.WebApi;
 public class Startup : AppStartup
 {
     /// <summary>
-    ///     程序入口
-    /// </summary>
-    /// <param name="args"></param>
-    public static void Main(string[] args)
-    {
-        Serve.Run(RunOptions.Default.WithArgs(args)
-                            .ConfigureBuilder(builder =>
-                                                  //
-                                                  builder.UseSerilogDefault(config => config.Init())));
-    }
-
-    /// <summary>
     ///     配置应用程序中间件
     /// </summary>
     /// <param name="app"></param>
@@ -97,6 +85,9 @@ public class Startup : AppStartup
             // 注册freeSql
            .AddFreeSql()
 
+            //注册redis
+           .AddRedis()
+
             //注册配置项
            .AddAllOptions()
 
@@ -127,5 +118,17 @@ public class Startup : AppStartup
 
                                   #endregion
                               });
+    }
+
+    /// <summary>
+    ///     程序入口
+    /// </summary>
+    /// <param name="args"></param>
+    public static void Main(string[] args)
+    {
+        Serve.Run(RunOptions.Default.WithArgs(args)
+                            .ConfigureBuilder(builder =>
+                                                  //
+                                                  builder.UseSerilogDefault(config => config.Init())));
     }
 }

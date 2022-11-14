@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Options;
 using NSExt.Extensions;
 using SimpleAdmin.WebApi.DataContracts.Dto.Security;
+using SimpleAdmin.WebApi.Infrastructure.Configuration.Options;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
@@ -16,72 +19,61 @@ namespace SimpleAdmin.WebApi.Api;
 public interface ISecurityApi
 {
     /// <summary>
-    ///     获得验证数据
+    ///     获取验证图片
     /// </summary>
-    /// <param name="captchaKey"></param>
     /// <returns></returns>
-    Task<CaptchaImageRsp> GetCaptchaImage(string captchaKey);
+    Task<GetCaptchaRsp> GetCaptchaImage();
+
+
+    /// <summary>
+    ///     检查验证信息
+    /// </summary>
+    /// <returns></returns>
+    Task<bool> VerifyCaptcha(VerifyCaptchaReq req);
 }
 
 /// <inheritdoc cref="SimpleAdmin.WebApi.Api.ISecurityApi" />
 public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi
 {
-    private readonly Size _sliderSize = new(50, 50);
+    /// <inheritdoc />
+    public SecurityApi(ILogger<ISecurityApi> logger, IDistributedCache cache, IOptions<SecretOptions> secretOptions) :
+        base(logger)
+    {
+        _cache         = cache;
+        _secretOptions = secretOptions.Value;
+    }
+
+    private readonly string _baseDir = $@"{AppContext.BaseDirectory}/.res/captcha";
 
     private readonly int[] _bgroundIndexScope = {
         1,
         101
     };
 
+    private readonly IDistributedCache _cache;
+    private readonly SecretOptions     _secretOptions;
+
+    private readonly Size _sliderSize = new(50, 50);
+
     private readonly int[] _templateIndexScope = {
         1,
+
         7
     };
 
-    private readonly string _baseDir = $@"{AppContext.BaseDirectory}/.res/captcha";
-
-
-    private static ComplexPolygon CalcBlockShape(Image<Rgba32> templateDarkImage)
-    {
-        var temp     = 0;
-        var pathList = new List<IPath>();
-        templateDarkImage.ProcessPixelRows(accessor => {
-                                               for (var y = 0; y < templateDarkImage.Height; y++) {
-                                                   var rowSpan = accessor.GetRowSpan(y);
-                                                   for (var x = 0; x < rowSpan.Length; x++) {
-                                                       ref var pixel = ref rowSpan[x];
-                                                       if (pixel.A != 0) {
-                                                           temp = temp switch {
-                                                                      0 => x,
-                                                                      _ => temp
-                                                                  };
-                                                       }
-                                                       else {
-                                                           if (temp == 0) continue;
-                                                           pathList.Add(new RectangularPolygon(temp, y, x - temp, 1));
-                                                           temp = 0;
-                                                       }
-                                                   }
-                                               }
-                                           });
-
-        return new ComplexPolygon(new PathCollection(pathList));
-    }
-
-
     /// <inheritdoc />
     [AllowAnonymous]
-    public async Task<CaptchaImageRsp> GetCaptchaImage(string captchaKey)
+    public async Task<GetCaptchaRsp> GetCaptchaImage()
     {
         //底图
         using var backgroundImage =
             await Image.LoadAsync<Rgba32>($"{_baseDir}/backgrounds/{_bgroundIndexScope.Rand()}.jpg");
         //深色模板图
-        using var darkTemplateImage =
-            await Image.LoadAsync<Rgba32>($@"{_baseDir}/templates/{_templateIndexScope.Rand()}/dark.png");
+        var       templateIndex     = _templateIndexScope.Rand();
+        using var darkTemplateImage = await Image.LoadAsync<Rgba32>($@"{_baseDir}/templates/{templateIndex}/dark.png");
         //透明模板图
         using var transparentTemplateImage =
-            await Image.LoadAsync<Rgba32>($@"{_baseDir}/templates/{_templateIndexScope.Rand()}/transparent.png");
+            await Image.LoadAsync<Rgba32>($@"{_baseDir}/templates/{templateIndex}/transparent.png");
 
 
         //调整模板图大小
@@ -140,33 +132,66 @@ public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi
 
 
         var token = Guid.NewGuid().ToString();
-        var captchaData = new CaptchaImageRsp {
-            Token          = token,
-            BackgrondImage = backgroundImage.ToBase64String(PngFormat.Instance),
-            SliderImage    = sliderBlockImage.ToBase64String(PngFormat.Instance)
+        var captchaData = new GetCaptchaRsp {
+            Token           = token,
+            BackgroundImage = backgroundImage.ToBase64String(PngFormat.Instance),
+            SliderImage     = sliderBlockImage.ToBase64String(PngFormat.Instance)
         };
 
-        var key = captchaKey + token;
-        //
-        //await _cache.SetAsync(key, blockPoint.X, TimeSpan.FromMinutes(5));
+
+        // 将缺口坐标保存到缓存
+        await _cache.SetStringAsync(token,
+                                    blockPoint.X.ToString(),
+                                    new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5)));
 
         return captchaData;
     }
 
-    /// <summary>
-    ///     随机范围内数字
-    /// </summary>
-    /// <param name="startNum"></param>
-    /// <param name="endNum"></param>
-    /// <returns></returns>
-    private static int GetRandomInt(int startNum, int endNum)
+
+    /// <inheritdoc />
+    [AllowAnonymous]
+    public async Task<bool> VerifyCaptcha(VerifyCaptchaReq req)
     {
-        return (endNum > startNum
-                    ? new[] {
-                        0,
-                        endNum - startNum
-                    }.Rand()
-                    : 0) + startNum;
+        var ret = false;
+        try {
+            var point  = await _cache.GetStringAsync(req.Token);
+            var aesKey = req.Token.Aes(_secretOptions.SecretKeyA)[..32];
+            ret = Math.Abs(point.Float() - req.VerifyData.AesDe(aesKey).Float()) < 5f;
+        }
+        catch {
+            // ignored
+        }
+
+        if (!ret) await _cache.RemoveAsync(req.Token);
+        return ret;
+    }
+
+
+    private static ComplexPolygon CalcBlockShape(Image<Rgba32> templateDarkImage)
+    {
+        var temp     = 0;
+        var pathList = new List<IPath>();
+        templateDarkImage.ProcessPixelRows(accessor => {
+                                               for (var y = 0; y < templateDarkImage.Height; y++) {
+                                                   var rowSpan = accessor.GetRowSpan(y);
+                                                   for (var x = 0; x < rowSpan.Length; x++) {
+                                                       ref var pixel = ref rowSpan[x];
+                                                       if (pixel.A != 0) {
+                                                           temp = temp switch {
+                                                                      0 => x,
+                                                                      _ => temp
+                                                                  };
+                                                       }
+                                                       else {
+                                                           if (temp == 0) continue;
+                                                           pathList.Add(new RectangularPolygon(temp, y, x - temp, 1));
+                                                           temp = 0;
+                                                       }
+                                                   }
+                                               }
+                                           });
+
+        return new ComplexPolygon(new PathCollection(pathList));
     }
 
     /// <summary>
@@ -205,11 +230,6 @@ public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi
         return new Point(x, y);
     }
 
-
-    /// <inheritdoc />
-    public SecurityApi(ILogger<ISecurityApi> logger) : base(logger)
-    { }
-
     /// <summary>
     ///     随机生成拼图坐标
     /// </summary>
@@ -239,5 +259,22 @@ public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi
                 };
 
         return new Point(x, y);
+    }
+
+
+    /// <summary>
+    ///     随机范围内数字
+    /// </summary>
+    /// <param name="startNum"></param>
+    /// <param name="endNum"></param>
+    /// <returns></returns>
+    private static int GetRandomInt(int startNum, int endNum)
+    {
+        return (endNum > startNum
+                    ? new[] {
+                        0,
+                        endNum - startNum
+                    }.Rand()
+                    : 0) + startNum;
     }
 }

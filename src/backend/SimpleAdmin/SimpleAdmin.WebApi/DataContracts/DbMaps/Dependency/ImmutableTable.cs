@@ -37,5 +37,4 @@ public abstract record ImmutableTable : ITable, IFieldPrimary, IFieldAdd, IField
     [Description("是否删除")]
     [Column]
     public bool IsDeleted { get; set; }
-
 }

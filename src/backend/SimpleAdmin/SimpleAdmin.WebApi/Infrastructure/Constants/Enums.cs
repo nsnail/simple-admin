@@ -9,34 +9,6 @@ public static partial class Const
     /// </summary>
     public static class Enums
     {
-
-
-
-        /// <summary>
-        ///     用户类型
-        /// </summary>
-        public enum UserTypes
-        {
-            /// <summary>
-            ///     默认用户
-            /// </summary>
-            DefaultUser = 1,
-
-            /// <summary>
-            ///     租户管理员
-            /// </summary>
-            TenantAdmin = 10,
-
-            /// <summary>
-            ///     平台管理员
-            /// </summary>
-            PlatformAdmin = 100
-        }
-
-
-
-
-
         /// <summary>
         ///     数据范围
         /// </summary>
@@ -69,34 +41,30 @@ public static partial class Const
         }
 
 
-
-
-
         /// <summary>
-        /// FreeSql全局过滤器
+        ///     FreeSql全局过滤器
         /// </summary>
         public enum FreeSqlGlobalFilters
         {
             /// <summary>
             ///     数据权限
             /// </summary>
-            [Description("数据权限")]
-            Delete,
+            [Description("数据权限")] Delete,
+
             /// <summary>
             ///     删除
             /// </summary>
-            [Description("删除")]
-            Self,
+            [Description("删除")] Self,
+
             /// <summary>
             ///     本人权限
             /// </summary>
-            [Description("本人权限")]
-            Tenant,
+            [Description("本人权限")] Tenant,
+
             /// <summary>
             ///     租户
             /// </summary>
-            [Description("租户")]
-            Data
+            [Description("租户")] Data
         }
 
         /// <summary>
@@ -144,6 +112,28 @@ public static partial class Const
             ///     Delete
             /// </summary>
             Delete
+        }
+
+
+        /// <summary>
+        ///     用户类型
+        /// </summary>
+        public enum UserTypes
+        {
+            /// <summary>
+            ///     默认用户
+            /// </summary>
+            DefaultUser = 1,
+
+            /// <summary>
+            ///     租户管理员
+            /// </summary>
+            TenantAdmin = 10,
+
+            /// <summary>
+            ///     平台管理员
+            /// </summary>
+            PlatformAdmin = 100
         }
     }
 }

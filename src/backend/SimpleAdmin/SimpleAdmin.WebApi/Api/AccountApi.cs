@@ -21,6 +21,14 @@ public interface IAccountApi
 public class AccountApi : ApiBase<IAccountApi>, IAccountApi
 {
     /// <inheritdoc />
+    public AccountApi(ILogger<IAccountApi> logger, AccountRepository accountRepository) : base(logger)
+    {
+        _accountRepository = accountRepository;
+    }
+
+    private readonly AccountRepository _accountRepository;
+
+    /// <inheritdoc />
     [AllowAnonymous]
     public void Create(CreateReq req)
     {
@@ -28,13 +36,5 @@ public class AccountApi : ApiBase<IAccountApi>, IAccountApi
             UserName = req.UserName
         });
         Logger.Info($"当前线程：{Thread.CurrentThread.ManagedThreadId}");
-    }
-
-    private readonly AccountRepository _accountRepository;
-
-    /// <inheritdoc />
-    public AccountApi(ILogger<IAccountApi> logger, AccountRepository accountRepository) : base(logger)
-    {
-        _accountRepository = accountRepository;
     }
 }

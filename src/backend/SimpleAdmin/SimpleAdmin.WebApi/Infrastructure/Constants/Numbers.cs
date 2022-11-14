@@ -8,11 +8,6 @@ public static partial class Const
     public static class Values
     {
         /// <summary>
-        ///     预设的cookie最大日起值
-        /// </summary>
-        public static readonly DateTime COOKIE_MAX_DATE = DateTime.Now.AddYears(100);
-
-        /// <summary>
         ///     最大页码
         /// </summary>
         public const int PAGE_NO_MAX = 10000;
@@ -31,6 +26,11 @@ public static partial class Const
         ///     最小分页容量
         /// </summary>
         public const int PAGE_SIZE_MIN = 1;
+
+        /// <summary>
+        ///     预设的cookie最大日起值
+        /// </summary>
+        public static readonly DateTime COOKIE_MAX_DATE = DateTime.Now.AddYears(100);
 
         /// <summary>
         ///     sql server中的最小日期值

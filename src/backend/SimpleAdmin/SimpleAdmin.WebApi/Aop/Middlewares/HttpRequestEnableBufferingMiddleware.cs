@@ -5,8 +5,6 @@
 /// </summary>
 public class HttpRequestEnableBufferingMiddleware
 {
-    private readonly RequestDelegate _next;
-
     /// <summary>
     ///     确保AspNetCore Http请求 主体可以被多次读取。
     /// </summary>
@@ -15,6 +13,8 @@ public class HttpRequestEnableBufferingMiddleware
     {
         _next = next;
     }
+
+    private readonly RequestDelegate _next;
 
     /// <summary>
     ///     中间件主处理器
