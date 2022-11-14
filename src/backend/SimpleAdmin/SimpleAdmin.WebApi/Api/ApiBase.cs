@@ -7,14 +7,18 @@ namespace SimpleAdmin.WebApi.Api;
 /// <summary>
 ///     Api Controller 基类
 /// </summary>
-/// <typeparam name="TLogType">日志类型</typeparam>
-public abstract class ApiBase<TLogType> : IDynamicApiController
+public abstract class ApiBase<T> : IDynamicApiController
 {
     /// <summary>
-    ///     控制器基类
+    ///     Api Controller 基类
     /// </summary>
+    protected ApiBase()
+    {
+        Logger = App.GetService<ILogger<T>>();
+    }
+
     /// <param name="logger"></param>
-    protected ApiBase(ILogger<TLogType> logger)
+    protected ApiBase(ILogger<T> logger)
     {
         Logger = logger;
     }
@@ -22,5 +26,5 @@ public abstract class ApiBase<TLogType> : IDynamicApiController
     /// <summary>
     ///     日志记录器
     /// </summary>
-    public ILogger<TLogType> Logger { get; }
+    public ILogger<T> Logger { get; }
 }

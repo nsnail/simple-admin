@@ -1,43 +1,26 @@
+using Furion.FriendlyException;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using NSExt.Extensions;
 using SimpleAdmin.WebApi.DataContracts.Dto.Security;
 using SimpleAdmin.WebApi.Infrastructure.Configuration.Options;
+using SimpleAdmin.WebApi.Infrastructure.Constants;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using Yitter.IdGenerator;
 
-namespace SimpleAdmin.WebApi.Api;
-
-/// <summary>
-///     安全接口
-/// </summary>
-public interface ISecurityApi
-{
-    /// <summary>
-    ///     获取验证图片
-    /// </summary>
-    /// <returns></returns>
-    Task<GetCaptchaRsp> GetCaptchaImage();
-
-
-    /// <summary>
-    ///     检查验证信息
-    /// </summary>
-    /// <returns></returns>
-    Task<bool> VerifyCaptcha(VerifyCaptchaReq req);
-}
+namespace SimpleAdmin.WebApi.Api.Implements;
 
 /// <inheritdoc cref="SimpleAdmin.WebApi.Api.ISecurityApi" />
 public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi
 {
     /// <inheritdoc />
-    public SecurityApi(ILogger<ISecurityApi> logger, IDistributedCache cache, IOptions<SecretOptions> secretOptions) :
-        base(logger)
+    public SecurityApi(IDistributedCache cache, IOptions<SecretOptions> secretOptions)
     {
         _cache         = cache;
         _secretOptions = secretOptions.Value;
@@ -131,7 +114,7 @@ public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi
                                                 opacity));
 
 
-        var token = Guid.NewGuid().ToString();
+        var token = $"captcha_{YitIdHelper.NextId()}";
         var captchaData = new GetCaptchaRsp {
             Token           = token,
             BackgroundImage = backgroundImage.ToBase64String(PngFormat.Instance),
@@ -145,6 +128,22 @@ public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi
                                     new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5)));
 
         return captchaData;
+    }
+
+    /// <summary>
+    ///     发送短信验证码
+    /// </summary>
+    /// <param name="req"></param>
+    /// <returns></returns>
+    [AllowAnonymous]
+    public async Task<SendSmsCodeRsp> SendSmsCode(SendSmsCodeReq req)
+    {
+        var captchaPassed = await VerifyCaptcha(req);
+        if (!captchaPassed) throw Oops.Oh(ErrorCodes.无效操作, "人机验证未通过");
+
+        //删除缓存
+        await _cache.RemoveAsync(req.Token);
+        return null;
     }
 
 
@@ -278,3 +277,6 @@ public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi
                     : 0) + startNum;
     }
 }
+
+public record SendSmsCodeRsp : CaptchaInfo
+{ }

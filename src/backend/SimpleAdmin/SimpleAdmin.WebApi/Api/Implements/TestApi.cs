@@ -1,12 +1,7 @@
 ﻿using Furion.DynamicApiController;
 using Microsoft.AspNetCore.Authorization;
 
-namespace SimpleAdmin.WebApi.Api;
-
-public interface ITestApi
-{
-    public string Test();
-}
+namespace SimpleAdmin.WebApi.Api.Implements;
 
 public class TestApi : ITestApi, IDynamicApiController
 {

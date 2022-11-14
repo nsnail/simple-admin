@@ -15,6 +15,12 @@ public static partial class Const
 
 
         /// <summary>
+        ///     正则表达式-手机号
+        /// </summary>
+        public const string REGEX_MOBILE = """^1(3\d|4[5-9]|5[0-35-9]|6[6]|7[2-8]|8\d|9[0-35-9])\d{8}$""";
+
+
+        /// <summary>
         ///     36进制码表
         /// </summary>
         public const string SYS36_TABLE = "0123456789abcdefghijklmnopqrstuvwxyz";

@@ -4,24 +4,13 @@ using SimpleAdmin.WebApi.DataContracts.DbMaps;
 using SimpleAdmin.WebApi.DataContracts.Dto.Account;
 using SimpleAdmin.WebApi.Repositories;
 
-namespace SimpleAdmin.WebApi.Api;
+namespace SimpleAdmin.WebApi.Api.Implements;
 
-/// <summary>
-///     帐号接口
-/// </summary>
-public interface IAccountApi
-{
-    /// <summary>
-    ///     创建帐号
-    /// </summary>
-    void Create(CreateReq req);
-}
-
-/// <inheritdoc cref="SimpleAdmin.WebApi.Api.IAccountApi" />
+/// <inheritdoc cref="IAccountApi" />
 public class AccountApi : ApiBase<IAccountApi>, IAccountApi
 {
     /// <inheritdoc />
-    public AccountApi(ILogger<IAccountApi> logger, AccountRepository accountRepository) : base(logger)
+    public AccountApi(AccountRepository accountRepository)
     {
         _accountRepository = accountRepository;
     }
