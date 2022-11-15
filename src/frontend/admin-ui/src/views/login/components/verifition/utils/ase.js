@@ -7,6 +7,5 @@ export function aesEncrypt(word,keyWord="1Z?f(2)%v?:X5NYRl+]PSi.rDf7Ip#lB"){
   var key = CryptoJS.enc.Utf8.parse(keyWord);
   var srcs = CryptoJS.enc.Utf8.parse(word);
   var encrypted = CryptoJS.AES.encrypt(srcs, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
-  console.log(encrypted.toString())
   return encrypted.toString();
 }

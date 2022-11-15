@@ -64,7 +64,9 @@ const DEFAULT_CONFIG = {
 			['about', 'ver'],
 			['time', 'progress']
 		]
-	}
+	},
+	//常量字符串
+	STRINGS:null
 }
 
 //合并业务配置

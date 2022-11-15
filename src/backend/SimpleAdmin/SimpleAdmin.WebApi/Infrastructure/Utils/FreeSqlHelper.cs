@@ -25,7 +25,7 @@ public class FreeSqlHelper
     }
 
     private readonly DatabaseOptions        _databaseOptions;
-    private readonly ILogger<FreeSqlHelper> _logger;
+    private          ILogger<FreeSqlHelper> _logger;
     private          TimeSpan               _timeOffset;
     private readonly IContextUser           _user;
 
@@ -58,9 +58,6 @@ public class FreeSqlHelper
         #endregion
 
 
-        var entityTypes = GetEntityTypes();
-        var entityNames = entityTypes.Select(x => x.Name);
-
         #region 监听Curd操作
 
         freeSql.Aop.CurdBefore += (_, e) => {
@@ -69,47 +66,30 @@ public class FreeSqlHelper
                                   };
         freeSql.Aop.CurdAfter += (_, e) => {
                                      var sql = GetNoParamSql(e.Sql, e.DbParms);
-                                     _logger.Info($"SQL.{e.Sql.GetHashCode()}：{e.ElapsedMilliseconds} ms");
+                                     _logger.Info($"SQL.{sql.GetHashCode()}：{e.ElapsedMilliseconds} ms");
                                  };
 
         #endregion 监听Curd操作
 
+        #region 初始化数据库
 
-        #region 同步结构
+        Task.Run(() => {
+                     WaitSerilogReady();
 
-        if (_databaseOptions.IsSyncStructure) {
-            _logger.Info("获取所有数据库表实体类...");
-            if (_databaseOptions.DbType == DataType.Oracle) freeSql.CodeFirst.IsSyncStructureToUpper = true;
-            _logger.Info(entityNames.Json());
-            _logger.Info($"同步 {_databaseOptions.DbType} 数据库结构...");
-            freeSql.CodeFirst.SyncStructure(entityTypes);
-            _logger.Info("完成");
-        }
+                     var entityTypes = GetEntityTypes();
 
-        #endregion
 
-        #region 同步数据
+                     if (_databaseOptions.IsSyncStructure) {
+                         SyncStructure(freeSql, entityTypes);
+                         _logger.Info("数据库结构已同步");
+                     }
 
-        _logger.Info("初始化种子数据");
-        foreach (var entityType in entityTypes) {
-            var path = $"{AppContext.BaseDirectory}/.res/seed-data/{entityType.Name}.json";
-            if (!File.Exists(path)) continue;
-            dynamic entities = File.ReadAllText(path).Object(typeof(List<>).MakeGenericType(entityType));
-            foreach (var entity in entities) {
-                var select = typeof(IFreeSql).GetMethod(nameof(freeSql.Select), 1, Type.EmptyTypes)
-                                            ?.MakeGenericMethod(entityType)
-                                             .Invoke(freeSql, null);
-                var any = select?.GetType()
-                                 .GetMethod(nameof(ISelect<dynamic>.Any), 0, Type.EmptyTypes)
-                                ?.Invoke(select, null) as bool? ?? true;
 
-                if (any) continue;
-                freeSql.Insert(entity).ExecuteAffrows();
-            }
-        }
+                     InitSeedData(freeSql, entityTypes);
+                     _logger.Info("种子数据初始化完毕");
+                 });
 
         #endregion
-
 
         return freeSql;
     }
@@ -144,5 +124,47 @@ public class FreeSqlHelper
         return dbParams.Where(x => x is not null)
                        .Aggregate(sql,
                                   (current, dbParm) => current.Replace(dbParm.ParameterName, dbParm.Value?.ToString()));
+    }
+
+    private static void InitSeedData(IFreeSql freeSql, IEnumerable<Type> entityTypes)
+    {
+        foreach (var entityType in entityTypes) {
+            var path = $"{AppContext.BaseDirectory}/.res/seed-data/{entityType.Name}.json";
+            if (!File.Exists(path)) continue;
+            dynamic entities = File.ReadAllText(path).Object(typeof(List<>).MakeGenericType(entityType));
+            foreach (var entity in entities) {
+                var select = typeof(IFreeSql).GetMethod(nameof(freeSql.Select), 1, Type.EmptyTypes)
+                                            ?.MakeGenericMethod(entityType)
+                                             .Invoke(freeSql, null);
+                var any = select?.GetType()
+                                 .GetMethod(nameof(ISelect<dynamic>.Any), 0, Type.EmptyTypes)
+                                ?.Invoke(select, null) as bool? ?? true;
+
+                if (any) continue;
+                freeSql.Insert(entity).ExecuteAffrows();
+            }
+        }
+    }
+
+    private void SyncStructure(IFreeSql freeSql, Type[] entityTypes)
+    {
+        if (_databaseOptions.DbType == DataType.Oracle) freeSql.CodeFirst.IsSyncStructureToUpper = true;
+        freeSql.CodeFirst.SyncStructure(entityTypes);
+    }
+
+    private void WaitSerilogReady()
+    {
+        _logger = App.GetService<ILogger<FreeSqlHelper>>();
+        for (var i = 0; i != 10; ++i) {
+            if (_logger.GetType()
+                       .GetRuntimeFields()
+                       .FirstOrDefault(x => x.Name == "_logger")
+                      ?.GetValue(_logger)
+                      ?.GetType()
+                       .Name == "SerilogLogger")
+                break;
+            Thread.Sleep(100);
+            _logger = App.GetService<ILogger<FreeSqlHelper>>();
+        }
     }
 }

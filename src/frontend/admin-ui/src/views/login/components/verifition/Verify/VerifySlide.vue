@@ -246,7 +246,7 @@
                         let data = {
                             verifyData:secretKey.value ?
 								aesEncrypt(  moveLeftDistance ,secretKey.value) : moveLeftDistance,
-                            token:backToken.value
+                            cacheKey:backToken.value
                         }
                         reqCheck(data).then(res=>{
                             if (res.data) {
@@ -320,11 +320,11 @@
                         captchaType:captchaType.value
                     }
                     reqGet(data).then(res=>{
-                        if (res.code == 200) {
+                        if (res.code == 0) {
                             backImgBase.value = res.data.backgroundImage
                             blockBackImgBase.value = res.data.sliderImage
-                            backToken.value = res.data.token
-                            secretKey.value = aesEncrypt(res.data.token)
+                            backToken.value = res.data.cacheKey
+                            secretKey.value = aesEncrypt(res.data.cacheKey)
 							if (secretKey.value.length>32)
 								secretKey.value= secretKey.value.substring(0,32)
 

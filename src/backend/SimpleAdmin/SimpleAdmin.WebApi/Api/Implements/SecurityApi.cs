@@ -1,11 +1,13 @@
 using Furion.FriendlyException;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using NSExt.Extensions;
 using SimpleAdmin.WebApi.DataContracts.Dto.Security;
 using SimpleAdmin.WebApi.Infrastructure.Configuration.Options;
 using SimpleAdmin.WebApi.Infrastructure.Constants;
+using SimpleAdmin.WebApi.Infrastructure.Utils;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
@@ -19,6 +21,8 @@ namespace SimpleAdmin.WebApi.Api.Implements;
 /// <inheritdoc cref="SimpleAdmin.WebApi.Api.ISecurityApi" />
 public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi
 {
+    private const int SMS_CODE_SEND_LIMIT = 60;
+
     /// <inheritdoc />
     public SecurityApi(IDistributedCache cache, IOptions<SecretOptions> secretOptions)
     {
@@ -114,36 +118,62 @@ public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi
                                                 opacity));
 
 
-        var token = $"captcha_{YitIdHelper.NextId()}";
+        var cacheKey = $"{nameof(GetCaptchaImage)}_{YitIdHelper.NextId()}";
         var captchaData = new GetCaptchaRsp {
-            Token           = token,
+            CacheKey        = cacheKey,
             BackgroundImage = backgroundImage.ToBase64String(PngFormat.Instance),
             SliderImage     = sliderBlockImage.ToBase64String(PngFormat.Instance)
         };
 
 
         // 将缺口坐标保存到缓存
-        await _cache.SetStringAsync(token,
+        await _cache.SetStringAsync(cacheKey,
                                     blockPoint.X.ToString(),
                                     new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5)));
 
         return captchaData;
     }
 
-    /// <summary>
-    ///     发送短信验证码
-    /// </summary>
-    /// <param name="req"></param>
-    /// <returns></returns>
+    /// <inheritdoc />
     [AllowAnonymous]
-    public async Task<SendSmsCodeRsp> SendSmsCode(SendSmsCodeReq req)
+    public async Task<SendSmsCodeRsp> SendSmsCode([FromServices] ISmsSender smsSender, SendSmsCodeReq req)
     {
-        var captchaPassed = await VerifyCaptcha(req);
-        if (!captchaPassed) throw Oops.Oh(ErrorCodes.无效操作, "人机验证未通过");
+        if (!await VerifyCaptcha(req.VerifyCaptchaReq)) throw Oops.Oh(Enums.ErrorCodes.人机验证);
+        //人机验证通过，删除人机验证缓存
+        await _cache.RemoveAsync(req.VerifyCaptchaReq.CacheKey);
 
-        //删除缓存
-        await _cache.RemoveAsync(req.Token);
-        return null;
+
+        var cacheKey = $"{nameof(SendSmsCode)}_{req.Mobile}";
+
+        //如果缓存（手机号做key）存在，且创建时间小于1分钟，不得再次发送
+        var sentCodeStr = await _cache.GetStringAsync(cacheKey);
+        if (sentCodeStr is not null) {
+            var sentCode     = sentCodeStr.Object<SendSmsCodeRsp>();
+            var timeInterval = (DateTime.Now - sentCode.CreateTime).TotalSeconds;
+            if (timeInterval < SMS_CODE_SEND_LIMIT)
+                throw Oops.Oh(Enums.ErrorCodes.无效操作, $"{SMS_CODE_SEND_LIMIT - timeInterval}秒 后方可再次发送");
+        }
+
+        var ret = new SendSmsCodeRsp {
+            Code = new[] {
+                    0,
+                    10000
+                }.Rand()
+                 .ToString()
+                 .PadLeft(4, '0'),
+            CreateTime    = DateTime.Now,
+            Mobile        = req.Mobile,
+            OperationType = req.OperationType
+        };
+        // 调用短信接口发送数字码
+        smsSender.SendCode(req.Mobile, ret.Code);
+        // 写入缓存，用于校验
+        await _cache.SetStringAsync(cacheKey, ret.Json());
+
+        #if !DEBUG
+            ret.Code = null;
+        #endif
+        return ret;
     }
 
 
@@ -151,17 +181,20 @@ public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi
     [AllowAnonymous]
     public async Task<bool> VerifyCaptcha(VerifyCaptchaReq req)
     {
+        var point = await _cache.GetStringAsync(req.CacheKey);
+        if (point is null) return false;
+
+
         var ret = false;
         try {
-            var point  = await _cache.GetStringAsync(req.Token);
-            var aesKey = req.Token.Aes(_secretOptions.SecretKeyA)[..32];
+            var aesKey = req.CacheKey.Aes(_secretOptions.SecretKeyA)[..32];
             ret = Math.Abs(point.Float() - req.VerifyData.AesDe(aesKey).Float()) < 5f;
         }
         catch {
-            // ignored
+            ret = false;
         }
 
-        if (!ret) await _cache.RemoveAsync(req.Token);
+        if (!ret) await _cache.RemoveAsync(req.CacheKey);
         return ret;
     }
 
@@ -278,5 +311,5 @@ public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi
     }
 }
 
-public record SendSmsCodeRsp : CaptchaInfo
+public record SendSmsCodeRsp : SmsCodeInfo
 { }

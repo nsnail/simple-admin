@@ -58,11 +58,12 @@ public class RequestAuditHandler : IAsyncActionFilter
             ResponseRawType    = actionDescriptor?.MethodInfo.ReturnType.ToString(),
             ResponseStatusCode = (ushort)context.HttpContext.Response.StatusCode,
             // ResponseWrapType   = HandleGenericType(retType),
-            ResponseWrapType = retType.ToString(),
-            ResponseResult   = retData.Json(),
+            ResponseWrapType = retType?.ToString(),
+            ResponseResult   = retData?.Json(),
             ServerIp         = context.HttpContext.GetLocalIpAddressToIPv4(),
             UserAgent        = context.HttpContext.Request.Headers["User-Agent"]
         };
+
 
         // 发布审计事件
         await _eventPublisher.PublishAsync($"{nameof(RequestAuditHandler)}.{nameof(OnActionExecutionAsync)}",

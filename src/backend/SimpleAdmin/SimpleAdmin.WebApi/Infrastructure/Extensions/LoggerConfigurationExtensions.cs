@@ -24,7 +24,7 @@ public static class LoggerConfigurationExtensions
         config.WriteTo.Logger(subConfig => {
                                   subConfig.Filter.ByIncludingOnly(Matching.FromSource(sourceName));
                                   subConfig.WriteTo.File($"logs/{sourceName}/.log",
-                                                         outputTemplate: Const.Templates.LOG_OUTPUT_TEMPLATE_FULL,
+                                                         outputTemplate: Strings.TEMP_LOG_OUPUT,
                                                          rollingInterval: RollingInterval.Day,
                                                          encoding: Encoding.UTF8);
                               });
@@ -57,7 +57,7 @@ public static class LoggerConfigurationExtensions
         #region 全部日志
 
         //写入控制台
-        me.WriteTo.Console(outputTemplate: Const.Templates.LOG_OUTPUT_TEMPLATE_FULL,
+        me.WriteTo.Console(outputTemplate: Strings.TEMP_LOG_OUPUT,
                            theme: new SystemConsoleTheme(new Dictionary<ConsoleThemeStyle, SystemConsoleThemeStyle> {
                                [ConsoleThemeStyle.Text] = new() {
                                    Foreground = ConsoleColor.White
@@ -122,7 +122,7 @@ public static class LoggerConfigurationExtensions
 
         // LogEventLevel.Warning 类型级别以上 写入文件
         me.WriteTo.File(".logs/.log",
-                        outputTemplate: Const.Templates.LOG_OUTPUT_TEMPLATE_FULL,
+                        outputTemplate: Strings.TEMP_LOG_OUPUT,
                         rollingInterval: RollingInterval.Day,
                         restrictedToMinimumLevel: LogEventLevel.Warning,
                         encoding: Encoding.UTF8);

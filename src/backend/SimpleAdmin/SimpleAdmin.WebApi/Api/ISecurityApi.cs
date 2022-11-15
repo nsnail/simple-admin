@@ -1,5 +1,6 @@
 ﻿using SimpleAdmin.WebApi.Api.Implements;
 using SimpleAdmin.WebApi.DataContracts.Dto.Security;
+using SimpleAdmin.WebApi.Infrastructure.Utils;
 
 namespace SimpleAdmin.WebApi.Api;
 
@@ -16,15 +17,16 @@ public interface ISecurityApi
 
 
     /// <summary>
-    ///     发送短信验证码
+    ///     发送短信数字码
     /// </summary>
+    /// <param name="smsSender"></param>
     /// <param name="req"></param>
     /// <returns></returns>
-    Task<SendSmsCodeRsp> SendSmsCode(SendSmsCodeReq req);
+    Task<SendSmsCodeRsp> SendSmsCode(ISmsSender smsSender, SendSmsCodeReq req);
 
 
     /// <summary>
-    ///     检查验证信息
+    ///     完成图片验证
     /// </summary>
     /// <returns></returns>
     Task<bool> VerifyCaptcha(VerifyCaptchaReq req);

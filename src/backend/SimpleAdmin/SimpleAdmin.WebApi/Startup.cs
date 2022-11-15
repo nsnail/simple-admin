@@ -26,8 +26,11 @@ public class Startup : AppStartup
             #endif
 
 
+            #if !DEBUG
             //强制https
            .UseHttpsRedirection()
+            #endif
+
             //认证授权
            .UseAuthentication()
            .UseAuthorization()
@@ -73,8 +76,11 @@ public class Startup : AppStartup
         services
             #if DEBUG
             // 打印日志监视信息，便于调试
-           .AddMvcFilter<LoggingMonitorAttribute>()
+           .AddMonitorLogging()
             #endif
+
+            //请求审计日志
+           .AddMvcFilter<RequestAuditHandler>()
 
             // 雪花id生成器
            .AddSnowflake()
@@ -94,9 +100,6 @@ public class Startup : AppStartup
             //支持跨域访问
            .AddCorsAccessor()
 
-            //请求审计日志
-           .AddMvcFilter<RequestAuditHandler>()
-
             // 远程请求
             // .AddRemoteRequest()
 
@@ -111,7 +114,7 @@ public class Startup : AppStartup
                                   #region 序列化设置
 
                                   // 日期格式
-                                  config.SerializerSettings.DateFormatString = Const.Templates.YYYY_MM_DD_HH_MM_SS;
+                                  config.SerializerSettings.DateFormatString = Strings.FMT_YYYY_MM_DD_HH_MM_SS;
                                   // 小驼峰属性名
                                   config.SerializerSettings.ContractResolver =
                                       new CamelCasePropertyNamesContractResolver();

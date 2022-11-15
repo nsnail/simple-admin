@@ -7,13 +7,13 @@
 		</el-steps>
 		<el-form v-if="stepActive==0" ref="stepForm_0" :model="form" :rules="rules" :label-width="120">
 			<el-form-item label="登录账号" prop="user">
-				<el-input v-model="form.user" placeholder="请输入登录账号"></el-input>
-				<div class="el-form-item-msg">登录账号将作为登录时的唯一凭证</div>
+				<el-input v-model="form.user" placeholder="请输入登录账号" maxlength="20"></el-input>
+
 			</el-form-item>
 			<el-form-item label="登录密码" prop="password">
 				<el-input v-model="form.password" type="password" show-password placeholder="请输入登录密码"></el-input>
 				<sc-password-strength v-model="form.password"></sc-password-strength>
-				<div class="el-form-item-msg">请输入包含英文、数字的8位以上密码</div>
+
 			</el-form-item>
 			<el-form-item label="确认密码" prop="password2">
 				<el-input v-model="form.password2" type="password" show-password placeholder="请再一次输入登录密码"></el-input>
@@ -23,24 +23,15 @@
 			</el-form-item>
 		</el-form>
 		<el-form v-if="stepActive==1" ref="stepForm_1" :model="form" :rules="rules" :label-width="120">
-			<el-form-item label="真实姓名" prop="userName">
-				<el-input v-model="form.userName" placeholder="请输入真实姓名"></el-input>
+			<el-form-item label="手机号码" prop="phone">
+				<el-input v-model="form.phone" :placeholder="请输入手机号码"></el-input>
 			</el-form-item>
-			<el-form-item label="邮箱" prop="email">
-				<el-input v-model="form.email" placeholder="请输入邮箱地址"></el-input>
-			</el-form-item>
-			<el-form-item label="账号类型" prop="userType">
-				<el-radio-group v-model="form.userType">
-					<el-radio-button label="1">企业开发者</el-radio-button>
-					<el-radio-button label="2">企业开发者</el-radio-button>
-				</el-radio-group>
-			</el-form-item>
-			<el-form-item label="开通类别" prop="open">
-				<el-checkbox-group v-model="form.open">
-					<el-checkbox label="1">云存储API</el-checkbox>
-					<el-checkbox label="2">云检索API</el-checkbox>
-					<el-checkbox label="3">Javescript API</el-checkbox>
-				</el-checkbox-group>
+			<el-form-item label="短信验证码" prop="yzm">
+				<div class="yzm">
+					<el-input v-model="form.yzm" placeholder="请输入4位短信验证码"></el-input>
+					<el-button @click="getYzm" :disabled="disabled">发送验证码短信
+						<span v-if="disabled"> ({{time}})</span></el-button>
+				</div>
 			</el-form-item>
 		</el-form>
 		<div v-if="stepActive==2">
@@ -62,20 +53,32 @@
 				<el-button type="primary" @click="showAgree=false;form.agree=true;">我已阅读并同意</el-button>
 			</template>
 		</el-dialog>
+		<Verify
+			mode="pop"
+			:captchaType="captchaType"
+			:imgSize="{width:'400px',height:'200px'}"
+			@success="captchaSuccess"
+			ref="verify"
+		></Verify>
 	</common-page>
 </template>
 
 <script>
 	import scPasswordStrength from '@/components/scPasswordStrength';
 	import commonPage from './components/commonPage'
+	import Verify from './components/verifition/Verify'
 
 	export default {
 		components: {
+			Verify,
 			commonPage,
 			scPasswordStrength
 		},
 		data() {
 			return {
+				captchaType:'blockPuzzle',
+				disabled: false,
+				time: 0,
 				stepActive: 0,
 				showAgree: false,
 				form: {
@@ -90,10 +93,11 @@
 				},
 				rules: {
 					user: [
-						{ required: true, message: '请输入账号名'}
+						{ required: true, message: this.$CONFIG.STRINGS.RULE_USERNAME, pattern:this.$CONFIG.STRINGS.REGEX_USERNAME}
 					],
 					password: [
-						{ required: true, message: '请输入密码'}
+						{ required: true,
+							message: this.$CONFIG.STRINGS.RULE_PASSWORD,pattern:this.$CONFIG.STRINGS.REGEX_PASSWORD}
 					],
 					password2: [
 						{ required: true, message: '请再次输入密码'},
@@ -114,18 +118,14 @@
 							}
 						}}
 					],
-					userName: [
-						{ required: true, message: '请输入真实姓名'}
+					phone: [
+						{ required: true,
+							message: this.$CONFIG.STRINGS.RULE_MOBILE,pattern:this.$CONFIG.STRINGS.REGEX_MOBILE }
 					],
-					email: [
-						{ required: true, message: '请输入邮箱地址'}
+					yzm: [
+						{
+							required: true,message: this.$CONFIG.STRINGS.RULE_SMSCODE,pattern:this.$CONFIG.STRINGS.REGEX_SMSCODE}
 					],
-					userType: [
-						{ required: true, message: '请选择账户类型'}
-					],
-					open: [
-						{ required: true, message: '请选择开通类别'}
-					]
 				}
 			}
 		},
@@ -133,6 +133,29 @@
 
 		},
 		methods: {
+			async captchaSuccess(obj){
+				console.log(obj)
+				var validate = await this.$refs.stepForm_1.validateField("phone").catch(()=>{})
+				if(!validate){ return false }
+
+				 this.$message.success("已发送短信至手机号码")
+				 this.disabled = true
+				 this.time = 60
+				 var t = setInterval(() => {
+				 	this.time -= 1
+				 	if(this.time < 1){
+				 		clearInterval(t)
+				 		this.disabled = false
+				 		this.time = 0
+				 	}
+				 },1000)
+			},
+			async getYzm(){
+				var validate = await this.$refs.stepForm_1.validateField("phone").catch(()=>{})
+				if(!validate){ return false }
+				this.$refs.verify.show();
+
+			},
 			pre(){
 				this.stepActive -= 1
 			},

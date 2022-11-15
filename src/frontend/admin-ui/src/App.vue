@@ -1,17 +1,17 @@
 <template>
 	<el-config-provider :locale="locale" :size="config.size" :zIndex="config.zIndex" :button="config.button">
-		<router-view></router-view>
+		<router-view v-if="config.stringsLoaded"></router-view>
 	</el-config-provider>
 </template>
 
 <script>
 	import colorTool from '@/utils/color'
-
 	export default {
 		name: 'App',
 		data() {
 			return {
 				config: {
+					stringsLoaded :false,
 					size: "default",
 					zIndex: 2000,
 					button: {
@@ -25,7 +25,9 @@
 				return this.$i18n.messages[this.$i18n.locale].el
 			},
 		},
-		created() {
+		  async created() {
+			this.$CONFIG.STRINGS =  (await this.$API.constant.getStrings.get()).data;
+			this.config.stringsLoaded = true;
 			//设置主题颜色
 			const app_color = this.$CONFIG.COLOR || this.$TOOL.data.get('APP_COLOR')
 			if(app_color){

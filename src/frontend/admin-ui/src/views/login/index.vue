@@ -141,7 +141,6 @@ export default {
 		}
 	},
 	mounted() {
-		//this.$refs.captcha.show()
 		this.$refs.verify.show();
 	},
 	created: function () {

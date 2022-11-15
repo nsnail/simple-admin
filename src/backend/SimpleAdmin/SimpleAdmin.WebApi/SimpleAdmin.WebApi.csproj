@@ -14,14 +14,14 @@
     </PropertyGroup>
 
     <ItemGroup Condition="Exists('d:\ForkedGitReps')">
-        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Extras.Authentication.JwtBearer\Furion.Extras.Authentication.JwtBearer.csproj"/>
-        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Extras.Logging.Serilog\Furion.Extras.Logging.Serilog.csproj"/>
-        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Extras.ObjectMapper.Mapster\Furion.Extras.ObjectMapper.Mapster.csproj"/>
-        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Pure\Furion.Pure.csproj"/>
-        <ProjectReference Include="d:\ForkedGitReps\ns-ext\src\NSExt\NSExt.csproj"/>
-        <ProjectReference Include="d:\ForkedGitReps\FreeSql\FreeSql\FreeSql.csproj"/>
-        <ProjectReference Include="d:\ForkedGitReps\FreeSql\FreeSql.DbContext\FreeSql.DbContext.csproj"/>
-        <ProjectReference Include="d:\ForkedGitReps\FreeSql\Providers\FreeSql.Provider.Sqlite\FreeSql.Provider.Sqlite.csproj"/>
+        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Extras.Authentication.JwtBearer\Furion.Extras.Authentication.JwtBearer.csproj" />
+        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Extras.Logging.Serilog\Furion.Extras.Logging.Serilog.csproj" />
+        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Extras.ObjectMapper.Mapster\Furion.Extras.ObjectMapper.Mapster.csproj" />
+        <ProjectReference Include="d:\ForkedGitReps\Furion\framework\Furion.Pure\Furion.Pure.csproj" />
+        <ProjectReference Include="d:\ForkedGitReps\ns-ext\src\NSExt\NSExt.csproj" />
+        <ProjectReference Include="d:\ForkedGitReps\FreeSql\FreeSql\FreeSql.csproj" />
+        <ProjectReference Include="d:\ForkedGitReps\FreeSql\FreeSql.DbContext\FreeSql.DbContext.csproj" />
+        <ProjectReference Include="d:\ForkedGitReps\FreeSql\Providers\FreeSql.Provider.Sqlite\FreeSql.Provider.Sqlite.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -31,16 +31,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="../../../frontend/swagger-ui/dist/**" LinkBase=".res/swagger-ui"/>
+        <EmbeddedResource Include="../../../frontend/swagger-ui/dist/**" LinkBase=".res/swagger-ui" />
     </ItemGroup>
 
 
     <ItemGroup>
-        <PackageReference Include="BenchmarkDotNet" Version="0.13.2"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.0"/>
-        <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3"/>
-        <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15"/>
-        <PackageReference Include="Yitter.IdGenerator" Version="1.0.14"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.0" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
+        <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15" />
+        <PackageReference Include="Yitter.IdGenerator" Version="1.0.14" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="../../../../res/**" LinkBase=".res" CopyToOutputDirectory="PreserveNewest">

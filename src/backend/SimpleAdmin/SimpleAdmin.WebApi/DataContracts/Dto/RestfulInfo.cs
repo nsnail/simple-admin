@@ -1,4 +1,6 @@
-﻿namespace SimpleAdmin.WebApi.DataContracts.Dto;
+﻿using Newtonsoft.Json;
+
+namespace SimpleAdmin.WebApi.DataContracts.Dto;
 
 /// <summary>
 ///     RESTful 风格结果集
@@ -9,15 +11,18 @@ public record RestfulInfo<T> : DtoBase
     /// <summary>
     ///     代码
     /// </summary>
-    public int Code { get; set; }
+    [JsonProperty("code")]
+    public object Code { get; set; }
 
     /// <summary>
     ///     数据
     /// </summary>
+    [JsonProperty("data")]
     public T Data { get; set; }
 
     /// <summary>
     ///     消息
     /// </summary>
+    [JsonProperty("message")]
     public object Message { get; set; }
 }
