@@ -62,11 +62,11 @@ public class FreeSqlHelper
 
         freeSql.Aop.CurdBefore += (_, e) => {
                                       var sql = GetNoParamSql(e.Sql, e.DbParms);
-                                      _logger.Info($"SQL.{sql.GetHashCode()}：{sql}");
+                                      _logger.Info($"SQL.{(uint)sql.GetHashCode()}：{sql}");
                                   };
         freeSql.Aop.CurdAfter += (_, e) => {
                                      var sql = GetNoParamSql(e.Sql, e.DbParms);
-                                     _logger.Info($"SQL.{sql.GetHashCode()}：{e.ElapsedMilliseconds} ms");
+                                     _logger.Info($"SQL.{(uint)sql.GetHashCode()}：{e.ElapsedMilliseconds} ms");
                                  };
 
         #endregion 监听Curd操作
@@ -123,7 +123,9 @@ public class FreeSqlHelper
     {
         return dbParams.Where(x => x is not null)
                        .Aggregate(sql,
-                                  (current, dbParm) => current.Replace(dbParm.ParameterName, dbParm.Value?.ToString()));
+                                  (current, dbParam) =>
+                                      current.Replace(dbParam.ParameterName, dbParam.Value?.ToString()))
+                       .RemoveWrapped();
     }
 
     private static void InitSeedData(IFreeSql freeSql, IEnumerable<Type> entityTypes)
