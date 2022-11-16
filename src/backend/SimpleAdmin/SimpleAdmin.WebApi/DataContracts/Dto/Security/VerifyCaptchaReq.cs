@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations;
 namespace SimpleAdmin.WebApi.DataContracts.Dto.Security;
 
 /// <summary>
-///     检查验证信息请求
+///     人机校验请求
 /// </summary>
 public record VerifyCaptchaReq : ICacheKey
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="ICacheKey.CacheKey" />
     [Required]
     public string CacheKey { get; set; }
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using NSExt.Extensions;
 using SimpleAdmin.WebApi.DataContracts.Dto;
 using SimpleAdmin.WebApi.Infrastructure.Constants;
 
@@ -11,6 +12,20 @@ namespace SimpleAdmin.WebApi.Api.Implements;
 [AllowAnonymous]
 public class ConstantApi : ApiBase<IConstantApi>, IConstantApi
 {
+    /// <inheritdoc />
+    public object GetEnums()
+    {
+        return typeof(Enums).GetNestedTypes()
+                            .ToDictionary(x => x.Name,
+                                          x => x.GetEnumValues()
+                                                .Cast<object>()
+                                                .ToDictionary(x.GetEnumName,
+                                                              y => new {
+                                                                  Value = y,
+                                                                  Desc  = ((Enum)y).Desc()
+                                                              }));
+    }
+
     /// <inheritdoc />
     [NonUnify]
     public IActionResult GetStrings()

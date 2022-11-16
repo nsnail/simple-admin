@@ -1,16 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using SimpleAdmin.WebApi.Infrastructure.Constants;
 
 namespace SimpleAdmin.WebApi.DataContracts.Dto.Security;
 
 /// <summary>
-///     发送短信验证码请求
+///     短信验证码信息
 /// </summary>
-public record SendSmsCodeReq : SmsCodeInfo
+public record VerifySmsCodeReq : SmsCodeInfo
 {
-    /// <inheritdoc />
-    [JsonIgnore]
+    /// <inheritdoc cref="SmsCodeInfo.Code" />
+    [Required]
     public override string Code { get; set; }
 
     /// <inheritdoc />
@@ -21,13 +21,7 @@ public record SendSmsCodeReq : SmsCodeInfo
     [Required]
     public override string Mobile { get; set; }
 
-    /// <inheritdoc cref="SmsCodeInfo.Type" />
-    [Required]
+    /// <inheritdoc />
+    [JsonIgnore]
     public override Enums.SmsCodeTypes Type { get; set; }
-
-    /// <summary>
-    ///     人机校验请求
-    /// </summary>
-    [Required]
-    public VerifyCaptchaReq VerifyCaptchaReq { get; set; }
 }

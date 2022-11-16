@@ -141,7 +141,6 @@ export default {
 		}
 	},
 	mounted() {
-		this.$refs.verify.show();
 	},
 	created: function () {
 		this.$TOOL.cookie.remove("TOKEN")

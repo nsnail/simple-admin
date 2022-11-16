@@ -264,11 +264,10 @@
                                 }
                                 passFlag.value = true
                                 tipWords.value = `${((endMovetime.value-startMoveTime.value)/1000).toFixed(2)}s验证成功`
-                                var captchaVerification = secretKey.value ? aesEncrypt(backToken.value+'---'+JSON.stringify({x:moveLeftDistance,y:5.0}),secretKey.value):backToken.value+'---'+JSON.stringify({x:moveLeftDistance,y:5.0})
                                 setTimeout(()=>{
                                     tipWords.value = ""
                                     proxy.$parent.closeBox();
-                                    proxy.$parent.$emit('success', {captchaVerification})
+                                    proxy.$parent.$emit('success', data)
                                 },1000)
                             }else{
                                 moveBlockBackgroundColor.value = '#d9534f'
@@ -327,6 +326,7 @@
                             secretKey.value = aesEncrypt(res.data.cacheKey)
 							if (secretKey.value.length>32)
 								secretKey.value= secretKey.value.substring(0,32)
+							proxy.$parent.$emit('apiReady', res.data)
 
                         }else{
                             tipWords.value = res.repMsg;

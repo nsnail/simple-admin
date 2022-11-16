@@ -1,15 +1,17 @@
-using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using SimpleAdmin.WebApi.Infrastructure.Constants;
 
 namespace SimpleAdmin.WebApi.DataContracts.Dto.Security;
 
 /// <summary>
-///     短信数字码信息
+///     短信验证码信息
 /// </summary>
 public record SmsCodeInfo
 {
     /// <summary>
-    ///     数字码
+    ///     验证码
     /// </summary>
+    [RegularExpression(Strings.REGEX_SMSCODE, ErrorMessage = Strings.RULE_SMSCODE)]
     public virtual string Code { get; set; }
 
 
@@ -22,27 +24,12 @@ public record SmsCodeInfo
     /// <summary>
     ///     手机号
     /// </summary>
+    [RegularExpression(Strings.REGEX_MOBILE, ErrorMessage = Strings.RULE_MOBILE)]
     public virtual string Mobile { get; set; }
 
 
     /// <summary>
-    ///     操作类型
+    ///     类型
     /// </summary>
-    public virtual OperationTypes OperationType { get; set; }
-}
-
-/// <summary>
-///     操作类型
-/// </summary>
-public enum OperationTypes
-{
-    /// <summary>
-    ///     注册账号
-    /// </summary>
-    [Description(nameof(注册帐号))] 注册帐号,
-
-    /// <summary>
-    ///     登录
-    /// </summary>
-    [Description(nameof(登录))] 登录
+    public virtual Enums.SmsCodeTypes Type { get; set; }
 }

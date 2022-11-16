@@ -66,7 +66,9 @@ const DEFAULT_CONFIG = {
 		]
 	},
 	//常量字符串
-	STRINGS:null
+	STRINGS:null,
+	//常量枚举
+	ENUMS:null
 }
 
 //合并业务配置

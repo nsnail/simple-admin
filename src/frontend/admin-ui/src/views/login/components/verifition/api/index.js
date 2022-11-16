@@ -1,11 +1,13 @@
-import { getCaptcha, verifyCaptcha } from '@/api/admin/auth'
+
+
+import security from "@/api/model/security";
 
 // 获取验证图片  以及token
 export function reqGet(data) {
-	return getCaptcha(data)
+	return security.getCaptchaImage.get(data)
 }
 
 // 滑动或者点选验证
 export function reqCheck(data) {
-	return verifyCaptcha(data)
+	return security.verifyCaptcha.post(data)
 }

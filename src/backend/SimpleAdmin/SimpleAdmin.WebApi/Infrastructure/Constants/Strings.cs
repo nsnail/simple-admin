@@ -5,7 +5,6 @@ public static class Strings
 {
     public const string FMT_YYYY_MM_DD = "yyyy-MM-dd";
 
-
     public const string FMT_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
 
@@ -20,15 +19,19 @@ public static class Strings
     public const string REGEX_SMSCODE  = """^\d{4}$""";
     public const string REGEX_USERNAME = """^[a-zA-Z0-9_]{5,20}$""";
     public const string RULE_MOBILE    = "能正常使用的手机号码";
-    public const string RULE_PASSWORD  = "8位以上数字字母组合";
-    public const string RULE_REQUIRED  = "必填";
-    public const string RULE_SMSCODE   = "验证码短信中的4位数字";
-    public const string RULE_USERNAME  = "5位以上（字母数字下划线）";
+
+    public const string RULE_MOBILE_EXISTS = "手机号已被注册";
+    public const string RULE_PASSWORD      = "8位以上数字字母组合";
+    public const string RULE_REQUIRED      = "必填";
+    public const string RULE_SMSCODE       = "验证码短信中的4位数字";
+    public const string RULE_USERNAME      = "5位以上（字母数字下划线）";
 
     public const string TEMP_LOG_OUPUT =
         "[{Timestamp:HH:mm:ss.fff} {Level:u3} {SourceContext,64}] {Message:lj}{NewLine}{Exception}";
 
     public const string TEMP_SMSCODE = "您正在进行 {0} 操作，验证码为：{1}，5分钟内有效，如非本人操作，请忽略。";
+
+    public const string TEMP_TRYSEND_SECS_AFTER = "{0} 秒后，可再次发送";
 
 
     public const string UA_MOBILE =

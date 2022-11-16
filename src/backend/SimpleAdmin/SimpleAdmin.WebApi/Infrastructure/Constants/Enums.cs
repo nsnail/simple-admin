@@ -40,7 +40,7 @@ public static class Enums
     }
 
     /// <summary>
-    ///     错误码
+    ///     错误码（0 表示 成功）
     /// </summary>
     [ErrorCodeType]
     public enum ErrorCodes
@@ -48,32 +48,38 @@ public static class Enums
         /// <summary>
         ///     未知错误
         /// </summary>
-        [ErrorCodeItemMetadata("{0}")] 未知错误 = 4000,
+        [ErrorCodeItemMetadata("{0}")] [Description("未知错误")]
+        Unknown = 4000,
 
         /// <summary>
         ///     无效输入
         /// </summary>
-        [ErrorCodeItemMetadata("{0}")] 无效输入 = 4010,
+        [ErrorCodeItemMetadata("{0}")] [Description("无效输入")]
+        InvalidInput = 4010,
 
         /// <summary>
         ///     无效操作
         /// </summary>
-        [ErrorCodeItemMetadata("{0}")] 无效操作 = 4020,
+        [ErrorCodeItemMetadata("{0}")] [Description("无效操作")]
+        InvalidOperation = 4020,
 
         /// <summary>
         ///     未登录
         /// </summary>
-        [ErrorCodeItemMetadata("{0}")] 尚未登录 = 4030,
+        [ErrorCodeItemMetadata("{0}")] [Description("未登录")]
+        IdentityMissing = 4030,
 
         /// <summary>
         ///     权限不足
         /// </summary>
-        [ErrorCodeItemMetadata("{0}")] 权限不足 = 4031,
+        [ErrorCodeItemMetadata("{0}")] [Description("权限不足")]
+        NoPermissions = 4031,
 
         /// <summary>
         ///     人机验证
         /// </summary>
-        [ErrorCodeItemMetadata("人机验证未通过")] 人机验证 = 4040
+        [ErrorCodeItemMetadata("需进行人机验证")] [Description("人机验证")]
+        HumanVerification = 4040
     }
 
 
@@ -106,7 +112,7 @@ public static class Enums
     /// <summary>
     ///     操作者
     /// </summary>
-    public enum Operators : byte
+    public enum Operators
     {
         /// <summary>
         ///     用户
@@ -122,6 +128,22 @@ public static class Enums
         ///     服务程序
         /// </summary>
         Service = 3
+    }
+
+    /// <summary>
+    ///     短信验证码类型
+    /// </summary>
+    public enum SmsCodeTypes
+    {
+        /// <summary>
+        ///     注册账号
+        /// </summary>
+        CreateUser = 1,
+
+        /// <summary>
+        ///     登录
+        /// </summary>
+        Login = 2
     }
 
     /// <summary>

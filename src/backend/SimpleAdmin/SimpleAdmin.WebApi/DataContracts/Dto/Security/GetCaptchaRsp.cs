@@ -10,7 +10,7 @@ public record GetCaptchaRsp : ICacheKey
     /// </summary>
     public virtual string BackgroundImage { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="ICacheKey.CacheKey" />
     public string CacheKey { get; set; }
 
     /// <summary>

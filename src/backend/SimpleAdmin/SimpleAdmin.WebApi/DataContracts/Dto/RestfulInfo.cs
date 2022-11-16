@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SimpleAdmin.WebApi.Infrastructure.Constants;
 
 namespace SimpleAdmin.WebApi.DataContracts.Dto;
 
@@ -12,7 +13,7 @@ public record RestfulInfo<T> : DtoBase
     ///     代码
     /// </summary>
     [JsonProperty("code")]
-    public object Code { get; set; }
+    public Enums.ErrorCodes Code { get; set; }
 
     /// <summary>
     ///     数据
@@ -23,6 +24,6 @@ public record RestfulInfo<T> : DtoBase
     /// <summary>
     ///     消息
     /// </summary>
-    [JsonProperty("message")]
-    public object Message { get; set; }
+    [JsonProperty("msg")]
+    public object Msg { get; set; }
 }

@@ -1,6 +1,6 @@
 <template>
 	<el-config-provider :locale="locale" :size="config.size" :zIndex="config.zIndex" :button="config.button">
-		<router-view v-if="config.stringsLoaded"></router-view>
+		<router-view v-if="config.stringsLoaded &&  config.enumsLoaded"></router-view>
 	</el-config-provider>
 </template>
 
@@ -12,6 +12,7 @@
 			return {
 				config: {
 					stringsLoaded :false,
+					enumsLoaded:false,
 					size: "default",
 					zIndex: 2000,
 					button: {
@@ -26,8 +27,12 @@
 			},
 		},
 		  async created() {
-			this.$CONFIG.STRINGS =  (await this.$API.constant.getStrings.get()).data;
+			  const [strings, enums] = await Promise.all([this.$API.constant.getStrings.get(),
+				  this.$API.constant.getEnums.get()]);
+			  this.$CONFIG.STRINGS =  strings.data;
 			this.config.stringsLoaded = true;
+			  this.$CONFIG.ENUMS =  enums.data;
+			  this.config.enumsLoaded = true;
 			//设置主题颜色
 			const app_color = this.$CONFIG.COLOR || this.$TOOL.data.get('APP_COLOR')
 			if(app_color){

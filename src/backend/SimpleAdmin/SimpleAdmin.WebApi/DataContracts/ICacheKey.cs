@@ -5,5 +5,8 @@ namespace SimpleAdmin.WebApi.DataContracts;
 /// </summary>
 public interface ICacheKey
 {
+    /// <summary>
+    ///     缓存键
+    /// </summary>
     string CacheKey { get; set; }
 }

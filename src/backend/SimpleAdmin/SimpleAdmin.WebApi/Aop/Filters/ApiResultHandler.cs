@@ -39,9 +39,9 @@ public class ApiResultHandler : IUnifyResultProvider
     /// <returns></returns>
     public IActionResult OnException(ExceptionContext context, ExceptionMetadata metadata)
     {
-        var result = metadata.OriginErrorCode is null
-                         ? RestfulResult(Enums.ErrorCodes.未知错误)
-                         : RestfulResult(metadata.OriginErrorCode, metadata.Data, metadata.Errors);
+        var result = RestfulResult(metadata.OriginErrorCode is Enums.ErrorCodes code ? code : Enums.ErrorCodes.Unknown,
+                                   metadata.Data,
+                                   metadata.Errors);
 
         return new JsonResult(result) {
             StatusCode = StatusCodes.Status400BadRequest
@@ -104,7 +104,7 @@ public class ApiResultHandler : IUnifyResultProvider
     /// <returns></returns>
     public IActionResult OnValidateFailed(ActionExecutingContext context, ValidationMetadata metadata)
     {
-        return new JsonResult(RestfulResult(Enums.ErrorCodes.无效输入, metadata.Data, metadata.ValidationResult)) {
+        return new JsonResult(RestfulResult(Enums.ErrorCodes.InvalidInput, metadata.Data, metadata.ValidationResult)) {
             StatusCode = StatusCodes.Status400BadRequest
         };
     }
@@ -116,12 +116,14 @@ public class ApiResultHandler : IUnifyResultProvider
     /// <param name="data"></param>
     /// <param name="message"></param>
     /// <returns></returns>
-    private static RestfulInfo<dynamic> RestfulResult(object errorCode, object data = default, object message = default)
+    private static RestfulInfo<dynamic> RestfulResult(Enums.ErrorCodes errorCode,
+                                                      object           data    = default,
+                                                      object           message = default)
     {
         return new RestfulInfo<dynamic> {
-            Code    = errorCode,
-            Data    = data,
-            Message = message
+            Code = errorCode,
+            Data = data,
+            Msg  = message
         };
     }
 }

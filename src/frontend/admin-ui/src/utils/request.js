@@ -39,12 +39,7 @@ axios.interceptors.response.use(
 					title: '请求错误',
 					message: "Status:404，正在请求不存在的服务器记录！"
 				});
-			} else if (error.response.status == 500) {
-				ElNotification.error({
-					title: '请求错误',
-					message: error.response.data.message || "Status:500，服务器发生错误！"
-				});
-			} else if (error.response.status == 401) {
+			}  else if (error.response.status == 401) {
 				ElMessageBox.confirm('当前用户已被登出或无权限访问当前资源，请尝试重新登录后再操作。', '无权限访问', {
 					type: 'error',
 					closeOnClickModal: false,
@@ -53,7 +48,33 @@ axios.interceptors.response.use(
 				}).then(() => {
 					router.replace({path: '/login'});
 				}).catch(() => {})
-			} else {
+			} else if (error.response.data.code){
+				var title = sysConfig.ENUMS.errorCodes.unknown.desc;
+				switch (error.response.data.code){
+					case sysConfig.ENUMS.errorCodes.invalidInput.value:
+						title = sysConfig.ENUMS.errorCodes.invalidInput.desc;
+						break;
+					case sysConfig.ENUMS.errorCodes.invalidOperation.value:
+						title = sysConfig.ENUMS.errorCodes.invalidOperation.desc;
+						break;
+					case sysConfig.ENUMS.errorCodes.identityMissing.value:
+						title = sysConfig.ENUMS.errorCodes.identityMissing.desc;
+						break;
+					case sysConfig.ENUMS.errorCodes.noPermissions.value:
+						title = sysConfig.ENUMS.errorCodes.noPermissions.desc;
+						break;
+					case sysConfig.ENUMS.errorCodes.humanVerification.value:
+						title = sysConfig.ENUMS.errorCodes.humanVerification.desc;
+						break;
+				}
+
+				ElNotification.error({
+					title: title,
+					message: error.response.data.msg
+				});
+			}
+
+			else {
 				ElNotification.error({
 					title: '请求错误',
 					message: error.message || `Status:${error.response.status}，未知错误！`

@@ -38,7 +38,7 @@ public class RequestAuditEvents : IEventSubscriber, ISingleton, IDisposable
 
         // 截断过长的ResponseResult
         const int cutThreshold = 1000;
-        if (tbSysOperationLog.ResponseResult.Length > cutThreshold)
+        if (tbSysOperationLog.ResponseResult?.Length > cutThreshold)
             tbSysOperationLog.ResponseResult = $"{tbSysOperationLog.ResponseResult.Sub(0, cutThreshold)}...";
         await _scope.ServiceProvider.GetRequiredService<OperationLogRepository>().InsertAsync(tbSysOperationLog);
     }

@@ -73,8 +73,8 @@ public class FreeSqlHelper
 
         #region 初始化数据库
 
-        Task.Run(() => {
-                     WaitSerilogReady();
+        Task.Run(async () => {
+                     await WaitSerilogReady();
 
                      var entityTypes = GetEntityTypes();
 
@@ -154,7 +154,7 @@ public class FreeSqlHelper
         freeSql.CodeFirst.SyncStructure(entityTypes);
     }
 
-    private void WaitSerilogReady()
+    private async Task WaitSerilogReady()
     {
         _logger = App.GetService<ILogger<FreeSqlHelper>>();
         for (var i = 0; i != 10; ++i) {
@@ -165,7 +165,7 @@ public class FreeSqlHelper
                       ?.GetType()
                        .Name == "SerilogLogger")
                 break;
-            Thread.Sleep(100);
+            await Task.Delay(100);
             _logger = App.GetService<ILogger<FreeSqlHelper>>();
         }
     }

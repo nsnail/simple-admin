@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SimpleAdmin.WebApi.DataContracts.Dto.Security;
 using SimpleAdmin.WebApi.Infrastructure.Constants;
 
 namespace SimpleAdmin.WebApi.DataContracts.Dto.Account;
@@ -15,8 +16,14 @@ public record CreateReq : AccountInfo
     [RegularExpression(Strings.REGEX_PASSWORD, ErrorMessage = Strings.RULE_PASSWORD)]
     public string Password { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="AccountInfo.UserName" />
     [Required(ErrorMessage = Strings.RULE_REQUIRED)]
-    [RegularExpression(Strings.REGEX_USERNAME, ErrorMessage = Strings.RULE_USERNAME)]
     public override string UserName { get; set; }
+
+
+    /// <summary>
+    ///     短信验证码信息
+    /// </summary>
+    [Required]
+    public VerifySmsCodeReq VerifySmsCodeReq { get; set; }
 }

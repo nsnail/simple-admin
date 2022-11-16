@@ -8,7 +8,14 @@ namespace SimpleAdmin.WebApi.Api;
 public interface IAccountApi
 {
     /// <summary>
+    ///     检查用户名可用性
+    /// </summary>
+    /// <param name="req"></param>
+    /// <returns></returns>
+    bool CheckUserName(CheckUserNameReq req);
+
+    /// <summary>
     ///     创建帐号
     /// </summary>
-    void Create(CreateReq req);
+    Task Create(CreateReq req);
 }
