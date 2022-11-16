@@ -40,12 +40,13 @@ export default {
       let content =
 `/**
  *  ${api.description||apiName}
- *  @module @/api/${scope}/${apiName}
+ *  @module @/api/${apiName}
  */
 
-import request from '@/utils/request'
-import scope from './scope'
-const apiPrefix = \`\${process.env.VUE_APP_BASE_API}/\${scope}/${apiName}/\`
+import config from "@/config"
+import http from "@/utils/request"
+
+export default {
 `
       let functionNames = []
       for (const children of api.childrens) {
@@ -66,20 +67,16 @@ const apiPrefix = \`\${process.env.VUE_APP_BASE_API}/\${scope}/${apiName}/\`
 /**
  * ${children.summary||functionName}
  */
-export const ${functionName} = (params, config = {}) => {
-  return request.${methodType}(apiPrefix + '${methodName}', ${methodType=='post'||methodType=='put'||methodType=='patch'?'params, config':'{ params: params, ...config }'})
-}
+${functionName} :{
+  url: \`\${config.API_URL}/${apiName}/${methodName}\`,
+  name: \`${children.summary||functionName}\`,
+  ${methodType}:async function(data) {
+    return await http.${methodType}(this.url,data)
+  }
+},
+
 `
       }
-      content = content +
-`
-export default {
-`
-      functionNames.forEach((exportFunctionName, index) => {
-        content = content +
-`  ${exportFunctionName}${index==functionNames.length-1?'':','}
-`
-      })
 
       content = content +
 `}

@@ -2172,7 +2172,7 @@ SwaggerBootstrapUi.prototype.analysisDefinitionRefTableModel = function(instance
                     refp.name = pkey
                     refp.type = def.type
                     refp.example = def.example
-                    description = '可用值:' + def['enum'].join(',')
+                    description = def.description
                     refp.description = KUtils.replaceMultipLineStr(description)
                     // models添加所有属性
                     originalTreeTableModel.params.push(refp)
