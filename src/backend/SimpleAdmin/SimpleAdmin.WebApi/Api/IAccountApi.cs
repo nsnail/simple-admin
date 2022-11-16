@@ -12,7 +12,7 @@ public interface IAccountApi
     /// </summary>
     /// <param name="req"></param>
     /// <returns></returns>
-    bool CheckUserName(CheckUserNameReq req);
+    Task<bool> CheckUserName(CheckUserNameReq req);
 
     /// <summary>
     ///     创建帐号

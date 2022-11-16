@@ -13,17 +13,24 @@ public record TbSysUser : DefaultTable
     ///     手机号
     /// </summary>
     [Column]
-    public long? Mobile { get; set; }
+    public long? Mobile { get; init; }
 
     /// <summary>
     ///     密码
     /// </summary>
     [Column]
-    public string Password { get; set; }
+    public Guid Password { get; set; }
+
+
+    /// <summary>
+    ///     密码加盐
+    /// </summary>
+    [Column]
+    public Guid SaltCode { get; set; }
 
     /// <summary>
     ///     用户名
     /// </summary>
     [Column]
-    public string UserName { get; set; }
+    public string UserName { get; init; }
 }

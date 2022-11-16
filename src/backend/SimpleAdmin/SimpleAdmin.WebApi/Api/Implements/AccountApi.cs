@@ -25,9 +25,9 @@ public class AccountApi : ApiBase<IAccountApi>, IAccountApi
 
     /// <inheritdoc />
     [AllowAnonymous]
-    public bool CheckUserName(CheckUserNameReq req)
+    public async Task<bool> CheckUserName(CheckUserNameReq req)
     {
-        return !_accountRepository.Select.Any(a => a.UserName == req.UserName);
+        return !await _accountRepository.Select.AnyAsync(a => a.UserName == req.UserName);
     }
 
     /// <inheritdoc />
@@ -35,14 +35,15 @@ public class AccountApi : ApiBase<IAccountApi>, IAccountApi
     public async Task Create(CreateReq req)
     {
         //短信验证码
-        var sdfff = await _securityApi.VerifySmsCode(req.VerifySmsCodeReq);
-        if (!sdfff) throw Oops.Oh(Enums.ErrorCodes.InvalidInput, "短信验证码不正确");
+        var checkResult = await _securityApi.VerifySmsCode(req.VerifySmsCodeReq);
+        if (!checkResult) throw Oops.Oh(Enums.ErrorCodes.InvalidInput, "短信验证码不正确");
 
-        await _accountRepository.InsertAsync(new TbSysUser {
+        var tbUser = new TbSysUser {
             Mobile   = req.VerifySmsCodeReq.Mobile.Int64(),
-            Password = req.Password,
+            SaltCode = Guid.NewGuid(),
             UserName = req.UserName
-        });
-        Logger.Info($"当前线程：{Thread.CurrentThread.ManagedThreadId}");
+        };
+        tbUser.Password = req.Password.Password(tbUser.SaltCode.ToString());
+        await _accountRepository.InsertAsync(tbUser);
     }
 }

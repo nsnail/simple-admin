@@ -26,5 +26,5 @@ public abstract class ApiBase<T> : IDynamicApiController
     /// <summary>
     ///     日志记录器
     /// </summary>
-    public ILogger<T> Logger { get; }
+    protected ILogger<T> Logger { get; }
 }
