@@ -1,10 +1,10 @@
 using System.ComponentModel;
 using Furion.FriendlyException;
 
-namespace SimpleAdmin.WebApi.Infrastructure.Constants;
+namespace SimpleAdmin.WebApi.Infrastructure.Constant;
 
 /// <summary>
-///     枚举类
+///     枚举常量表
 /// </summary>
 public static class Enums
 {

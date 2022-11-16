@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using NSExt.Extensions;
 using SimpleAdmin.WebApi.DataContracts.DbMaps;
 using SimpleAdmin.WebApi.DataContracts.Dto.Account;
-using SimpleAdmin.WebApi.Infrastructure.Constants;
+using SimpleAdmin.WebApi.Infrastructure.Constant;
 using SimpleAdmin.WebApi.Repositories;
 
 namespace SimpleAdmin.WebApi.Api.Implements;

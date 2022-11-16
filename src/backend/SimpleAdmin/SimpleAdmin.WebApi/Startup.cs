@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Serialization;
 using Serilog;
 using SimpleAdmin.WebApi.Aop.Filters;
-using SimpleAdmin.WebApi.Infrastructure.Constants;
+using SimpleAdmin.WebApi.Infrastructure.Constant;
 using SimpleAdmin.WebApi.Infrastructure.Extensions;
 
 namespace SimpleAdmin.WebApi;

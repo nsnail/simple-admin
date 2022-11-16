@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NSExt.Extensions;
 using SimpleAdmin.WebApi.DataContracts.Dto;
-using SimpleAdmin.WebApi.Infrastructure.Constants;
+using SimpleAdmin.WebApi.Infrastructure.Constant;
 
 namespace SimpleAdmin.WebApi.Api.Implements;
 

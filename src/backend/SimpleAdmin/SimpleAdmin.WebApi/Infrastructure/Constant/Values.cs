@@ -1,7 +1,7 @@
-﻿namespace SimpleAdmin.WebApi.Infrastructure.Constants;
+﻿namespace SimpleAdmin.WebApi.Infrastructure.Constant;
 
 /// <summary>
-///     一些值类型常量
+///     值类型常量表
 /// </summary>
 public static class Values
 {
@@ -26,12 +26,7 @@ public static class Values
     public const int PAGE_SIZE_MIN = 1;
 
     /// <summary>
-    ///     预设的cookie最大日起值
-    /// </summary>
-    public static readonly DateTime COOKIE_MAX_DATE = DateTime.Now.AddYears(100);
-
-    /// <summary>
     ///     sql server中的最小日期值
     /// </summary>
-    public static readonly DateTime SQL_MIN_DATE = new(1753, 1, 1, 12, 0, 0);
+    public static readonly DateTime SQLSERVER_MIN_DATE = new(1753, 1, 1, 12, 0, 0);
 }

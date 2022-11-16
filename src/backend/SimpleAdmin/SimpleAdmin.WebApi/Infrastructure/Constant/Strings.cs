@@ -1,6 +1,9 @@
 ﻿#pragma warning disable CS1591
-namespace SimpleAdmin.WebApi.Infrastructure.Constants;
+namespace SimpleAdmin.WebApi.Infrastructure.Constant;
 
+/// <summary>
+///    字符串常量表
+/// </summary>
 public static class Strings
 {
     public const string FMT_YYYY_MM_DD = "yyyy-MM-dd";

@@ -10,10 +10,10 @@ namespace SimpleAdmin.WebApi.Events;
 /// <summary>
 ///     请求审计事件
 /// </summary>
-public class RequestAuditEvents : IEventSubscriber, ISingleton, IDisposable
+public class RequestAuditEvent : IEventSubscriber, ISingleton, IDisposable
 {
     /// <param name="serviceProvider"></param>
-    public RequestAuditEvents(IServiceProvider serviceProvider)
+    public RequestAuditEvent(IServiceProvider serviceProvider)
     {
         _scope = serviceProvider.CreateScope();
     }

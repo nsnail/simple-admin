@@ -7,7 +7,7 @@ using NSExt.Extensions;
 using SimpleAdmin.WebApi.DataContracts.DbMaps;
 using SimpleAdmin.WebApi.DataContracts.Dto.Security;
 using SimpleAdmin.WebApi.Infrastructure.Configuration.Options;
-using SimpleAdmin.WebApi.Infrastructure.Constants;
+using SimpleAdmin.WebApi.Infrastructure.Constant;
 using SimpleAdmin.WebApi.Infrastructure.Utils;
 using SixLabors.ImageSharp;
 using Yitter.IdGenerator;

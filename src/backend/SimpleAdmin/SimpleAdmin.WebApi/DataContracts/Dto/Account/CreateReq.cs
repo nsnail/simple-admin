@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using SimpleAdmin.WebApi.DataContracts.Dto.Security;
-using SimpleAdmin.WebApi.Infrastructure.Constants;
+using SimpleAdmin.WebApi.Infrastructure.Constant;
 
 namespace SimpleAdmin.WebApi.DataContracts.Dto.Account;
 

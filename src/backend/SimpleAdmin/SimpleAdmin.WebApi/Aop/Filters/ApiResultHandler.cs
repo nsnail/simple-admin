@@ -4,7 +4,7 @@ using Furion.UnifyResult;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SimpleAdmin.WebApi.DataContracts.Dto;
-using SimpleAdmin.WebApi.Infrastructure.Constants;
+using SimpleAdmin.WebApi.Infrastructure.Constant;
 
 namespace SimpleAdmin.WebApi.Aop.Filters;
 

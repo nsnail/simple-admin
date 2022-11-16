@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using SimpleAdmin.WebApi.Infrastructure.Constants;
+using SimpleAdmin.WebApi.Infrastructure.Constant;
 
 namespace SimpleAdmin.WebApi.DataContracts.Dto;
 
