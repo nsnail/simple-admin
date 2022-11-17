@@ -1,13 +1,17 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using SimpleAdmin.WebApi.Infrastructure.Constant;
 
 namespace SimpleAdmin.WebApi.DataContracts.Dto.Account;
 
 /// <summary>
-///     创建用户请求
+///     登录请求
 /// </summary>
-public record CheckUserNameReq : AccountInfo
+public record LoginReq : AccountInfo
 {
+    /// <inheritdoc cref="AccountInfo.Password" />
+    [Required(ErrorMessage = Strings.MSG_REQUIRED)]
+    public override string Password { get; set; }
+
     /// <inheritdoc cref="AccountInfo.UserName" />
     [Required(ErrorMessage = Strings.MSG_REQUIRED)]
     public override string UserName { get; set; }

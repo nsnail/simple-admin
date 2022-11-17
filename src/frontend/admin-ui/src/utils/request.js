@@ -11,10 +11,19 @@ axios.defaults.timeout = sysConfig.TIMEOUT
 // HTTP request 拦截器
 axios.interceptors.request.use(
 	(config) => {
-		let token = tool.cookie.get("TOKEN");
-		if(token){
+		let token = tool.data.get("access-token");
+		if(token) {
 			config.headers[sysConfig.TOKEN_NAME] = sysConfig.TOKEN_PREFIX + token
+			let expires = tool.data.get('access-token-expires')
+			//accesstoken 已过期或 5分钟内过期 带上刷新token
+			if (!expires || expires - new Date().getTime() < 300000) {
+				let refresh_token = tool.data.get("x-access-token");
+				if (refresh_token){
+					config.headers[sysConfig.REFRESH_TOKEN_NAME] = sysConfig.REFRESH_TOKEN_PREFIX + refresh_token
+				}
+			}
 		}
+
 		if(!sysConfig.REQUEST_CACHE && config.method == 'get'){
 			config.params = config.params || {};
 			config.params['_'] = new Date().getTime();
@@ -30,6 +39,19 @@ axios.interceptors.request.use(
 // HTTP response 拦截器
 axios.interceptors.response.use(
 	(response) => {
+		//保存token
+		if (response.headers['access-token'])
+		{
+			const token = response.headers['access-token'];
+			tool.data.set('access-token', token)
+			const jwt = tool.crypto.decryptJWT(token)
+			const secs = jwt.exp - jwt.iat
+			tool.data.set('access-token-expires', new Date().getTime() + secs*1000 )
+		}
+		if (response.headers['x-access-token'])
+		{
+			tool.data.set('x-access-token', response.headers['x-access-token'])
+		}
 		return response;
 	},
 	(error) => {

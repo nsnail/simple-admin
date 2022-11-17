@@ -4,7 +4,7 @@ using Furion.FriendlyException;
 namespace SimpleAdmin.WebApi.Infrastructure.Constant;
 
 /// <summary>
-///     枚举常量表
+///     枚举常量（public类型会通过接口暴露给前端）
 /// </summary>
 public static class Enums
 {
@@ -48,37 +48,37 @@ public static class Enums
         /// <summary>
         ///     未知错误
         /// </summary>
-        [ErrorCodeItemMetadata("{0}")] [Description("未知错误")]
+        [ErrorCodeItemMetadata("{0}")] [Description(Strings.MSG_ERROR_UNKNOWN)]
         Unknown = 4000,
 
         /// <summary>
         ///     无效输入
         /// </summary>
-        [ErrorCodeItemMetadata("{0}")] [Description("无效输入")]
+        [ErrorCodeItemMetadata("{0}")] [Description(Strings.MSG_ERROR_INVALID_INPUT)]
         InvalidInput = 4010,
 
         /// <summary>
         ///     无效操作
         /// </summary>
-        [ErrorCodeItemMetadata("{0}")] [Description("无效操作")]
+        [ErrorCodeItemMetadata("{0}")] [Description(Strings.MSG_INVALID_OPERATION)]
         InvalidOperation = 4020,
 
         /// <summary>
         ///     未登录
         /// </summary>
-        [ErrorCodeItemMetadata("{0}")] [Description("未登录")]
+        [ErrorCodeItemMetadata("{0}")] [Description(Strings.MSG_IDENTITY_MISSING)]
         IdentityMissing = 4030,
 
         /// <summary>
         ///     权限不足
         /// </summary>
-        [ErrorCodeItemMetadata("{0}")] [Description("权限不足")]
+        [ErrorCodeItemMetadata("{0}")] [Description(Strings.MSG_NO_PERMISSIONS)]
         NoPermissions = 4031,
 
         /// <summary>
         ///     人机验证
         /// </summary>
-        [ErrorCodeItemMetadata("需进行人机验证")] [Description("人机验证")]
+        [ErrorCodeItemMetadata("需进行人机验证")] [Description(Strings.MSG_HUMAN_VERIFICATION)]
         HumanVerification = 4040
     }
 
@@ -192,5 +192,12 @@ public static class Enums
         ///     平台管理员
         /// </summary>
         PlatformAdmin = 100
+    }
+
+    [Flags]
+    internal enum UserBitSets : long
+    {
+        [Description(Strings.MSG_USER_DISABLED)]
+        Disabled = 1
     }
 }

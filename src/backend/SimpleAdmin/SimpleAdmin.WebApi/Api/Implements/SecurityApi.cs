@@ -97,7 +97,7 @@ public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi, IScoped
         // 如果是创建用户，但手机号存在，不得发送。
         if (req.Type == Enums.SmsCodeTypes.CreateUser)
             if (await _freeSql.Select<TbSysUser>().AnyAsync(a => a.Mobile == req.Mobile.Int64()))
-                throw Oops.Oh(Enums.ErrorCodes.InvalidOperation, Strings.RULE_MOBILE_EXISTS);
+                throw Oops.Oh(Enums.ErrorCodes.InvalidOperation, Strings.MSG_MOBILE_EXISTS);
 
         var ret = new SmsCodeInfo {
             Code = new[] {

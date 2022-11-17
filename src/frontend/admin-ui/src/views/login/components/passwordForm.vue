@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import {aesEncrypt} from "@/views/login/components/verifition/utils/ase";
 	export default {
 		data() {
 			return {
@@ -63,7 +64,6 @@
 			}
 		},
 		mounted() {
-
 		},
 		methods: {
 			async login(){
@@ -74,15 +74,12 @@
 				this.islogin = true
 				var data = {
 					username: this.form.user,
-					password: this.$TOOL.crypto.MD5(this.form.password)
+					password: aesEncrypt(this.form.password)
 				}
 				//获取token
-				var user = await this.$API.auth.token.post(data)
-				if(user.code == 200){
-					this.$TOOL.cookie.set("TOKEN", user.data.token, {
-						expires: this.form.autologin? 24*60*60 : 0
-					})
-					this.$TOOL.data.set("USER_INFO", user.data.userInfo)
+				var user = await this.$API.account.login.post(data)
+				if(user.code == 0) {
+					console.log(user)
 				}else{
 					this.islogin = false
 					this.$message.warning(user.message)
@@ -93,9 +90,9 @@
 				if(this.form.user == 'admin'){
 					menu = await this.$API.system.menu.myMenus.get()
 				}else{
-					menu = await this.$API.demo.menu.get()
+					menu = await this.$API.user.getProfile2.get()
 				}
-				if(menu.code == 200){
+				if(menu.code == 0){
 					if(menu.data.menu.length==0){
 						this.islogin = false
 						this.$alert("当前用户无任何菜单权限，请联系系统管理员", "无权限访问", {

@@ -11,7 +11,7 @@ public record SmsCodeInfo
     /// <summary>
     ///     验证码
     /// </summary>
-    [RegularExpression(Strings.REGEX_SMSCODE, ErrorMessage = Strings.RULE_SMSCODE)]
+    [RegularExpression(Strings.REGEX_SMSCODE, ErrorMessage = Strings.MSG_SMSCODE_NUMBER)]
     public virtual string Code { get; set; }
 
 
@@ -24,7 +24,7 @@ public record SmsCodeInfo
     /// <summary>
     ///     手机号
     /// </summary>
-    [RegularExpression(Strings.REGEX_MOBILE, ErrorMessage = Strings.RULE_MOBILE)]
+    [RegularExpression(Strings.REGEX_MOBILE, ErrorMessage = Strings.MSG_MOBILE_USEFUL)]
     public virtual string Mobile { get; set; }
 
 

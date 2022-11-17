@@ -9,15 +9,12 @@ namespace SimpleAdmin.WebApi.DataContracts.Dto.Account;
 /// </summary>
 public record CreateReq : AccountInfo
 {
-    /// <summary>
-    ///     密码
-    /// </summary>
-    [Required(ErrorMessage = Strings.RULE_REQUIRED)]
-    [RegularExpression(Strings.REGEX_PASSWORD, ErrorMessage = Strings.RULE_PASSWORD)]
-    public string Password { get; set; }
+    /// <inheritdoc cref="AccountInfo.Password" />
+    [Required(ErrorMessage = Strings.MSG_REQUIRED)]
+    public override string Password { get; set; }
 
     /// <inheritdoc cref="AccountInfo.UserName" />
-    [Required(ErrorMessage = Strings.RULE_REQUIRED)]
+    [Required(ErrorMessage = Strings.MSG_REQUIRED)]
     public override string UserName { get; set; }
 
 

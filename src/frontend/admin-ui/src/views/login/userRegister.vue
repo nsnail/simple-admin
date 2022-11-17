@@ -76,6 +76,7 @@
 import scPasswordStrength from '@/components/scPasswordStrength';
 import commonPage from './components/commonPage'
 import Verify from './components/verifition/Verify'
+import {aesEncrypt} from "@/views/login/components/verifition/utils/ase";
 
 export default {
 	components: {
@@ -217,7 +218,8 @@ export default {
 			const formName = `stepForm_${this.stepActive}`
 			this.$refs[formName].validate(async (valid) => {
 				if (valid) {
-					const res = await this.$API.account.create.post(this.form);
+					const res = await
+						this.$API.account.create.post(Object.assign({},this.form,{password:aesEncrypt(this.form.password),password2:null}));
 					if (res.code == 0)
 						this.stepActive += 1
 				} else {

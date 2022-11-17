@@ -74,7 +74,7 @@ public interface IRepositoryBase<TTable> : IBaseRepository<TTable> where TTable 
     /// <summary>
     ///     当前上下文关联的用户
     /// </summary>
-    IContextUser ContextUser { get; set; }
+    ContextUser ContextUser { get; set; }
 }
 
 /// <inheritdoc cref="SimpleAdmin.WebApi.Repositories.IRepositoryBase{TTable}" />
@@ -188,5 +188,5 @@ public abstract class RepositoryBase<TTable> : DefaultRepository<TTable, long>, 
     }
 
     /// <inheritdoc />
-    public IContextUser ContextUser { get; set; }
+    public ContextUser ContextUser { get; set; }
 }

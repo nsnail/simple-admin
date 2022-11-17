@@ -5,7 +5,6 @@ using FreeSql.Aop;
 using FreeSql.DataAnnotations;
 using NSExt.Extensions;
 using SimpleAdmin.WebApi.Aop.Attributes;
-using SimpleAdmin.WebApi.DataContracts;
 using SimpleAdmin.WebApi.Infrastructure.Configuration.Options;
 using SimpleAdmin.WebApi.Infrastructure.Extensions;
 using Yitter.IdGenerator;
@@ -21,13 +20,11 @@ public class FreeSqlHelper
     {
         _databaseOptions = databaseOptions;
         _logger          = App.GetService<ILogger<FreeSqlHelper>>();
-        _user            = App.GetService<IContextUser>();
     }
 
     private readonly DatabaseOptions        _databaseOptions;
     private          ILogger<FreeSqlHelper> _logger;
     private          TimeSpan               _timeOffset;
-    private readonly IContextUser           _user;
 
 
     /// <summary>
@@ -143,7 +140,40 @@ public class FreeSqlHelper
                                 ?.Invoke(select, null) as bool? ?? true;
 
                 if (any) continue;
-                freeSql.Insert(entity).ExecuteAffrows();
+
+
+                var rep = typeof(FreeSqlDbContextExtensions).GetMethods()
+                                                            .Where(x => x.Name ==
+                                                                        nameof(FreeSqlDbContextExtensions
+                                                                                  .GetRepository))
+                                                            .FirstOrDefault(x => x.GetGenericArguments().Length == 1)
+                                                           ?.MakeGenericMethod(entityType)
+                                                            .Invoke(null,
+                                                                    new object[] {
+                                                                        freeSql,
+                                                                        null
+                                                                    });
+                if (rep?.GetType().GetProperty(nameof(DbContextOptions))?.GetValue(rep) is DbContextOptions options) {
+                    options.EnableCascadeSave = true;
+                    options.NoneParameter     = true;
+                }
+
+                var insert = typeof(IBaseRepository<>).MakeGenericType(entityType)
+                                                      .GetMethod(nameof(IBaseRepository<dynamic>.Insert),
+                                                                 BindingFlags.Public | BindingFlags.Instance,
+                                                                 null,
+                                                                 CallingConventions.Any,
+                                                                 new[] {
+                                                                     entityType
+                                                                 },
+                                                                 null);
+
+
+                if (insert != null)
+                    insert.Invoke(rep,
+                                  new[] {
+                                      entity
+                                  });
             }
         }
     }

@@ -7,8 +7,11 @@ namespace SimpleAdmin.WebApi.DataContracts.DbMaps;
 ///     用户表
 /// </summary>
 [Table]
-public record TbSysUser : DefaultTable
+public record TbSysUser : DefaultTable, IFieldBitSet
 {
+    /// <inheritdoc />
+    public long BitSet { get; set; }
+
     /// <summary>
     ///     手机号
     /// </summary>
@@ -23,10 +26,11 @@ public record TbSysUser : DefaultTable
 
 
     /// <summary>
-    ///     密码加盐
+    ///     做授权验证的Token，全局唯一，可以随时重置（强制下线）
     /// </summary>
     [Column]
-    public Guid SaltCode { get; set; }
+    public Guid Token { get; init; }
+
 
     /// <summary>
     ///     用户名

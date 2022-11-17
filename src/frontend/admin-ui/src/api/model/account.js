@@ -31,4 +31,16 @@ export default {
 		}
 	},
 
+
+	/**
+	 * 帐号登录
+	 */
+	login :{
+		url: `${config.API_URL}/account/login`,
+		name: `帐号登录`,
+		post:async function(data) {
+			return await http.post(this.url,data)
+		}
+	},
+
 }

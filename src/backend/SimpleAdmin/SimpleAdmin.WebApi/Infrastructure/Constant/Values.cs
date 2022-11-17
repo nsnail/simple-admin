@@ -1,7 +1,7 @@
 ﻿namespace SimpleAdmin.WebApi.Infrastructure.Constant;
 
 /// <summary>
-///     值类型常量表
+///     值类型常量表（public类型会通过接口暴露给前端）
 /// </summary>
 public static class Values
 {
