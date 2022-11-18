@@ -8,6 +8,13 @@ namespace SimpleAdmin.WebApi.Api;
 public interface IAccountApi
 {
     /// <summary>
+    ///     检查手机号可用性
+    /// </summary>
+    /// <param name="req"></param>
+    /// <returns></returns>
+    Task<bool> CheckMobile(CheckMobileReq req);
+
+    /// <summary>
     ///     检查用户名可用性
     /// </summary>
     Task<bool> CheckUserName(CheckUserNameReq req);

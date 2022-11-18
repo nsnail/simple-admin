@@ -7,11 +7,11 @@ namespace SimpleAdmin.WebApi.DataContracts.DbMaps;
 ///     角色表
 /// </summary>
 [Table]
-public record TbSysRole : DefaultTable
+public record TbSysRole : FullTable
 {
     /// <summary>
     ///     角色名称
     /// </summary>
-    [Column]
-    public string RoleName { get; set; }
+
+    public virtual string RoleName { get; set; }
 }

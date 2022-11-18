@@ -3,7 +3,7 @@ namespace SimpleAdmin.WebApi.DataContracts;
 /// <summary>
 ///     上下文用户信息
 /// </summary>
-public class ContextUser : IScoped
+public record ContextUser : IScoped
 {
     /// <summary>
     ///     用户id

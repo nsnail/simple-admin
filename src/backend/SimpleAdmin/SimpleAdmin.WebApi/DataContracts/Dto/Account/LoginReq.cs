@@ -1,18 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
-using SimpleAdmin.WebApi.Infrastructure.Constant;
+﻿using SimpleAdmin.WebApi.Aop.Attributes;
+using SimpleAdmin.WebApi.DataContracts.DbMaps;
 
 namespace SimpleAdmin.WebApi.DataContracts.Dto.Account;
 
 /// <summary>
 ///     登录请求
 /// </summary>
-public record LoginReq : AccountInfo
+public record LoginReq : TbSysUser
 {
-    /// <inheritdoc cref="AccountInfo.Password" />
-    [Required(ErrorMessage = Strings.MSG_REQUIRED)]
-    public override string Password { get; set; }
+    /// <inheritdoc cref="TbSysUser.Password" />
+    [RequiredField]
+    public new string Password { get; set; }
 
-    /// <inheritdoc cref="AccountInfo.UserName" />
-    [Required(ErrorMessage = Strings.MSG_REQUIRED)]
+    /// <inheritdoc cref="TbSysUser.UserName" />
+    [JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    [RequiredField]
     public override string UserName { get; set; }
 }

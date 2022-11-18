@@ -20,14 +20,14 @@ const DEFAULT_CONFIG = {
 	//TokenName
 	TOKEN_NAME: "Authorization",
 
-	//Refresh TokenName
-	REFRESH_TOKEN_NAME: "X-Authorization",
-
 	//Token前缀，注意最后有个空格，如不需要需设置空字符串
 	TOKEN_PREFIX: "Bearer ",
 
-	//Refresh Token前缀，注意最后有个空格，如不需要需设置空字符串
-	REFRESH_TOKEN_PREFIX: "Bearer ",
+	//Refresh TokenName
+	REFRESH_TOKEN_NAME: "X-Authorization",
+
+	TOKEN_RSPNAME:'access-token',
+	REFRESH_TOKEN_RSPNAME:'x-access-token',
 
 	//追加其他头
 	HEADERS: {},

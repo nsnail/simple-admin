@@ -72,17 +72,23 @@ import {aesEncrypt} from "@/views/login/components/verifition/utils/ase";
 				if(!validate){ return false }
 
 				this.islogin = true
+
+				if (this.form.autologin)
+					this.$TOOL.data.set('REMEMBER_ME', this.form.autologin)
+				else
+					this.$TOOL.data.remove('REMEMBER_ME')
+
 				var data = {
 					username: this.form.user,
 					password: aesEncrypt(this.form.password)
 				}
 				//获取token
-				var user = await this.$API.account.login.post(data)
-				if(user.code == 0) {
+				try{
+					let user = await this.$API.account.login.post(data)
 					console.log(user)
-				}else{
+					this.$TOOL.data.set("USER_INFO", {userName:'nsnail'})
+				}catch {
 					this.islogin = false
-					this.$message.warning(user.message)
 					return false
 				}
 				//获取菜单
@@ -90,7 +96,7 @@ import {aesEncrypt} from "@/views/login/components/verifition/utils/ase";
 				if(this.form.user == 'admin'){
 					menu = await this.$API.system.menu.myMenus.get()
 				}else{
-					menu = await this.$API.user.getProfile2.get()
+					menu = await this.$API.user.getProfile.get()
 				}
 				if(menu.code == 0){
 					if(menu.data.menu.length==0){

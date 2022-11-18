@@ -1,40 +1,43 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using FreeSql.DataAnnotations;
 using SimpleAdmin.WebApi.Aop.Attributes;
+using SimpleAdmin.WebApi.Infrastructure.Constant;
 
 namespace SimpleAdmin.WebApi.DataContracts.DbMaps.Dependency;
 
 /// <summary>
-///     数据库默认表基类
+///     不可修改表
 /// </summary>
-public abstract record ImmutableTable : ITable, IFieldPrimary, IFieldAdd, IFieldDelete
+public abstract record NoModifyTable : DataContract, ITable, IFieldPrimary, IFieldAdd, IFieldDelete
 {
     /// <inheritdoc />
-    [Description("创建时间")]
+    [JsonIgnore]
+    [Description(Strings.DSC_CREATED_TIME)]
     [Column(CanUpdate = false, ServerTime = DateTimeKind.Local)]
     public DateTime CreatedTime { get; set; }
 
     /// <inheritdoc />
-    [Description("创建者Id")]
+    [JsonIgnore]
+    [Description(Strings.DSC_CREATED_USER_ID)]
     [Column(CanUpdate = false)]
     public long? CreatedUserId { get; set; }
 
     /// <inheritdoc />
-    [Description("创建者")]
+    [JsonIgnore]
+    [Description(Strings.DSC_CREATED_USER_NAME)]
     [Column(CanUpdate = false)]
-    [MaxLength(50)]
     public string CreatedUserName { get; set; }
 
-
     /// <inheritdoc />
-    [Description("主键Id")]
+    [JsonIgnore]
+    [Description(Strings.DSC_ID)]
     [Column(IsIdentity = false, IsPrimary = true)]
     [Snowflake]
     public long Id { get; set; }
 
     /// <inheritdoc />
-    [Description("是否删除")]
-    [Column]
+    [JsonIgnore]
+    [Description(Strings.DSC_IS_DELETED)]
     public bool IsDeleted { get; set; }
 }

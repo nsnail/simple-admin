@@ -2,7 +2,7 @@ namespace SimpleAdmin.WebApi.Infrastructure.Utils;
 
 public interface ISmsSender
 {
-    void Send(string mobile, string content);
+    void Send(long mobile, string content);
 
-    void SendCode(string mobile, string code);
+    void SendCode(long mobile, string code);
 }

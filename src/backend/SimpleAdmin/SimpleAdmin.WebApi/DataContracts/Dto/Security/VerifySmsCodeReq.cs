@@ -1,27 +1,18 @@
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+using SimpleAdmin.WebApi.Aop.Attributes;
+using SimpleAdmin.WebApi.DataContracts.Dto.Account;
 using SimpleAdmin.WebApi.Infrastructure.Constant;
 
 namespace SimpleAdmin.WebApi.DataContracts.Dto.Security;
 
 /// <summary>
-///     短信验证码信息
+///     核实短信验证码请求
 /// </summary>
-public record VerifySmsCodeReq : SmsCodeInfo
+public record VerifySmsCodeReq : CheckMobileReq
 {
-    /// <inheritdoc cref="SmsCodeInfo.Code" />
-    [Required]
-    public override string Code { get; set; }
-
-    /// <inheritdoc />
-    [JsonIgnore]
-    public override DateTime CreateTime { get; set; }
-
-    /// <inheritdoc cref="SmsCodeInfo.Mobile" />
-    [Required]
-    public override string Mobile { get; set; }
-
-    /// <inheritdoc />
-    [JsonIgnore]
-    public override Enums.SmsCodeTypes Type { get; set; }
+    /// <summary>
+    ///     验证码
+    /// </summary>
+    [RequiredField]
+    [RegularExpression(Strings.REGEX_SMSCODE, ErrorMessage = Strings.MSG_SMSCODE_NUMBER)]
+    public string Code { get; set; }
 }

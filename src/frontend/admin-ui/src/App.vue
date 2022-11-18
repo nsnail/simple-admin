@@ -26,13 +26,13 @@
 				return this.$i18n.messages[this.$i18n.locale].el
 			},
 		},
-		  async created() {
-			  const [strings, enums] = await Promise.all([this.$API.constant.getStrings.get(),
-				  this.$API.constant.getEnums.get()]);
-			  this.$CONFIG.STRINGS =  strings.data;
+		async created() {
+			const [strings, enums] = await Promise.all([this.$API.constant.getStrings.get(),
+				this.$API.constant.getEnums.get()]);
+			this.$CONFIG.STRINGS =  strings.data;
 			this.config.stringsLoaded = true;
-			  this.$CONFIG.ENUMS =  enums.data;
-			  this.config.enumsLoaded = true;
+			this.$CONFIG.ENUMS =  enums.data;
+			this.config.enumsLoaded = true;
 			//设置主题颜色
 			const app_color = this.$CONFIG.COLOR || this.$TOOL.data.get('APP_COLOR')
 			if(app_color){

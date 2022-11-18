@@ -3,6 +3,8 @@
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
+        <VersionPrefix>1.0.1</VersionPrefix>
+        <RepositoryUrl>https://github.com/nsnail/simple-admin.git</RepositoryUrl>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -60,6 +62,10 @@
         <Content Update="..\..\..\..\res\configs\securitySettings.Development.json">
             <LinkBase>.res\</LinkBase>
             <Link>.res\configs\securitySettings.Development.json</Link>
+        </Content>
+        <Content Update="..\..\..\..\res\seed-data\TbSysMenu.json">
+            <LinkBase>.res\</LinkBase>
+            <Link>.res\seed-data\TbSysMenu.json</Link>
         </Content>
         <Content Update="..\..\..\..\res\seed-data\TbSysMenu.json">
           <LinkBase>.res\</LinkBase>

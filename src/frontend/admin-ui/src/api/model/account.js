@@ -9,6 +9,18 @@ import http from "@/utils/request"
 export default {
 
 	/**
+	 * 检查手机号可用性
+	 */
+	checkMobile :{
+		url: `${config.API_URL}/account/check-mobile`,
+		name: `检查手机号可用性`,
+		post:async function(data) {
+			return await http.post(this.url,data)
+		}
+	},
+
+
+	/**
 	 * 检查用户名可用性
 	 */
 	checkUserName :{

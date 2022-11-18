@@ -1,30 +1,28 @@
 <template>
 	<common-page title="注册新账号">
-		<el-steps :active="stepActive" finish-status="success" simple>
-			<el-step title="基础信息"/>
+		<el-steps :active="stepActive" simple finish-status="success">
+		    <el-step title="基础信息" />
 			<el-step title="验证手机"/>
-			<el-step title="完成注册"/>
+		    <el-step title="完成注册" />
 		</el-steps>
-		<el-form v-if="stepActive==0" ref="stepForm_0" :label-width="120" :model="form" :rules="rules">
+		<el-form v-if="stepActive==0" ref="stepForm_0" :model="form" :rules="rules" :label-width="120">
 			<el-form-item label="登录账号" prop="userName">
 				<el-input v-model="form.userName" maxlength="20" placeholder="请输入登录账号"></el-input>
-
+				<div class="el-form-item-msg">登录账号将作为登录时的唯一凭证</div>
 			</el-form-item>
 			<el-form-item label="登录密码" prop="password">
-				<el-input v-model="form.password" placeholder="请输入登录密码" show-password type="password"></el-input>
+				<el-input v-model="form.password" type="password" show-password placeholder="请输入登录密码"></el-input>
 				<sc-password-strength v-model="form.password"></sc-password-strength>
-
+				<div class="el-form-item-msg">请输入包含英文、数字的8位以上密码</div>
 			</el-form-item>
 			<el-form-item label="确认密码" prop="password2">
-				<el-input v-model="form.password2" placeholder="请再一次输入登录密码" show-password
-						  type="password"></el-input>
+				<el-input v-model="form.password2" type="password" show-password placeholder="请再一次输入登录密码"></el-input>
 			</el-form-item>
 			<el-form-item label="" prop="agree">
-				<el-checkbox v-model="form.agree" label="">已阅读并同意</el-checkbox>
-				<span class="link" @click="showAgree=true">《平台服务协议》</span>
+				<el-checkbox v-model="form.agree" label="">已阅读并同意</el-checkbox><span class="link" @click="showAgree=true">《平台服务协议》</span>
 			</el-form-item>
 		</el-form>
-		<el-form v-if="stepActive==1" ref="stepForm_1" :label-width="120" :model="form" :rules="rules">
+		<el-form v-if="stepActive==1" ref="stepForm_1" :model="form" :rules="rules" :label-width="120">
 			<el-form-item label="手机号" prop="verifySmsCodeReq.mobile">
 				<el-input v-model="form.verifySmsCodeReq.mobile" clearable maxlength="11"
 						  placeholder="请输入手机号码" prefix-icon="el-icon-iphone">
@@ -44,7 +42,7 @@
 			</el-form-item>
 		</el-form>
 		<div v-if="stepActive==2">
-			<el-result icon="success" sub-title="可以使用登录账号以及手机号登录系统" title="注册成功">
+			<el-result icon="success" title="注册成功" sub-title="可以使用登录账号以及手机号登录系统">
 				<template #extra>
 					<el-button type="primary" @click="goLogin">前去登录</el-button>
 				</template>
@@ -55,7 +53,7 @@
 			<el-button v-if="stepActive<1" type="primary" @click="next">下一步</el-button>
 			<el-button v-if="stepActive==1" type="primary" @click="save">提交</el-button>
 		</el-form>
-		<el-dialog v-model="showAgree" :width="800" destroy-on-close title="平台服务协议">
+		<el-dialog v-model="showAgree" title="平台服务协议" :width="800" destroy-on-close>
 			平台服务协议
 			<template #footer>
 				<el-button @click="showAgree=false">取消</el-button>
@@ -104,7 +102,7 @@ export default {
 			rules: {
 				userName: [
 					{
-						required: true, message: this.$CONFIG.STRINGS.RULE_USERNAME,
+						required: true, message: this.$CONFIG.STRINGS.MSG_USERNAME_STRONG,
 						pattern: this.$CONFIG.STRINGS.REGEX_USERNAME
 					},
 					{
@@ -113,14 +111,14 @@ export default {
 							if (res.code == 0 && res.data) {
 								callback()
 							} else
-								callback(new Error('用户名不可用'))
+								callback(new Error('用户名已被使用'))
 						}, trigger: 'blur'
 					}
 				],
 				password: [
 					{
 						required: true,
-						message: this.$CONFIG.STRINGS.RULE_PASSWORD, pattern: this.$CONFIG.STRINGS.REGEX_PASSWORD
+						message: this.$CONFIG.STRINGS.MSG_PASSWORD_STRONG, pattern: this.$CONFIG.STRINGS.REGEX_PASSWORD
 					}
 				],
 				password2: [
@@ -149,14 +147,24 @@ export default {
 				'verifySmsCodeReq.mobile': [
 					{
 						required: true,
-						message: this.$CONFIG.STRINGS.RULE_MOBILE, pattern: this.$CONFIG.STRINGS.REGEX_MOBILE
+						message: this.$CONFIG.STRINGS.MSG_MOBILE_USEFUL, pattern: this.$CONFIG.STRINGS.REGEX_MOBILE
+					},
+					{
+						validator: async (rule, valueEquals, callback) => {
+							const res = await this.$API.account.checkMobile.post({mobile: valueEquals});
+							if (res.code == 0 && res.data) {
+								callback()
+							} else
+								callback(new Error('手机号已被使用'))
+						}, trigger: 'blur'
 					}
 				],
 				'verifySmsCodeReq.code': [
 					{
 						required: true,
-						message: this.$CONFIG.STRINGS.RULE_SMSCODE,
-						pattern: this.$CONFIG.STRINGS.REGEX_SMSCODE
+						message: this.$CONFIG.STRINGS.MSG_SMSCODE_NUMBER,
+						pattern: this.$CONFIG.STRINGS.REGEX_SMSCODE,
+						trigger: 'change'
 					}
 				],
 			}

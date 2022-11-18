@@ -14,16 +14,23 @@ namespace SimpleAdmin.WebApi.Api.Implements;
 public class AccountApi : ApiBase<IAccountApi>, IAccountApi
 {
     /// <inheritdoc />
-    public AccountApi(AccountRepository rep, ISecurityApi securityApi)
+    public AccountApi(Repository<TbSysUser> rep, ISecurityApi securityApi)
     {
         _rep         = rep;
         _securityApi = securityApi;
     }
 
-    private readonly AccountRepository _rep;
+    private readonly Repository<TbSysUser> _rep;
 
     private readonly ISecurityApi _securityApi;
 
+
+    /// <inheritdoc />
+    [AllowAnonymous]
+    public async Task<bool> CheckMobile(CheckMobileReq req)
+    {
+        return !await _rep.Select.AnyAsync(a => a.Mobile == req.Mobile);
+    }
 
     /// <inheritdoc />
     [AllowAnonymous]
@@ -42,7 +49,7 @@ public class AccountApi : ApiBase<IAccountApi>, IAccountApi
         if (!checkResult) throw Oops.Oh(Enums.ErrorCodes.InvalidInput, Strings.MSG_SMSCODE_WRONG);
 
         var tbUser = new TbSysUser {
-            Mobile   = req.VerifySmsCodeReq.Mobile.Int64(),
+            Mobile   = req.VerifySmsCodeReq.Mobile,
             Token    = Guid.NewGuid(),
             UserName = req.UserName,
             Password = req.Password.Pwd().Guid()
@@ -74,7 +81,7 @@ public class AccountApi : ApiBase<IAccountApi>, IAccountApi
         var refreshToken = JWTEncryption.GenerateRefreshToken(accessToken);
 
         // 设置响应报文头
-        App.HttpContext.Response.Headers["access-token"]   = accessToken;
-        App.HttpContext.Response.Headers["x-access-token"] = refreshToken;
+        App.HttpContext.Response.Headers[Strings.FLAG_ACCESS_TOKEN]   = accessToken;
+        App.HttpContext.Response.Headers[Strings.FLAG_X_ACCESS_TOKEN] = refreshToken;
     }
 }

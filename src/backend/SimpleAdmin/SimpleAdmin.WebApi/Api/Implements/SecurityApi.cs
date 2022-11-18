@@ -96,10 +96,10 @@ public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi, IScoped
 
         // 如果是创建用户，但手机号存在，不得发送。
         if (req.Type == Enums.SmsCodeTypes.CreateUser)
-            if (await _freeSql.Select<TbSysUser>().AnyAsync(a => a.Mobile == req.Mobile.Int64()))
+            if (await _freeSql.Select<TbSysUser>().AnyAsync(a => a.Mobile == req.Mobile))
                 throw Oops.Oh(Enums.ErrorCodes.InvalidOperation, Strings.MSG_MOBILE_EXISTS);
 
-        var ret = new SmsCodeInfo {
+        var smsCode = new SmsCodeInfo {
             Code = new[] {
                     0,
                     10000
@@ -107,15 +107,14 @@ public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi, IScoped
                  .ToString()
                  .PadLeft(4, '0'),
             CreateTime = DateTime.Now,
-            Mobile     = req.Mobile,
-            Type       = req.Type
+            Mobile     = req.Mobile
         };
         // 调用短信接口发送验证码
-        smsSender.SendCode(req.Mobile, ret.Code);
+        smsSender.SendCode(req.Mobile!.Value, smsCode.Code);
         // 写入缓存，用于校验
 
         await _cache.SetStringAsync(cacheKey,
-                                    ret.Json(),
+                                    smsCode.Json(),
                                     new DistributedCacheEntryOptions {
                                         AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(CACHE_EXPIRES_SMSCODE)
                                     });

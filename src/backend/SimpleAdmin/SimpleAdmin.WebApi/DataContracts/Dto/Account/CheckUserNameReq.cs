@@ -1,14 +1,16 @@
-using System.ComponentModel.DataAnnotations;
-using SimpleAdmin.WebApi.Infrastructure.Constant;
+using SimpleAdmin.WebApi.Aop.Attributes;
 
 namespace SimpleAdmin.WebApi.DataContracts.Dto.Account;
 
 /// <summary>
 ///     创建用户请求
 /// </summary>
-public record CheckUserNameReq : AccountInfo
+public record CheckUserNameReq : DataContract
 {
-    /// <inheritdoc cref="AccountInfo.UserName" />
-    [Required(ErrorMessage = Strings.MSG_REQUIRED)]
-    public override string UserName { get; set; }
+    /// <summary>
+    ///     用户名
+    /// </summary>
+    [RequiredField]
+    [RegularExpression(Strings.REGEX_USERNAME, ErrorMessage = Strings.MSG_USERNAME_STRONG)]
+    public string UserName { get; set; }
 }

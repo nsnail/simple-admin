@@ -3,6 +3,8 @@ import { ElNotification, ElMessageBox } from 'element-plus';
 import sysConfig from "@/config";
 import tool from '@/utils/tool';
 import router from '@/router';
+import { generateHTMLTable } from 'json5-to-table';
+import config from "@/config";
 
 axios.defaults.baseURL = ''
 
@@ -11,15 +13,15 @@ axios.defaults.timeout = sysConfig.TIMEOUT
 // HTTP request 拦截器
 axios.interceptors.request.use(
 	(config) => {
-		let token = tool.data.get("access-token");
+		let token = tool.cookie.get("TOKEN");
 		if(token) {
 			config.headers[sysConfig.TOKEN_NAME] = sysConfig.TOKEN_PREFIX + token
-			let expires = tool.data.get('access-token-expires')
+			let expires = tool.data.get('TOKEN-EXP')
 			//accesstoken 已过期或 5分钟内过期 带上刷新token
 			if (!expires || expires - new Date().getTime() < 300000) {
-				let refresh_token = tool.data.get("x-access-token");
+				let refresh_token = tool.data.get("X-TOKEN");
 				if (refresh_token){
-					config.headers[sysConfig.REFRESH_TOKEN_NAME] = sysConfig.REFRESH_TOKEN_PREFIX + refresh_token
+					config.headers[sysConfig.REFRESH_TOKEN_NAME] = sysConfig.TOKEN_PREFIX + refresh_token
 				}
 			}
 		}
@@ -39,18 +41,34 @@ axios.interceptors.request.use(
 // HTTP response 拦截器
 axios.interceptors.response.use(
 	(response) => {
-		//保存token
-		if (response.headers['access-token'])
+
+		let token = response.headers[config.TOKEN_RSPNAME];
+		let refreshToken = response.headers[config.REFRESH_TOKEN_RSPNAME];
+		if (token || refreshToken)
 		{
-			const token = response.headers['access-token'];
-			tool.data.set('access-token', token)
-			const jwt = tool.crypto.decryptJWT(token)
-			const secs = jwt.exp - jwt.iat
-			tool.data.set('access-token-expires', new Date().getTime() + secs*1000 )
-		}
-		if (response.headers['x-access-token'])
-		{
-			tool.data.set('x-access-token', response.headers['x-access-token'])
+			let cookieExpires =tool.data.get('REMEMBER_ME') ? 24*60*60*7 : 0;
+			if (token)
+			{
+				// 保存访问令牌
+				tool.cookie.set("TOKEN", token, {
+					expires: cookieExpires
+				})
+
+				// 解析访问令牌，保存令牌的失效时间
+				const jwt = tool.crypto.decryptJWT(token)
+				const secs = jwt.exp - jwt.iat
+				tool.cookie.set("TOKEN-EXP", new Date().getTime() + secs*1000, {
+					expires: cookieExpires
+				})
+			}
+
+			if (refreshToken)
+			{
+				// 保存刷新令牌
+				tool.cookie.set("X-TOKEN", token, {
+					expires: cookieExpires
+				})
+			}
 		}
 		return response;
 	},
@@ -71,7 +89,7 @@ axios.interceptors.response.use(
 					router.replace({path: '/login'});
 				}).catch(() => {})
 			} else if (error.response.data.code){
-				var title = sysConfig.ENUMS.errorCodes.unknown.desc;
+				let title = sysConfig.ENUMS.errorCodes.unknown.desc;
 				switch (error.response.data.code){
 					case sysConfig.ENUMS.errorCodes.invalidInput.value:
 						title = sysConfig.ENUMS.errorCodes.invalidInput.desc;
@@ -90,10 +108,19 @@ axios.interceptors.response.use(
 						break;
 				}
 
+
+				if(typeof (error.response.data.msg) == 'object'){
 				ElNotification.error({
 					title: title,
-					message: error.response.data.msg
+					dangerouslyUseHTMLString:true,
+					message: generateHTMLTable( error.response.data.msg)
 				});
+				}else{
+					ElNotification.error({
+						title: title,
+						message: error.response.data.msg
+					});
+				}
 			}
 
 			else {

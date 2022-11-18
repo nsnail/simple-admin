@@ -2,5 +2,5 @@
 
 namespace SimpleAdmin.WebApi.DataContracts.DbMaps;
 
-public record TbOperationLog : ImmutableTable
+public record TbOperationLog : NoModifyTable
 { }

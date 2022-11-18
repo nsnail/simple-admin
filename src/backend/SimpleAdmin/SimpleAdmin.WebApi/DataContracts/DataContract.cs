@@ -1,11 +1,11 @@
 ﻿using NSExt.Extensions;
 
-namespace SimpleAdmin.WebApi.DataContracts.Dto;
+namespace SimpleAdmin.WebApi.DataContracts;
 
 /// <summary>
 ///     Dto 基类
 /// </summary>
-public abstract record DtoBase
+public abstract record DataContract
 {
     /// <inheritdoc />
     public override string ToString()

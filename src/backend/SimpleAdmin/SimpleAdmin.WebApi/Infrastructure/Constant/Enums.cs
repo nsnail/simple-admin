@@ -110,6 +110,27 @@ public static class Enums
     }
 
     /// <summary>
+    ///     菜单类型
+    /// </summary>
+    public enum MenuTypes
+    {
+        /// <summary>
+        ///     菜单
+        /// </summary>
+        [Description("菜单")] Menu = 1,
+
+        /// <summary>
+        ///     链接
+        /// </summary>
+        [Description("链接")] Link = 2,
+
+        /// <summary>
+        ///     框架
+        /// </summary>
+        [Description("框架")] Iframe = 3
+    }
+
+    /// <summary>
     ///     操作者
     /// </summary>
     public enum Operators
@@ -128,6 +149,25 @@ public static class Enums
         ///     服务程序
         /// </summary>
         Service = 3
+    }
+
+
+    public enum PermissionTypes
+    {
+        /// <summary>
+        ///     分组
+        /// </summary>
+        [Description("分组")] Group = 1,
+
+        /// <summary>
+        ///     菜单
+        /// </summary>
+        [Description("菜单")] Menu = 2,
+
+        /// <summary>
+        ///     权限点
+        /// </summary>
+        [Description("权限点")] Dot = 3
     }
 
     /// <summary>

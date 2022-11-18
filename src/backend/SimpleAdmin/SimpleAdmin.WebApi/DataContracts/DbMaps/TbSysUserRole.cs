@@ -7,15 +7,15 @@ namespace SimpleAdmin.WebApi.DataContracts.DbMaps;
 ///     用户与角色映射表
 /// </summary>
 [Table]
-public record TbSysUserRole : ImmutableTable
+public record TbSysUserRole : NoModifyTable
 {
     /// <summary>
     ///     角色id
     /// </summary>
-    public long RoleId { get; set; }
+    public virtual long RoleId { get; set; }
 
     /// <summary>
     ///     用户id
     /// </summary>
-    public long UserId { get; set; }
+    public virtual long UserId { get; set; }
 }

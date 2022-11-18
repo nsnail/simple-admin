@@ -1,8 +1,8 @@
 [
   {
-    'Id': 351881876561989,
-    'UserName': 'admin',
-    'Password': '48c0ab05-d785-54b1-9df6-f9e98056ce35',
-    'SaltCode': 'b950830a-ce50-4df0-a1ad-09f101f0ae2e'
+    "id": 351881876561989,
+    "userName": "admin",
+    "password": "48c0ab05-d785-54b1-9df6-f9e98056ce35",
+    "saltCode": "b950830a-ce50-4df0-a1ad-09f101f0ae2e"
   }
 ]

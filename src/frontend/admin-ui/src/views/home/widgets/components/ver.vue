@@ -27,7 +27,7 @@
 		},
 		methods: {
 			async getVer(){
-				const ver = await this.$API.demo.ver.get()
+				const ver = await this.$API.tools.getVersion.get()
 				this.ver = ver.data
 			},
 			golog(){

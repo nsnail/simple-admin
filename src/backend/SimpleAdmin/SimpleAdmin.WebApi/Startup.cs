@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.HttpOverrides;
-using Newtonsoft.Json.Serialization;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.HttpOverrides;
 using Serilog;
 using SimpleAdmin.WebApi.Aop.Filters;
-using SimpleAdmin.WebApi.Infrastructure.Constant;
 using SimpleAdmin.WebApi.Infrastructure.Extensions;
 
 namespace SimpleAdmin.WebApi;
@@ -107,20 +106,21 @@ public class Startup : AppStartup
            .AddControllers()
             // 统一controller api响应结果模板
            .AddInjectWithUnifyResult<ApiResultHandler>()
-            // .AddInject()
-            // ↑ ↓ 二选一
+
             //使用NewtonsoftJson代替asp.netcore默认System.Text.Json组件进行正反序列化
-           .AddNewtonsoftJson(config => {
-                                  #region 序列化设置
-
-                                  // 日期格式
-                                  config.SerializerSettings.DateFormatString = Strings.FMT_YYYY_MM_DD_HH_MM_SS;
-                                  // 小驼峰属性名
-                                  config.SerializerSettings.ContractResolver =
-                                      new CamelCasePropertyNamesContractResolver();
-
-                                  #endregion
-                              });
+            // .AddNewtonsoftJson(config => {
+            //                        #region 序列化设置
+            //
+            //                        // 日期格式
+            //                        config.SerializerSettings.DateFormatString = Strings.FMT_YYYY_MM_DD_HH_MM_SS;
+            //                        // 小驼峰属性名
+            //                        config.SerializerSettings.ContractResolver =
+            //                            new CamelCasePropertyNamesContractResolver();
+            //
+            //                        #endregion
+            //                    })
+            //
+            ;
     }
 
     /// <summary>
@@ -129,9 +129,41 @@ public class Startup : AppStartup
     /// <param name="args"></param>
     public static void Main(string[] args)
     {
+        const string logo = """
+┌{0}┐
+│                                                                   │
+│   _____ _                 _                  _           _        │
+│  / ____(_)               | |        /\      | |         (_)       │
+│ | (___  _ _ __ ___  _ __ | | ___   /  \   __| |_ __ ___  _ _ __   │
+│  \___ \| | '_ ` _ \| '_ \| |/ _ \ / /\ \ / _` | '_ ` _ \| | '_ \  │
+│  ____) | | | | | | | |_) | |  __// ____ \ (_| | | | | | | | | | | │
+│ |_____/|_|_| |_| |_| .__/|_|\___/_/    \_\__,_|_| |_| |_|_|_| |_| │
+│                    | |                                            │
+│                    |_|                                            │
+│                                                                   │
+└{1}┘
+""";
+
+
+        const int  width   = 67;
+        const char padChar = '─';
+        var        asm     = typeof(Startup).Assembly;
+        var        version = $" v{asm.GetName().Version} ";
+        var repUrl = $" {asm.GetCustomAttributes<AssemblyMetadataAttribute>()
+                            .FirstOrDefault(x => x.Key == "RepositoryUrl")
+                           ?.Value} ";
+
+
+        Console.WriteLine(logo,
+                          version.PadLeft((width + version.Length) / 2, padChar).PadRight(width, padChar),
+                          repUrl.PadLeft((width  + repUrl.Length)  / 2, padChar).PadRight(width, padChar));
+
+
         Serve.Run(RunOptions.Default.WithArgs(args)
                             .ConfigureBuilder(builder =>
                                                   //
-                                                  builder.UseSerilogDefault(config => config.Init())));
+                                                  builder.UseSerilogDefault(config => config.Init())
+                                              //
+                                             ));
     }
 }

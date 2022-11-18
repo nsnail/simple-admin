@@ -1,61 +1,73 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using FreeSql.DataAnnotations;
 using SimpleAdmin.WebApi.Aop.Attributes;
+using SimpleAdmin.WebApi.Infrastructure.Constant;
 
 namespace SimpleAdmin.WebApi.DataContracts.DbMaps.Dependency;
 
 /// <summary>
-///     数据库默认表基类
+///     全功能表
 /// </summary>
-public abstract record DefaultTable : ITable, IFieldPrimary, IFieldAdd, IFieldUpdate, IFieldDelete, IFieldVersion
+public abstract record FullTable : DataContract,
+                                   ITable,
+                                   IFieldPrimary,
+                                   IFieldAdd,
+                                   IFieldUpdate,
+                                   IFieldDelete,
+                                   IFieldVersion
 {
     /// <inheritdoc />
-    [Description("创建时间")]
+    [JsonIgnore]
+    [Description(Strings.DSC_CREATED_TIME)]
     [Column(CanUpdate = false, ServerTime = DateTimeKind.Local)]
     public DateTime CreatedTime { get; set; }
 
     /// <inheritdoc />
-    [Description("创建者Id")]
+    [JsonIgnore]
+    [Description(Strings.DSC_CREATED_USER_ID)]
     [Column(CanUpdate = false)]
     public long? CreatedUserId { get; set; }
 
     /// <inheritdoc />
-    [Description("创建者")]
+    [JsonIgnore]
+    [Description(Strings.DSC_CREATED_USER_NAME)]
     [Column(CanUpdate = false)]
-    [MaxLength(50)]
     public string CreatedUserName { get; set; }
 
-
     /// <inheritdoc />
-    [Description("主键Id")]
+    [JsonIgnore]
+    [Description(Strings.DSC_ID)]
     [Column(IsIdentity = false, IsPrimary = true)]
     [Snowflake]
     public long Id { get; set; }
 
     /// <inheritdoc />
-    [Description("是否删除")]
-    [Column]
+    [JsonIgnore]
+    [Description(Strings.DSC_IS_DELETED)]
     public bool IsDeleted { get; set; }
 
     /// <inheritdoc />
-    [Description("修改时间")]
+    [JsonIgnore]
+    [Description(Strings.DESC_MODIFIED_TIME)]
     [Column(CanInsert = false, ServerTime = DateTimeKind.Local)]
     public DateTime? ModifiedTime { get; set; }
 
     /// <inheritdoc />
-    [Description("修改者Id")]
+    [JsonIgnore]
+    [Description(Strings.DSC_MODIFIED_USER_ID)]
     [Column(CanInsert = false)]
     public long? ModifiedUserId { get; set; }
 
     /// <inheritdoc />
-    [Description("修改者")]
+    [JsonIgnore]
+    [Description(Strings.DSC_MODIFIED_USER_NAME)]
     [Column(CanInsert = false)]
-    [MaxLength(50)]
     public string ModifiedUserName { get; set; }
 
     /// <inheritdoc />
-    [Description("版本")]
+    [JsonIgnore]
+    [Description(Strings.DSC_VERSION)]
     [Column(IsVersion = true)]
     public long Version { get; set; }
 }

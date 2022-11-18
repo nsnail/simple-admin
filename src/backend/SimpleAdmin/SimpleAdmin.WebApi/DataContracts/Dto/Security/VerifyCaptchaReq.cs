@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+using SimpleAdmin.WebApi.Aop.Attributes;
 
 namespace SimpleAdmin.WebApi.DataContracts.Dto.Security;
 
@@ -8,12 +8,12 @@ namespace SimpleAdmin.WebApi.DataContracts.Dto.Security;
 public record VerifyCaptchaReq : ICacheKey
 {
     /// <inheritdoc cref="ICacheKey.CacheKey" />
-    [Required]
+    [RequiredField]
     public string CacheKey { get; set; }
 
     /// <summary>
     ///     验证数据
     /// </summary>
-    [Required]
+    [RequiredField]
     public string VerifyData { get; set; }
 }

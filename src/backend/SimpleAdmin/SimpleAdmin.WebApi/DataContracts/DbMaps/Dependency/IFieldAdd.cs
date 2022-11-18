@@ -11,7 +11,7 @@ public interface IFieldAdd
     DateTime CreatedTime { get; set; }
 
     /// <summary>
-    ///     创建者用户Id
+    ///     创建者Id
     /// </summary>
     long? CreatedUserId { get; set; }
 

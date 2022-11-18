@@ -8,6 +8,7 @@ using SimpleAdmin.WebApi.Aop.Attributes;
 using SimpleAdmin.WebApi.Infrastructure.Configuration.Options;
 using SimpleAdmin.WebApi.Infrastructure.Extensions;
 using Yitter.IdGenerator;
+using DataType = FreeSql.DataType;
 
 namespace SimpleAdmin.WebApi.Infrastructure.Utils;
 
@@ -131,50 +132,47 @@ public class FreeSqlHelper
             var path = $"{AppContext.BaseDirectory}/.res/seed-data/{entityType.Name}.json";
             if (!File.Exists(path)) continue;
             dynamic entities = File.ReadAllText(path).Object(typeof(List<>).MakeGenericType(entityType));
-            foreach (var entity in entities) {
-                var select = typeof(IFreeSql).GetMethod(nameof(freeSql.Select), 1, Type.EmptyTypes)
-                                            ?.MakeGenericMethod(entityType)
-                                             .Invoke(freeSql, null);
-                var any = select?.GetType()
-                                 .GetMethod(nameof(ISelect<dynamic>.Any), 0, Type.EmptyTypes)
-                                ?.Invoke(select, null) as bool? ?? true;
-
-                if (any) continue;
 
 
-                var rep = typeof(FreeSqlDbContextExtensions).GetMethods()
-                                                            .Where(x => x.Name ==
-                                                                        nameof(FreeSqlDbContextExtensions
-                                                                                  .GetRepository))
-                                                            .FirstOrDefault(x => x.GetGenericArguments().Length == 1)
-                                                           ?.MakeGenericMethod(entityType)
-                                                            .Invoke(null,
-                                                                    new object[] {
-                                                                        freeSql,
-                                                                        null
-                                                                    });
-                if (rep?.GetType().GetProperty(nameof(DbContextOptions))?.GetValue(rep) is DbContextOptions options) {
-                    options.EnableCascadeSave = true;
-                    options.NoneParameter     = true;
-                }
-
-                var insert = typeof(IBaseRepository<>).MakeGenericType(entityType)
-                                                      .GetMethod(nameof(IBaseRepository<dynamic>.Insert),
-                                                                 BindingFlags.Public | BindingFlags.Instance,
-                                                                 null,
-                                                                 CallingConventions.Any,
-                                                                 new[] {
-                                                                     entityType
-                                                                 },
-                                                                 null);
+            // 如果表存在数据，跳过
+            var select = typeof(IFreeSql).GetMethod(nameof(freeSql.Select), 1, Type.EmptyTypes)
+                                        ?.MakeGenericMethod(entityType)
+                                         .Invoke(freeSql, null);
+            if (select?.GetType()
+                       .GetMethod(nameof(ISelect<dynamic>.Any), 0, Type.EmptyTypes)
+                      ?.Invoke(select, null) as bool? ?? true)
+                continue;
 
 
-                if (insert != null)
-                    insert.Invoke(rep,
-                                  new[] {
-                                      entity
-                                  });
+            var rep = typeof(FreeSqlDbContextExtensions).GetMethods()
+                                                        .Where(x => x.Name ==
+                                                                    nameof(FreeSqlDbContextExtensions.GetRepository))
+                                                        .FirstOrDefault(x => x.GetGenericArguments().Length == 1)
+                                                       ?.MakeGenericMethod(entityType)
+                                                        .Invoke(null,
+                                                                new object[] {
+                                                                    freeSql,
+                                                                    null
+                                                                });
+            if (rep?.GetType().GetProperty(nameof(DbContextOptions))?.GetValue(rep) is DbContextOptions options) {
+                options.EnableCascadeSave = true;
+                options.NoneParameter     = true;
             }
+
+            var insert = typeof(IBaseRepository<>).MakeGenericType(entityType)
+                                                  .GetMethod(nameof(IBaseRepository<dynamic>.Insert),
+                                                             BindingFlags.Public | BindingFlags.Instance,
+                                                             null,
+                                                             CallingConventions.Any,
+                                                             new[] {
+                                                                 typeof(List<>).MakeGenericType(entityType)
+                                                             },
+                                                             null);
+
+            insert?.Invoke(rep,
+                           new[] {
+                               entities
+                           });
         }
     }
 

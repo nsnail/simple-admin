@@ -1,6 +1,6 @@
-using Furion.DynamicApiController;
-
 // ReSharper disable ContextualLoggerProblem
+
+using Furion.DynamicApiController;
 
 namespace SimpleAdmin.WebApi.Api;
 

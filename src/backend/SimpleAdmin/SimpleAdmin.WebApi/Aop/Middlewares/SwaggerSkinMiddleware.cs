@@ -80,7 +80,7 @@ public class SwaggerSkinMiddleware
                 // }else{
                 //     this.url = options.url || 'swagger-resources'
                 // }
-                await context.Response.WriteAsync(_options.ConfigObject.Urls.JsonCamelCase());
+                await context.Response.WriteAsync(_options.ConfigObject.Urls.Json());
                 return;
             // 响应其他资源
             default:
@@ -113,9 +113,9 @@ public class SwaggerSkinMiddleware
         return new Dictionary<string, string> {
             { "%(DocumentTitle)", _options.DocumentTitle },
             { "%(HeadContent)", _options.HeadContent },
-            { "%(ConfigObject)", _options.ConfigObject.JsonCamelCase() },
-            { "%(OAuthConfigObject)", _options.OAuthConfigObject.JsonCamelCase() },
-            { "%(Interceptors)", _options.Interceptors.JsonCamelCase() }
+            { "%(ConfigObject)", _options.ConfigObject.Json() },
+            { "%(OAuthConfigObject)", _options.OAuthConfigObject.Json() },
+            { "%(Interceptors)", _options.Interceptors.Json() }
         };
     }
 

@@ -1,4 +1,5 @@
-﻿using SimpleAdmin.WebApi.DataContracts.Dto.User;
+﻿using SimpleAdmin.WebApi.DataContracts.Dto;
+using SimpleAdmin.WebApi.DataContracts.Dto.User;
 
 namespace SimpleAdmin.WebApi.Api;
 
@@ -11,5 +12,11 @@ public interface IUserApi
     ///     获取个人信息
     /// </summary>
     /// <returns></returns>
-    Task<ProfileRsp> GetProfile();
+    Task<GetProfileRsp> GetProfile();
+
+    /// <summary>
+    ///     分页获取用户列表
+    /// </summary>
+    /// <returns></returns>
+    Task<PagedListRsp<UserRsp>> QueryUsers(PagedListReq<QueryUsersReq> req);
 }
