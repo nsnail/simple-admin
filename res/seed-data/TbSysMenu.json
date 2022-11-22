@@ -1,0 +1,63 @@
+[
+  {
+    "code": "dashboard",
+    "icon": "el-icon-fold",
+    "title": "首页",
+    "path": "/dashboard",
+    "component": "home",
+    "sort": 0,
+    "type": 1,
+  },
+  {
+    "code": "system",
+    "icon": "el-icon-fold",
+    "title": "平台管理",
+    "path": "/system",
+    "sort": 0,
+    "type": 1,
+    "children": [
+      {
+        "code": "system-user",
+        "icon": "el-icon-fold",
+        "title": "用户管理",
+        "path": "/system/user",
+        "sort": 0,
+        "type": 1,
+      },
+      {
+        "code": "system-permission",
+        "icon": "el-icon-fold",
+        "title": "权限管理",
+        "path": "/system/permission",
+        "sort": 0,
+        "type": 1,
+      },
+      {
+        "code": "system-role",
+        "icon": "el-icon-fold",
+        "title": "角色管理",
+        "path": "/system/role",
+        "sort": 0,
+        "type": 1,
+      }
+    ]
+  },
+  {
+    "code": "personal",
+    "icon": "el-icon-fold",
+    "title": "个人管理",
+    "path": "/personal",
+    "sort": 0,
+    "type": 1,
+    "children": [
+      {
+        "code": "personal-settings",
+        "icon": "el-icon-fold",
+        "title": "个人设置",
+        "path": "/personal/settings",
+        "sort": 0,
+        "type": 1,
+      }
+    ]
+  }
+]
