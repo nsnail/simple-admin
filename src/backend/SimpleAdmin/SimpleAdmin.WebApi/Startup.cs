@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
+using System.Text.Json;
 using Microsoft.AspNetCore.HttpOverrides;
+using NSExt.Extensions;
 using Serilog;
 using SimpleAdmin.WebApi.Aop.Filters;
 using SimpleAdmin.WebApi.Infrastructure.Extensions;
@@ -21,45 +23,27 @@ public class Startup : AppStartup
     {
         app
             #if DEBUG
-           .UseDeveloperExceptionPage()
+           .UseDeveloperExceptionPage() //                             开发者异常信息页
+            #else
+           .UseHttpsRedirection() //                                   强制https
             #endif
 
 
-            #if !DEBUG
-            //强制https
-           .UseHttpsRedirection()
-            #endif
-
-            //认证授权
-           .UseAuthentication()
-           .UseAuthorization()
-
-            // 确保AspNetCore Http请求 主体可以被多次读取。
-            // 修复 HttpContext 请求正文内容返回空 ，放在其他所有中间件前面
-           .UseHttpRequestEnableBuffering()
-
-            // Furion基础中间件
-           .UseInject(string.Empty)
-
-            //跨域访问中间件
-           .UseCorsAccessor()
-            //使用Serilog接管HTTP请求日志
-           .UseSerilogRequestLogging()
-
-            //设置识别客户端来源真实ip
+           .UseAuthentication() //                                     认证授权
+           .UseAuthorization()  //                                     认证授权
+            // ↓                                                       修复 HttpContext  请求正文内容返回空 ，放在其他所有中间件前面
+           .UseHttpRequestEnableBuffering() //                         确保AspNetCore Http请求 主体可以被多次读取。
+           .UseInject(string.Empty)         //                         Furion基础中间件
+           .UseCorsAccessor()               //                         跨域访问中间件
+           .UseSerilogRequestLogging()      //                         使用Serilog接管HTTP请求日志
            .UseForwardedHeaders(new ForwardedHeadersOptions {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            })
-            //控制器路由映射
-           .UseRouting()
-
-            // 新版swagger ui（knife4j）中间件
-           .UseSwaggerSkin()
-
-            // 配置端点
-           .UseEndpoints(endpoints => { endpoints.MapControllers(); })
-
-            //
+            })               //                                        设置识别客户端来源真实ip
+           .UseRouting()     //                                        控制器路由映射
+           .UseSwaggerSkin() //                                        新版swagger ui（knife4j）中间件
+           .UseEndpoints(endpoints =>
+                             //
+                             endpoints.MapControllers()) //            配置端点
             ;
     }
 
@@ -69,43 +53,27 @@ public class Startup : AppStartup
     /// <param name="services"></param>
     public void ConfigureServices(IServiceCollection services)
     {
-        //Jwt 授权处理器
-        services.AddJwt<JwtHandler>(enableGlobalAuthorize: true);
+        services.AddJwt<JwtHandler>(enableGlobalAuthorize: true) //    Jwt 授权处理器
+                .Services
+                 #if DEBUG
+                .AddMonitorLogging() //                                打印日志监视信息，便于调试
+                 #endif
 
-        services
-            #if DEBUG
-            // 打印日志监视信息，便于调试
-           .AddMonitorLogging()
-            #endif
-
-            //请求审计日志
-           .AddMvcFilter<RequestAuditHandler>()
-
-            // 雪花id生成器
-           .AddSnowflake()
-
-            //事件总线
-           .AddEventBus()
-
-            // 注册freeSql
-           .AddFreeSql()
-
-            //注册redis
-           .AddRedis()
-
-            //注册配置项
-           .AddAllOptions()
-
-            //支持跨域访问
-           .AddCorsAccessor()
-
-            // 远程请求
-            // .AddRemoteRequest()
-
-            //注册控制器
-           .AddControllers()
-            // 统一controller api响应结果模板
-           .AddInjectWithUnifyResult<ApiResultHandler>()
+                .AddMvcFilter<RequestAuditHandler>()          //       请求审计日志
+                .AddSnowflake()                               //       雪花id生成器
+                .AddEventBus()                                //       事件总线
+                .AddFreeSql()                                 //       注册freeSql
+                .AddRedis()                                   //       注册redis
+                .AddAllOptions()                              //       注册配置项
+                .AddCorsAccessor()                            //       支持跨域访问
+                .AddRemoteRequest()                           //       远程请求
+                .AddControllers()                             //       注册控制器
+                .AddInjectWithUnifyResult<ApiResultHandler>() //       api响应结果模板
+                .AddJsonOptions(options =>
+                                    options.JsonSerializerOptions.CopyFrom(default(JsonSerializerOptions)
+                                                                              .NewJsonSerializerOptions())
+                                //
+                               ) //                                    json序列化配置
 
             //使用NewtonsoftJson代替asp.netcore默认System.Text.Json组件进行正反序列化
             // .AddNewtonsoftJson(config => {
@@ -123,13 +91,33 @@ public class Startup : AppStartup
             ;
     }
 
+
     /// <summary>
     ///     程序入口
     /// </summary>
     /// <param name="args"></param>
     public static void Main(string[] args)
     {
-        const string logo = """
+        PrintLog();
+
+        Serve.Run(RunOptions.Default.WithArgs(args)
+                            .ConfigureBuilder(builder =>
+                                                  //
+                                                  builder.UseSerilogDefault(config => config.Init())
+                                              //
+                                             ));
+    }
+
+
+    private static void PrintLog()
+    {
+        var asm     = typeof(Startup).Assembly;
+        var version = $" v{asm.GetName().Version} ";
+        var repUrl = $" {asm.GetCustomAttributes<AssemblyMetadataAttribute>()
+                            .FirstOrDefault(x => x.Key == "RepositoryUrl")
+                           ?.Value} ";
+
+        var logo = (t: """
 ┌{0}┐
 │                                                                   │
 │   _____ _                 _                  _           _        │
@@ -142,28 +130,10 @@ public class Startup : AppStartup
 │                    |_|                                            │
 │                                                                   │
 └{1}┘
-""";
+""", w: 67, c: '─');
 
-
-        const int  width   = 67;
-        const char padChar = '─';
-        var        asm     = typeof(Startup).Assembly;
-        var        version = $" v{asm.GetName().Version} ";
-        var repUrl = $" {asm.GetCustomAttributes<AssemblyMetadataAttribute>()
-                            .FirstOrDefault(x => x.Key == "RepositoryUrl")
-                           ?.Value} ";
-
-
-        Console.WriteLine(logo,
-                          version.PadLeft((width + version.Length) / 2, padChar).PadRight(width, padChar),
-                          repUrl.PadLeft((width  + repUrl.Length)  / 2, padChar).PadRight(width, padChar));
-
-
-        Serve.Run(RunOptions.Default.WithArgs(args)
-                            .ConfigureBuilder(builder =>
-                                                  //
-                                                  builder.UseSerilogDefault(config => config.Init())
-                                              //
-                                             ));
+        Console.WriteLine(logo.t,
+                          version.PadLeft((logo.w + version.Length) / 2, logo.c).PadRight(logo.w, logo.c),
+                          repUrl.PadLeft((logo.w  + repUrl.Length)  / 2, logo.c).PadRight(logo.w, logo.c));
     }
 }

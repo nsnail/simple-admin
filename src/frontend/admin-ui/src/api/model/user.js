@@ -20,4 +20,15 @@ export default {
 	},
 
 
+	/**
+	 * 分页获取用户列表
+	 */
+	queryUsers :{
+		url: `${config.API_URL}/user/query-users`,
+		name: `分页获取用户列表`,
+		post:async function(data) {
+			return await http.post(this.url,data)
+		}
+	},
+
 }

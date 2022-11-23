@@ -5,22 +5,18 @@ using NSExt.Extensions;
 using SimpleAdmin.WebApi.DataContracts;
 using SimpleAdmin.WebApi.DataContracts.DbMaps;
 using SimpleAdmin.WebApi.DataContracts.Dto.Account;
-using SimpleAdmin.WebApi.Infrastructure.Constant;
-using SimpleAdmin.WebApi.Repositories;
 
 namespace SimpleAdmin.WebApi.Api.Implements;
 
 /// <inheritdoc cref="IAccountApi" />
-public class AccountApi : ApiBase<IAccountApi>, IAccountApi
+public class AccountApi : ApiBase<IAccountApi, TbSysUser>, IAccountApi
 {
     /// <inheritdoc />
-    public AccountApi(Repository<TbSysUser> rep, ISecurityApi securityApi)
+    public AccountApi(ISecurityApi securityApi)
     {
-        _rep         = rep;
         _securityApi = securityApi;
     }
 
-    private readonly Repository<TbSysUser> _rep;
 
     private readonly ISecurityApi _securityApi;
 
@@ -29,14 +25,14 @@ public class AccountApi : ApiBase<IAccountApi>, IAccountApi
     [AllowAnonymous]
     public async Task<bool> CheckMobile(CheckMobileReq req)
     {
-        return !await _rep.Select.AnyAsync(a => a.Mobile == req.Mobile);
+        return !await Repository.Select.AnyAsync(a => a.Mobile == req.Mobile);
     }
 
     /// <inheritdoc />
     [AllowAnonymous]
     public async Task<bool> CheckUserName(CheckUserNameReq req)
     {
-        return !await _rep.Select.AnyAsync(a => a.UserName == req.UserName);
+        return !await Repository.Select.AnyAsync(a => a.UserName == req.UserName);
     }
 
 
@@ -54,14 +50,16 @@ public class AccountApi : ApiBase<IAccountApi>, IAccountApi
             UserName = req.UserName,
             Password = req.Password.Pwd().Guid()
         };
-        await _rep.InsertAsync(tbUser);
+        await Repository.InsertAsync(tbUser);
     }
+
 
     /// <inheritdoc />
     [AllowAnonymous]
     public async Task Login(LoginReq req)
     {
-        var tbUser = await _rep.GetAsync(x => x.UserName == req.UserName && x.Password == req.Password.Pwd().Guid());
+        var tbUser =
+            await Repository.GetAsync(x => x.UserName == req.UserName && x.Password == req.Password.Pwd().Guid());
         if (tbUser is null) throw Oops.Oh(Enums.ErrorCodes.InvalidInput, Strings.MSG_UNAME_PASSWORD_WRONG);
 
         if (tbUser.BitSet.HasFlag(Enums.UserBitSets.Disabled))

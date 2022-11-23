@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace SimpleAdmin.WebApi.Infrastructure.Configuration.Options.Nodes.SwaggerSkin;
+﻿namespace SimpleAdmin.WebApi.Infrastructure.Configuration.Options.Nodes.SwaggerSkin;
 
 /// <summary>
 ///     swagger 配置对象 节点

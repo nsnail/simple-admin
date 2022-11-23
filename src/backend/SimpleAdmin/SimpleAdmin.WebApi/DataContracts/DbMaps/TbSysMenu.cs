@@ -1,6 +1,5 @@
 ﻿using FreeSql.DataAnnotations;
 using SimpleAdmin.WebApi.DataContracts.DbMaps.Dependency;
-using SimpleAdmin.WebApi.Infrastructure.Constant;
 
 namespace SimpleAdmin.WebApi.DataContracts.DbMaps;
 
@@ -38,7 +37,7 @@ public record TbSysMenu : FullTable, IFieldBitSet
 
 
     /// <summary>
-    ///     父级节点
+    ///     父id
     /// </summary>
     public virtual long ParentId { get; set; }
 

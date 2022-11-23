@@ -1,6 +1,5 @@
 ﻿using SimpleAdmin.WebApi.Aop.Attributes;
 using SimpleAdmin.WebApi.DataContracts.Dto.Account;
-using SimpleAdmin.WebApi.Infrastructure.Constant;
 
 namespace SimpleAdmin.WebApi.DataContracts.Dto.Security;
 

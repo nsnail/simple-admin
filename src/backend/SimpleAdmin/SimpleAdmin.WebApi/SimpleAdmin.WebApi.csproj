@@ -71,6 +71,10 @@
           <LinkBase>.res\</LinkBase>
           <Link>.res\seed-data\TbSysMenu.json</Link>
         </Content>
+        <Content Update="..\..\..\..\res\seed-data\TbSysDepartment.json">
+          <LinkBase>.res\</LinkBase>
+          <Link>.res\seed-data\TbSysDepartment.json</Link>
+        </Content>
     </ItemGroup>
 
 

@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel;
-using System.Text.Json.Serialization;
 using FreeSql.DataAnnotations;
 using SimpleAdmin.WebApi.Aop.Attributes;
-using SimpleAdmin.WebApi.Infrastructure.Constant;
 
 namespace SimpleAdmin.WebApi.DataContracts.DbMaps.Dependency;
 

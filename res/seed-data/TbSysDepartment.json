@@ -1,0 +1,36 @@
+[
+  {
+    "label": "华南分部",
+    "remark": "",
+    "sort": 1,
+    "children": [
+      {
+        "label": "售前客服部",
+        "remark": "",
+        "sort": 2
+      },
+      {
+        "label": "技术研发部",
+        "remark": "软件开发&测试",
+        "sort": 3
+      }
+    ]
+  },
+  {
+    "label": "华东分部",
+    "remark": "",
+    "sort": 4,
+    "children": [
+      {
+        "label": "售前客服部",
+        "remark": "",
+        "sort": 5
+      },
+      {
+        "label": "技术研发部",
+        "remark": "",
+        "sort": 6
+      }
+    ]
+  }
+]

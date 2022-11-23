@@ -1,8 +1,38 @@
 // ReSharper disable ContextualLoggerProblem
 
 using Furion.DynamicApiController;
+using SimpleAdmin.WebApi.DataContracts;
+using SimpleAdmin.WebApi.DataContracts.DbMaps.Dependency;
+using SimpleAdmin.WebApi.Repositories;
 
 namespace SimpleAdmin.WebApi.Api;
+
+/// <summary>
+///     Api Controller 基类
+/// </summary>
+public abstract class ApiBase<TLogger, TTable> : ApiBase<TLogger> where TTable : DataContract, ITable, new()
+{
+    /// <summary>
+    ///     Api Controller 基类
+    /// </summary>
+    protected ApiBase()
+    {
+        Repository = App.GetService<Repository<TTable>>();
+    }
+
+    /// <param name="logger"></param>
+    /// <param name="repository"></param>
+    protected ApiBase(ILogger<TLogger> logger, Repository<TTable> repository) : base(logger)
+    {
+        Repository = repository;
+    }
+
+
+    /// <summary>
+    ///     默认仓储
+    /// </summary>
+    protected Repository<TTable> Repository { get; }
+}
 
 /// <summary>
 ///     Api Controller 基类

@@ -4,38 +4,46 @@ using SimpleAdmin.WebApi.DataContracts.DbMaps.Dependency;
 namespace SimpleAdmin.WebApi.DataContracts.DbMaps;
 
 /// <summary>
-///     用户表
+///     部门表
 /// </summary>
 [Table]
-public record TbSysUser : FullTable, IFieldBitSet
+public record TbSysDepartment : FullTable, IFieldBitSet
 {
     /// <inheritdoc />
     [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
     public virtual long BitSet { get; set; }
 
     /// <summary>
-    ///     手机号
+    ///     子节点
     /// </summary>
+    [Navigate(nameof(ParentId))]
     [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-    public virtual long? Mobile { get; set; }
-
-    /// <summary>
-    ///     密码
-    /// </summary>
-    [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-    public virtual Guid Password { get; set; }
+    public virtual List<TbSysDepartment> Children { get; set; }
 
 
     /// <summary>
-    ///     做授权验证的Token，全局唯一，可以随时重置（强制下线）
+    ///     部门名称
     /// </summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-    public virtual Guid Token { get; set; }
+    public virtual string Label { get; set; }
 
 
     /// <summary>
-    ///     用户名
+    ///     父id
     /// </summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-    public virtual string UserName { get; set; }
+    public virtual long ParentId { get; set; }
+
+    /// <summary>
+    ///     部门描述
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+    public string Remark { get; set; }
+
+
+    /// <summary>
+    ///     排序
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+    public virtual int Sort { get; set; }
 }

@@ -1,6 +1,5 @@
 using Mapster;
 using SimpleAdmin.WebApi.DataContracts.DbMaps;
-using SimpleAdmin.WebApi.Infrastructure.Constant;
 
 namespace SimpleAdmin.WebApi.DataContracts.Dto.User;
 

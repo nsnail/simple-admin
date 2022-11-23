@@ -3,7 +3,6 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Filters;
 using Serilog.Sinks.SystemConsole.Themes;
-using SimpleAdmin.WebApi.Infrastructure.Constant;
 
 // ReSharper disable UnusedMember.Global
 

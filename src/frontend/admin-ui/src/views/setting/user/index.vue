@@ -77,7 +77,7 @@
 				showGrouploading: false,
 				groupFilterText: '',
 				group: [],
-				apiObj: this.$API.system.user.list,
+				apiObj: this.$API.user.queryUsers,
 				selection: [],
 				search: {
 					name: null

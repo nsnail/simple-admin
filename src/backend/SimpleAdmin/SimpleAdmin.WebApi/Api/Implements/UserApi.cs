@@ -9,19 +9,15 @@ using SimpleAdmin.WebApi.Repositories;
 namespace SimpleAdmin.WebApi.Api.Implements;
 
 /// <inheritdoc cref="SimpleAdmin.WebApi.Api.IUserApi" />
-public class UserApi : ApiBase<IUserApi>, IUserApi
+public class UserApi : ApiBase<IUserApi, TbSysUser>, IUserApi
 {
     /// <inheritdoc />
-    public UserApi(Repository<TbSysUser> rep, Repository<TbSysMenu> repMenu)
+    public UserApi(Repository<TbSysMenu> repMenu)
     {
-        _rep     = rep;
         _repMenu = repMenu;
     }
 
-
-    private readonly Repository<TbSysUser> _rep;
     private readonly Repository<TbSysMenu> _repMenu;
-
 
     /// <inheritdoc />
     [AllowAnonymous]
@@ -42,12 +38,13 @@ public class UserApi : ApiBase<IUserApi>, IUserApi
         return ret;
     }
 
+
     /// <inheritdoc />
     [AllowAnonymous]
     [HttpPost]
     public async Task<PagedListRsp<UserRsp>> QueryUsers(PagedListReq<QueryUsersReq> req)
     {
-        var ret = await _rep.GetPagedListAsync(req.DynamicFilter, req.Page, req.PageSize);
+        var ret = await Repository.GetPagedListAsync(req.DynamicFilter, req.Page, req.PageSize);
         return new PagedListRsp<UserRsp> {
             Page     = req.Page,
             PageSize = req.PageSize,

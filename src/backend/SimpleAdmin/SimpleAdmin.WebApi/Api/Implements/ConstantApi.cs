@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSExt.Extensions;
 using SimpleAdmin.WebApi.DataContracts.Dto;
@@ -27,9 +28,14 @@ public class ConstantApi : ApiBase<IConstantApi>, IConstantApi
     [NonUnify]
     public IActionResult GetStrings()
     {
+        var jsonOptions = default(JsonSerializerOptions).NewJsonSerializerOptions();
+        jsonOptions.DictionaryKeyPolicy = null;
         return new JsonResult(new RestfulInfo<object> {
-            Code = 0,
-            Data = typeof(Strings).GetFields().ToDictionary(x => x.Name.ToString(), x => x.GetValue(null)?.ToString())
-        });
+                                  Code = 0,
+                                  Data = typeof(Strings).GetFields()
+                                                        .ToDictionary(x => x.Name.ToString(),
+                                                                      x => x.GetValue(null)?.ToString())
+                              },
+                              jsonOptions);
     }
 }
