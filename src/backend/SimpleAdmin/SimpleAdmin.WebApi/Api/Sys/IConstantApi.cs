@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace SimpleAdmin.WebApi.Api;
+namespace SimpleAdmin.WebApi.Api.Sys;
 
 /// <summary>
 ///     常量接口

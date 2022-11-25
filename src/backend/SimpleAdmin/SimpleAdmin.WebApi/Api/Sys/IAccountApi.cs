@@ -1,6 +1,6 @@
 ﻿using SimpleAdmin.WebApi.DataContracts.Dto.Account;
 
-namespace SimpleAdmin.WebApi.Api;
+namespace SimpleAdmin.WebApi.Api.Sys;
 
 /// <summary>
 ///     帐号接口

@@ -6,9 +6,9 @@ using SimpleAdmin.WebApi.DataContracts.Dto;
 using SimpleAdmin.WebApi.DataContracts.Dto.User;
 using SimpleAdmin.WebApi.Repositories;
 
-namespace SimpleAdmin.WebApi.Api.Implements;
+namespace SimpleAdmin.WebApi.Api.Sys.Implements;
 
-/// <inheritdoc cref="SimpleAdmin.WebApi.Api.IUserApi" />
+/// <inheritdoc cref="IUserApi" />
 public class UserApi : ApiBase<IUserApi, TbSysUser>, IUserApi
 {
     /// <inheritdoc />

@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="dist\**"/>
+		<None Remove="node_modules\**"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="dist\**"/>
+		<Compile Remove="node_modules\**"/>
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<EmbeddedResource Remove="dist\**"/>
+		<EmbeddedResource Remove="node_modules\**"/>
+	</ItemGroup>
+</Project>

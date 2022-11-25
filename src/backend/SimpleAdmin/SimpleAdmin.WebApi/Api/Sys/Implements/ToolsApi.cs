@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace SimpleAdmin.WebApi.Api.Implements;
+namespace SimpleAdmin.WebApi.Api.Sys.Implements;
 
-/// <inheritdoc cref="SimpleAdmin.WebApi.Api.IToolsApi" />
+/// <inheritdoc cref="IToolsApi" />
 [AllowAnonymous]
 public class ToolsApi : ApiBase<IToolsApi>, IToolsApi
 {

@@ -52,25 +52,19 @@ public class SwaggerSkinMiddleware
         var path = context.Request.Path.Value!;
 
         switch (context.Request.Method) {
-            // 以前缀结尾则 重定向到首页
-            case "GET" when
-                Regex.IsMatch(path, $"^/?{Regex.Escape(_options.RoutePrefix)}/?$", RegexOptions.IgnoreCase): {
-                // Use relative redirect to support proxy environments
-                var relativeIndexUrl = string.IsNullOrWhiteSpace(path) || path.EndsWith("/")
-                                           ? INDEX_FILE_NAME
-                                           : $"{path.Split('/').Last()}/{INDEX_FILE_NAME}";
-
-                RespondWithRedirect(context.Response, relativeIndexUrl);
+            // 重定向到首页
+            case Strings.FLAG_HTTP_METHOD_GET when Regex.IsMatch(path, "^/*$", RegexOptions.IgnoreCase): {
+                await RespondWithIndexHtml(context.Response);
                 return;
             }
             // 响应首页
-            case "GET" when Regex.IsMatch(path,
-                                          $"^/{Regex.Escape(_options.RoutePrefix)}/?{INDEX_FILE_NAME}$",
-                                          RegexOptions.IgnoreCase):
+            case Strings.FLAG_HTTP_METHOD_GET when Regex.IsMatch(path,
+                                                                 $"^/?{INDEX_FILE_NAME}$",
+                                                                 RegexOptions.IgnoreCase):
                 await RespondWithIndexHtml(context.Response);
                 return;
             // 前端特殊用途
-            case "GET" when Regex.IsMatch(path, "^/swagger-resources$", RegexOptions.IgnoreCase):
+            case Strings.FLAG_HTTP_METHOD_GET when Regex.IsMatch(path, "^/swagger-resources$", RegexOptions.IgnoreCase):
                 // 前端特殊用途： knife4j -vue / Knife4jAsync.js line 74： 此处判断底层springfox版本
                 // 1、springfox提供的分组地址   /swagger -resources
                 // 2、springdoc                   -open提供的分组地址：v3 /api -docs /swagger -config
@@ -97,7 +91,7 @@ public class SwaggerSkinMiddleware
     private StaticFileMiddleware CreateStaticFileMiddleware()
     {
         var staticFileOptions = new StaticFileOptions {
-            RequestPath  = string.IsNullOrWhiteSpace(_options.RoutePrefix) ? string.Empty : $"/{_options.RoutePrefix}",
+            RequestPath  = string.Empty,
             FileProvider = new EmbeddedFileProvider(GetType().Assembly, EMBEDDED_FILE_NAMESPACE)
         };
 

@@ -17,8 +17,18 @@ public static class Strings
     public const string DSC_VERSION            = "版本";
 
 
-    public const string FLAG_ACCESS_TOKEN   = "ACCESS-TOKEN";
-    public const string FLAG_X_ACCESS_TOKEN = "X-ACCESS-TOKEN";
+    public const string FLAG_ACCESS_TOKEN = "ACCESS-TOKEN";
+
+    public const string FLAG_HTTP_METHOD_CONNECT = "CONNECT";
+    public const string FLAG_HTTP_METHOD_DELETE  = "DELETE";
+    public const string FLAG_HTTP_METHOD_GET     = "GET";
+    public const string FLAG_HTTP_METHOD_HEAD    = "HEAD";
+    public const string FLAG_HTTP_METHOD_OPTIONS = "OPTIONS";
+    public const string FLAG_HTTP_METHOD_PATCH   = "PATCH";
+    public const string FLAG_HTTP_METHOD_POST    = "POST";
+    public const string FLAG_HTTP_METHOD_PUT     = "PUT";
+    public const string FLAG_HTTP_METHOD_TRACE   = "TRACE";
+    public const string FLAG_X_ACCESS_TOKEN      = "X-ACCESS-TOKEN";
 
 
     public const string FMT_YYYY_MM_DD = "yyyy-MM-dd";

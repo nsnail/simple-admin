@@ -11,9 +11,9 @@ using SimpleAdmin.WebApi.Infrastructure.Utils;
 using SixLabors.ImageSharp;
 using Yitter.IdGenerator;
 
-namespace SimpleAdmin.WebApi.Api.Implements;
+namespace SimpleAdmin.WebApi.Api.Sys.Implements;
 
-/// <inheritdoc cref="SimpleAdmin.WebApi.Api.ISecurityApi" />
+/// <inheritdoc cref="ISecurityApi" />
 public class SecurityApi : ApiBase<ISecurityApi>, ISecurityApi, IScoped
 {
     private const int CACHE_EXPIRES_CAPTCHA = 60;

@@ -6,7 +6,7 @@ using SimpleAdmin.WebApi.DataContracts;
 using SimpleAdmin.WebApi.DataContracts.DbMaps;
 using SimpleAdmin.WebApi.DataContracts.Dto.Account;
 
-namespace SimpleAdmin.WebApi.Api.Implements;
+namespace SimpleAdmin.WebApi.Api.Sys.Implements;
 
 /// <inheritdoc cref="IAccountApi" />
 public class AccountApi : ApiBase<IAccountApi, TbSysUser>, IAccountApi

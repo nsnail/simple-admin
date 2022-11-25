@@ -4,9 +4,9 @@ using SimpleAdmin.WebApi.DataContracts.DbMaps;
 using SimpleAdmin.WebApi.DataContracts.Dto;
 using SimpleAdmin.WebApi.DataContracts.Dto.Department;
 
-namespace SimpleAdmin.WebApi.Api.Implements;
+namespace SimpleAdmin.WebApi.Api.Sys.Implements;
 
-/// <inheritdoc cref="SimpleAdmin.WebApi.Api.IDepartmentApi" />
+/// <inheritdoc cref="IDepartmentApi" />
 public class DepartmentApi : ApiBase<IDepartmentApi, TbSysDepartment>, IDepartmentApi
 {
     /// <inheritdoc />

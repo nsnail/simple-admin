@@ -37,10 +37,4 @@ public record SwaggerSkinOptions : OptionAbstraction
     ///     Gets the JavaScript config object, represented as JSON, that will be passed to the initOAuth method
     /// </summary>
     public OAuthConfigObjectNode OAuthConfigObject { get; set; } = new();
-
-    /// <summary>
-    ///     当url path 以此值开头，则交给 api skin 中间件处理 ， 开头不需要 "/"
-    ///     Gets or sets a route prefix for accessing the swagger-ui
-    /// </summary>
-    public string RoutePrefix { get; set; } = "";
 }

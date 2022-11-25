@@ -1,4 +1,4 @@
-﻿namespace SimpleAdmin.WebApi.Api;
+﻿namespace SimpleAdmin.WebApi.Api.Sys;
 
 /// <summary>
 ///     工具接口

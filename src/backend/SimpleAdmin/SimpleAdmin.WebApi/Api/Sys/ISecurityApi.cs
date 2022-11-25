@@ -1,7 +1,7 @@
 ﻿using SimpleAdmin.WebApi.DataContracts.Dto.Security;
 using SimpleAdmin.WebApi.Infrastructure.Utils;
 
-namespace SimpleAdmin.WebApi.Api;
+namespace SimpleAdmin.WebApi.Api.Sys;
 
 /// <summary>
 ///     安全接口

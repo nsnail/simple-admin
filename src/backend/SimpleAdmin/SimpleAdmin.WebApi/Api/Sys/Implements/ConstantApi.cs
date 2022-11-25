@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using NSExt.Extensions;
 using SimpleAdmin.WebApi.DataContracts.Dto;
 
-namespace SimpleAdmin.WebApi.Api.Implements;
+namespace SimpleAdmin.WebApi.Api.Sys.Implements;
 
-/// <inheritdoc cref="SimpleAdmin.WebApi.Api.IConstantApi" />
+/// <inheritdoc cref="IConstantApi" />
 [AllowAnonymous]
 public class ConstantApi : ApiBase<IConstantApi>, IConstantApi
 {

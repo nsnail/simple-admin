@@ -88,6 +88,7 @@
     //  [ "other", "PUT" ]  // => 新增一条新规则，比如，一 `[other]` 开头会转换为 `[HttpPut]` 请求
     //  ]
     //  }
+    "CamelCaseSeparator": ".",
     "UrlParameterization": true,
     "KeepVerb": true,
     "AbandonControllerAffixes": [

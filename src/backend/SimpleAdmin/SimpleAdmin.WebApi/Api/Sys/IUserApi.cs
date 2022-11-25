@@ -1,7 +1,7 @@
 ﻿using SimpleAdmin.WebApi.DataContracts.Dto;
 using SimpleAdmin.WebApi.DataContracts.Dto.User;
 
-namespace SimpleAdmin.WebApi.Api;
+namespace SimpleAdmin.WebApi.Api.Sys;
 
 /// <summary>
 ///     用户接口
