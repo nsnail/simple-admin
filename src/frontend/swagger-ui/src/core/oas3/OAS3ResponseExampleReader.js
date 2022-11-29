@@ -73,7 +73,3 @@ Knife4jOAS3ResponseExampleReader.prototype.multipleExample = function (moreExamp
 }
 
 export default Knife4jOAS3ResponseExampleReader;
-
-
-
-

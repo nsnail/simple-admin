@@ -7215,4 +7215,3 @@ SwaggerBootstrapUi.prototype.error = function(msg) {
 }
 
 export default SwaggerBootstrapUi
-  
