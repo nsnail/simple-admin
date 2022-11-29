@@ -1,4 +1,4 @@
-﻿namespace SimpleAdmin.Infrastructure.Configuration.Options.Nodes.Connection;
+namespace SimpleAdmin.Infrastructure.Configuration.Options.Nodes.Connection;
 
 /// <summary>
 ///     数据库服务器节点

@@ -1,4 +1,4 @@
-﻿namespace SimpleAdmin.DataContract.DataTransferObjects;
+namespace SimpleAdmin.DataContract.DataTransferObjects;
 
 /// <summary>
 ///     命令接口

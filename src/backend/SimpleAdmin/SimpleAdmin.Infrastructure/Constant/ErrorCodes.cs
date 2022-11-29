@@ -1,4 +1,4 @@
-﻿using Furion.FriendlyException;
+using Furion.FriendlyException;
 
 namespace SimpleAdmin.Infrastructure.Constant;
 

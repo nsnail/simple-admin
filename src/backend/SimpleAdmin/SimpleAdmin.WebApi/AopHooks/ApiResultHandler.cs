@@ -1,4 +1,4 @@
-﻿using Furion.DataValidation;
+using Furion.DataValidation;
 using Furion.FriendlyException;
 using Furion.UnifyResult;
 using Microsoft.AspNetCore.Mvc;

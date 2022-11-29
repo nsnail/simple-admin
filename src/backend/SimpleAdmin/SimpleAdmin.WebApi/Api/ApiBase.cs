@@ -1,4 +1,4 @@
-﻿using Furion.DynamicApiController;
+using Furion.DynamicApiController;
 
 
 // ReSharper disable ContextualLoggerProblem

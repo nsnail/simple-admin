@@ -1,4 +1,4 @@
-﻿// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 
 namespace SimpleAdmin.Infrastructure.Attributes;
 

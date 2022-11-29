@@ -1,4 +1,4 @@
-﻿using FreeSql;
+using FreeSql;
 using SimpleAdmin.DataContract.DbMaps;
 using SimpleAdmin.Infrastructure.Repositories;
 

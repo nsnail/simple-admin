@@ -1,4 +1,4 @@
-﻿using SimpleAdmin.WebApi.Middlewares;
+using SimpleAdmin.WebApi.Middlewares;
 
 namespace SimpleAdmin.WebApi.Extensions;
 

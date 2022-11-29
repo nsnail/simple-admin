@@ -1,4 +1,4 @@
-﻿using EntityBase = SimpleAdmin.DataContract.DbMaps.Dependency.EntityBase;
+using EntityBase = SimpleAdmin.DataContract.DbMaps.Dependency.EntityBase;
 
 namespace SimpleAdmin.DataContract.DbMaps;
 

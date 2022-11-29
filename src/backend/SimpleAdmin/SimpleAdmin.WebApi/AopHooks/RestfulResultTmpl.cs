@@ -1,4 +1,4 @@
-﻿namespace SimpleAdmin.WebApi.AopHooks;
+namespace SimpleAdmin.WebApi.AopHooks;
 
 /// <summary>
 ///     RESTful 风格结果集

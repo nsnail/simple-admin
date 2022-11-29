@@ -1,4 +1,4 @@
-﻿using Furion.FriendlyException;
+using Furion.FriendlyException;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NSExt.Extensions;
 using Serilog;

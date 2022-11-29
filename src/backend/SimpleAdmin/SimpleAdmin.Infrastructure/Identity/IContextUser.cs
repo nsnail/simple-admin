@@ -1,4 +1,4 @@
-﻿using SimpleAdmin.Infrastructure.Constant;
+using SimpleAdmin.Infrastructure.Constant;
 
 namespace SimpleAdmin.Infrastructure.Identity;
 

@@ -1,4 +1,4 @@
-﻿using Furion;
+using Furion;
 using Microsoft.AspNetCore.HttpOverrides;
 using Serilog;
 using SimpleAdmin.Infrastructure.Constant;

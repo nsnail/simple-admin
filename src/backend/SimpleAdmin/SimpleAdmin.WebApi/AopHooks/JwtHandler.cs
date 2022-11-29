@@ -1,4 +1,4 @@
-﻿using Furion.Authorization;
+using Furion.Authorization;
 using Microsoft.AspNetCore.Authorization;
 
 namespace SimpleAdmin.WebApi.AopHooks;

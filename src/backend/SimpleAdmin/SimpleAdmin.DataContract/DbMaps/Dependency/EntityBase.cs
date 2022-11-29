@@ -1,4 +1,4 @@
-﻿namespace SimpleAdmin.DataContract.DbMaps.Dependency;
+namespace SimpleAdmin.DataContract.DbMaps.Dependency;
 
 /// <summary>
 ///     实体基类

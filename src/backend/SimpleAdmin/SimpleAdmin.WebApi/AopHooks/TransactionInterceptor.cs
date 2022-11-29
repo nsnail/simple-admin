@@ -1,4 +1,4 @@
-﻿using FreeSql;
+using FreeSql;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NSExt.Extensions;
 

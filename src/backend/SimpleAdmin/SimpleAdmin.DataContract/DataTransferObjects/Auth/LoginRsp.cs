@@ -1,4 +1,4 @@
-﻿namespace SimpleAdmin.DataContract.DataTransferObjects.Auth;
+namespace SimpleAdmin.DataContract.DataTransferObjects.Auth;
 
 /// <summary>
 ///     登录响应

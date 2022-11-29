@@ -1,4 +1,4 @@
-﻿using NSExt.Extensions;
+using NSExt.Extensions;
 
 namespace SimpleAdmin.DataContract.DataTransferObjects;
 

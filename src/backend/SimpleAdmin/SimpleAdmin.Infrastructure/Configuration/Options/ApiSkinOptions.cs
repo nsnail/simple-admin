@@ -1,4 +1,4 @@
-﻿using SimpleAdmin.Infrastructure.Configuration.Options.Nodes.ApiSkin;
+using SimpleAdmin.Infrastructure.Configuration.Options.Nodes.ApiSkin;
 
 namespace SimpleAdmin.Infrastructure.Configuration.Options;
 
